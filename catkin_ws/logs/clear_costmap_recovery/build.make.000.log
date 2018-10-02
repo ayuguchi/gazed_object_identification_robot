@@ -1,0 +1,4 @@
+[35m[1mScanning dependencies of target clear_costmap_recovery[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/clear_costmap_recovery.dir/src/clear_costmap_recovery.cpp.o[0m
+[100%] [32m[1mLinking CXX shared library /root/catkin_ws/devel/.private/clear_costmap_recovery/lib/libclear_costmap_recovery.so[0m
+[100%] Built target clear_costmap_recovery

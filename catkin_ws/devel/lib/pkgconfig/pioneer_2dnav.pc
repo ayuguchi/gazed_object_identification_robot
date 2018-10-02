@@ -1,0 +1,1 @@
+/root/catkin_ws/devel/.private/pioneer_2dnav/lib/pkgconfig/pioneer_2dnav.pc

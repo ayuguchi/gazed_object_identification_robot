@@ -1,0 +1,833 @@
+[  1%] [34m[1mBuilding NVCC (Device) object CMakeFiles/darknet_ros_lib.dir/__/darknet/src/darknet_ros_lib_generated_avgpool_layer_kernels.cu.o[0m
+[  2%] [34m[1mBuilding NVCC (Device) object CMakeFiles/darknet_ros_lib.dir/__/darknet/src/darknet_ros_lib_generated_activation_kernels.cu.o[0m
+[  3%] [34m[1mBuilding NVCC (Device) object CMakeFiles/darknet_ros_lib.dir/__/darknet/src/darknet_ros_lib_generated_crop_layer_kernels.cu.o[0m
+[  5%] [34m[1mBuilding NVCC (Device) object CMakeFiles/darknet_ros_lib.dir/__/darknet/src/darknet_ros_lib_generated_col2im_kernels.cu.o[0m
+[  6%] [34m[1mBuilding NVCC (Device) object CMakeFiles/darknet_ros_lib.dir/__/darknet/src/darknet_ros_lib_generated_blas_kernels.cu.o[0m
+[  7%] [34m[1mBuilding NVCC (Device) object CMakeFiles/darknet_ros_lib.dir/__/darknet/src/darknet_ros_lib_generated_im2col_kernels.cu.o[0m
+[  8%] [34m[1mBuilding NVCC (Device) object CMakeFiles/darknet_ros_lib.dir/__/darknet/src/darknet_ros_lib_generated_dropout_layer_kernels.cu.o[0m
+[ 10%] [34m[1mBuilding NVCC (Device) object CMakeFiles/darknet_ros_lib.dir/__/darknet/src/darknet_ros_lib_generated_deconvolutional_kernels.cu.o[0m
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+[ 11%] [34m[1mBuilding NVCC (Device) object CMakeFiles/darknet_ros_lib.dir/__/darknet/src/darknet_ros_lib_generated_maxpool_layer_kernels.cu.o[0m
+[ 12%] [34m[1mBuilding NVCC (Device) object CMakeFiles/darknet_ros_lib.dir/__/darknet/src/darknet_ros_lib_generated_convolutional_kernels.cu.o[0m
+[ 14%] [34m[1mBuilding NVCC (Device) object CMakeFiles/darknet_ros_lib.dir/__/darknet/src/darknet_ros_lib_generated_network_kernels.cu.o[0m
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(378): warning: variable "batch" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(379): warning: variable "subdivisions" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(378): warning: variable "batch" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(379): warning: variable "subdivisions" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(378): warning: variable "batch" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(379): warning: variable "subdivisions" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(378): warning: variable "batch" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(379): warning: variable "subdivisions" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(378): warning: variable "batch" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(379): warning: variable "subdivisions" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(378): warning: variable "batch" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(379): warning: variable "subdivisions" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(378): warning: variable "batch" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(379): warning: variable "subdivisions" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(378): warning: variable "batch" was declared but never referenced
+
+/root/catkin_ws/src/darknet_ros/darknet/src/network_kernels.cu(379): warning: variable "subdivisions" was declared but never referenced
+
+[35m[1mScanning dependencies of target darknet_ros_lib[0m
+[ 15%] [32mBuilding CXX object CMakeFiles/darknet_ros_lib.dir/src/object_detector_demo.cpp.o[0m
+[ 16%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/src/image_interface.c.o[0m
+[ 17%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/im2col.c.o[0m
+[ 19%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/activation_layer.c.o[0m
+[ 20%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/avgpool_layer.c.o[0m
+[ 21%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/activations.c.o[0m
+[ 23%] [32mBuilding CXX object CMakeFiles/darknet_ros_lib.dir/src/YoloObjectDetector.cpp.o[0m
+[ 24%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/image.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/box.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.h:9[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/avgpool_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/avgpool_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/box.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.h:9[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet_ros/include/darknet_ros/image_interface.h:12[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet_ros/src/image_interface.c:9[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/activations.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/activation_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/activation_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/box.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.h:9[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/activations.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/activations.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.c:[m[K In function '[01m[Kload_image_cv[m[K':
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.c:534:16:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvLoadImage[m[K' [-Wimplicit-function-declaration]
+     if( (src = cvLoadImage(filename, flag)) == 0 )
+[01;32m[K                ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.c:534:14:[m[K [01;35m[Kwarning: [m[Kassignment makes pointer from integer without a cast [-Wint-conversion]
+     if( (src = cvLoadImage(filename, flag)) == 0 )
+[01;32m[K              ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.c:[m[K In function '[01m[Ksave_image_jpg[m[K':
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.c:593:5:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvSaveImage[m[K' [-Wimplicit-function-declaration]
+     cvSaveImage(buff, disp,0);
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.c:[m[K In function '[01m[Kload_image_cv[m[K':
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.c:539:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Ksystem[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         system(buff);
+[01;32m[K         ^[m[K
+[ 26%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/batchnorm_layer.c.o[0m
+[ 26%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/blas.c.o[0m
+[ 28%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/local_layer.c.o[0m
+[ 29%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/layer.c.o[0m
+[ 30%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/list.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/cuda.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/convolutional_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/batchnorm_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/layer.h:1[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/cuda.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/local_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/local_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/blas.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/blas.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/list.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/list.c:3[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 32%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/box.c.o[0m
+[ 33%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/matrix.c.o[0m
+[ 34%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/lstm_layer.c.o[0m
+[ 35%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/compare.c.o[0m
+[ 37%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/col2im.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/matrix.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/matrix.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/box.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/box.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/activations.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/lstm_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/lstm_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/network.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/compare.c:3[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 38%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/convolutional_layer.c.o[0m
+[ 39%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/connected_layer.c.o[0m
+[ 41%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/network.c.o[0m
+[ 42%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/maxpool_layer.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/activations.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/connected_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/connected_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/cuda.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/convolutional_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/convolutional_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/network.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/network.c:4[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/box.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.h:9[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/maxpool_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/maxpool_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 44%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/normalization_layer.c.o[0m
+[ 44%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/cost_layer.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/layer.h:1[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/cost_layer.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/cost_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/box.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.h:9[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/normalization_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/normalization_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 46%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/parser.c.o[0m
+[ 47%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/option_list.c.o[0m
+[ 48%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/crnn_layer.c.o[0m
+[ 50%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/crop_layer.c.o[0m
+[ 51%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/region_layer.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/box.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.h:9[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/crop_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/crop_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/list.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/option_list.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/option_list.c:4[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/activations.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/activation_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:6[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/activations.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/crnn_layer.h:5[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/crnn_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:[m[K In function '[01m[Kload_connected_weights[m[K':
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:973:5:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+     fread(l.biases, sizeof(float), l.outputs, fp);
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:974:5:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+     fread(l.weights, sizeof(float), l.outputs*l.inputs, fp);
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:981:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fread(l.scales, sizeof(float), l.outputs, fp);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:982:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fread(l.rolling_mean, sizeof(float), l.outputs, fp);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:983:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fread(l.rolling_variance, sizeof(float), l.outputs, fp);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:[m[K In function '[01m[Kload_batchnorm_weights[m[K':
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:997:5:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+     fread(l.scales, sizeof(float), l.c, fp);
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:998:5:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+     fread(l.rolling_mean, sizeof(float), l.c, fp);
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:999:5:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+     fread(l.rolling_variance, sizeof(float), l.c, fp);
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:[m[K In function '[01m[Kload_convolutional_weights_binary[m[K':
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1009:5:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+     fread(l.biases, sizeof(float), l.n, fp);
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1011:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fread(l.scales, sizeof(float), l.n, fp);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1012:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fread(l.rolling_mean, sizeof(float), l.n, fp);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1013:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fread(l.rolling_variance, sizeof(float), l.n, fp);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1019:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fread(&mean, sizeof(float), 1, fp);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1023:13:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+             fread(&c, sizeof(char), 1, fp);
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:[m[K In function '[01m[Kload_convolutional_weights[m[K':
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1044:5:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+     fread(l.biases, sizeof(float), l.n, fp);
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1046:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fread(l.scales, sizeof(float), l.n, fp);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1047:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fread(l.rolling_mean, sizeof(float), l.n, fp);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1048:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fread(l.rolling_variance, sizeof(float), l.n, fp);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1065:5:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+     fread(l.weights, sizeof(float), num, fp);
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:[m[K In function '[01m[Kload_weights_upto[m[K':
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1094:5:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+     fread(&major, sizeof(int), 1, fp);
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1095:5:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+     fread(&minor, sizeof(int), 1, fp);
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1096:5:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+     fread(&revision, sizeof(int), 1, fp);
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1098:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fread(net->seen, sizeof(size_t), 1, fp);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1101:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fread(&iseen, sizeof(int), 1, fp);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1156:13:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+             fread(l.biases, sizeof(float), l.outputs, fp);
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/parser.c:1157:13:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+             fread(l.weights, sizeof(float), size, fp);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/region_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/region_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 52%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/reorg_layer.c.o[0m
+[ 53%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/cuda.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/box.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/image.h:9[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/reorg_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/reorg_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/cuda.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/cuda.c:5[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 55%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/data.c.o[0m
+[ 56%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/rnn_layer.c.o[0m
+[ 57%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/deconvolutional_layer.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/activations.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/rnn_layer.h:5[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/rnn_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/data.h:5[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/data.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/cuda.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/deconvolutional_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/deconvolutional_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/data.c:[m[K In function '[01m[Kload_regression_labels_paths[m[K':
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/data.c:448:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfscanf[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fscanf(file, "%f", &(y.vals[i][0]));
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/data.c:[m[K In function '[01m[Kload_cifar10_data[m[K':
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/data.c:1203:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fread(bytes, 1, 3073, fp);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/data.c:[m[K In function '[01m[Kload_all_cifar10[m[K':
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/data.c:1266:13:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+             fread(bytes, 1, 3073, fp);
+[01;32m[K             ^[m[K
+[ 58%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/route_layer.c.o[0m
+[ 60%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/demo.c.o[0m
+[ 61%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/shortcut_layer.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/network.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/route_layer.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/route_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/network.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/demo.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/layer.h:1[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/shortcut_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/shortcut_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 62%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/detection_layer.c.o[0m
+[ 64%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/softmax_layer.c.o[0m
+[ 65%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/dropout_layer.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/layer.h:1[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/detection_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/detection_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/layer.h:1[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/softmax_layer.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/softmax_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/layer.h:1[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/dropout_layer.h:4[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/dropout_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 66%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/tree.c.o[0m
+[ 67%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/gemm.c.o[0m
+[ 69%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/utils.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/utils.h:5[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/gemm.c:2[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/utils.h:5[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/utils.c:11[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/tree.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/tree.c:3[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/utils.c:[m[K In function '[01m[Kfgetl[m[K':
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/src/utils.c:311:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfgets[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fgets(&line[curr], readsize, fp);
+[01;32m[K         ^[m[K
+[ 70%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/src/gru_layer.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/activations.h:3[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/gru_layer.h:5[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/src/gru_layer.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 71%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/art.c.o[0m
+[ 73%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/regressor.c.o[0m
+[ 74%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/captcha.c.o[0m
+[ 75%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/cifar.c.o[0m
+[ 76%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/rnn.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/art.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/captcha.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/cifar.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/rnn.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/regressor.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/rnn.c:[m[K In function '[01m[Ktrain_char_rnn[m[K':
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/rnn.c:143:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kfread[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         fread(text, 1, size, fp);
+[01;32m[K         ^[m[K
+[ 78%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/rnn_vid.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/rnn_vid.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 79%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/classifier.c.o[0m
+[ 80%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/segmenter.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/classifier.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 82%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/coco.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/segmenter.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/coco.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 83%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/super.c.o[0m
+[ 84%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/detector.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/super.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/detector.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 85%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/swag.c.o[0m
+[ 87%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/dice.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/swag.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 88%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/tag.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/dice.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 89%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/go.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/tag.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/go.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/go.c:[m[K In function '[01m[Kengine_go[m[K':
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/go.c:503:9:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kscanf[m[K', declared with attribute warn_unused_result [-Wunused-result]
+         scanf("%s", buff);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/go.c:521:13:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kscanf[m[K', declared with attribute warn_unused_result [-Wunused-result]
+             scanf("%s", comm);
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/go.c:545:13:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kscanf[m[K', declared with attribute warn_unused_result [-Wunused-result]
+             scanf("%d", &boardsize);
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/go.c:555:13:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kscanf[m[K', declared with attribute warn_unused_result [-Wunused-result]
+             scanf("%d", &handicap);
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/go.c:567:13:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kscanf[m[K', declared with attribute warn_unused_result [-Wunused-result]
+             scanf("%f", &komi);
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/go.c:577:17:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kscanf[m[K', declared with attribute warn_unused_result [-Wunused-result]
+                 scanf("%s ", color);
+[01;32m[K                 ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/go.c:579:17:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kscanf[m[K', declared with attribute warn_unused_result [-Wunused-result]
+                 scanf(" ");
+[01;32m[K                 ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/go.c:615:17:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kscanf[m[K', declared with attribute warn_unused_result [-Wunused-result]
+                 scanf("%s", color);
+[01;32m[K                 ^[m[K
+[01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/go.c:647:13:[m[K [01;35m[Kwarning: [m[Kignoring return value of '[01m[Kscanf[m[K', declared with attribute warn_unused_result [-Wunused-result]
+             scanf("%s", type);
+[01;32m[K             ^[m[K
+[ 91%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/voxel.c.o[0m
+[ 92%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/lsd.c.o[0m
+[ 93%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/writing.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/voxel.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/lsd.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/writing.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 94%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/nightmare.c.o[0m
+[ 96%] [32mBuilding C object CMakeFiles/darknet_ros_lib.dir/root/catkin_ws/src/darknet_ros/darknet/examples/yolo.c.o[0m
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/nightmare.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core_c.h:48:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/highgui/highgui_c.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/include/darknet.h:25[m[K,
+                 from [01m[K/root/catkin_ws/src/darknet_ros/darknet/examples/yolo.c:1[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:[m[K In function '[01m[KcvPointFrom32f[m[K':
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/types_c.h:929:13:[m[K [01;35m[Kwarning: [m[Kimplicit declaration of function '[01m[KcvRound[m[K' [-Wimplicit-function-declaration]
+     ipt.x = cvRound(point.x);
+[01;32m[K             ^[m[K
+[ 97%] [32m[1mLinking CXX shared library /root/catkin_ws/devel/.private/darknet_ros/lib/libdarknet_ros_lib.so[0m
+[ 97%] Built target darknet_ros_lib
+[35m[1mScanning dependencies of target darknet_ros[0m
+[ 98%] [32mBuilding CXX object CMakeFiles/darknet_ros.dir/src/yolo_object_detector_node.cpp.o[0m
+[100%] [32m[1mLinking CXX executable /root/catkin_ws/devel/.private/darknet_ros/lib/darknet_ros/darknet_ros[0m
+[100%] Built target darknet_ros

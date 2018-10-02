@@ -1,0 +1,1 @@
+/root/catkin_ws/devel/.private/person_tracking_kalman/lib/pkgconfig/person_tracking_kalman.pc

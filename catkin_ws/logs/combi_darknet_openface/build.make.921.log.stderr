@@ -1,0 +1,25 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:139:1:[m[K [01;31m[Kerror: [m[Kexpected initializer before '[01m[Kint[m[K'
+ int display_num = 2;
+[01;32m[K ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::rgbObjectImageCallback(const ImageConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:2184:8:[m[K [01;31m[Kerror: [m[K'[01m[Kdisplay_num[m[K' was not declared in this scope
+     if(display_num==2)
+[01;32m[K        ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::rgbImageCallback(const ImageConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:2424:38:[m[K [01;31m[Kerror: [m[K'[01m[Ktest_headangle[m[K' was not declared in this scope
+     cv::putText(cv_ptr->image, tostr(test_headangle), cv::Point(20,120), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(255,255,0), 2,CV_AA);
+[01;32m[K                                      ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:2458:8:[m[K [01;31m[Kerror: [m[K'[01m[Kdisplay_num[m[K' was not declared in this scope
+     if(display_num==2)
+[01;32m[K        ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::depthImageCallback(const ImageConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:2773:8:[m[K [01;31m[Kerror: [m[K'[01m[Kdisplay_num[m[K' was not declared in this scope
+     if(display_num==2)
+[01;32m[K        ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::PublishHeadposeArrow()[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:3193:9:[m[K [01;31m[Kerror: [m[K'[01m[Ktest_headangle[m[K' was not declared in this scope
+         test_headangle = atan2(nose_end_point2D_drawtmp.at(0)-nose_tip[0],nose_end_point2D_drawtmp.at(1)-nose_tip[1])* 180 / PI;
+[01;32m[K         ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

@@ -1,0 +1,8 @@
+prefix=/root/catkin_ws/devel/.private/polar_scan_matcher
+
+Name: polar_scan_matcher
+Description: Description of polar_scan_matcher
+Version: 0.3.2
+Cflags: -I/root/catkin_ws/src/scan_tools/polar_scan_matcher/include
+Libs: -L/root/catkin_ws/devel/.private/polar_scan_matcher/lib -lpolar_scan_matcher
+Requires: 

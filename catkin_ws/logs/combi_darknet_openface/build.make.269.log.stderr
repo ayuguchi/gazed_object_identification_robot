@@ -1,0 +1,28 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::ModifyHeadOrientation()[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:423:17:[m[K [01;31m[Kerror: [m[K'[01m[Kmat[m[K' in namespace '[01m[Kcv[m[K' does not name a type
+      static cv::mat lastrotation_vector;
+[01;32m[K                 ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:424:17:[m[K [01;31m[Kerror: [m[K'[01m[Kmat[m[K' in namespace '[01m[Kcv[m[K' does not name a type
+      static cv::mat lasttranslation_vector;
+[01;32m[K                 ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:432:9:[m[K [01;31m[Kerror: [m[K'[01m[Klastrotation_vector[m[K' was not declared in this scope
+         lastrotation_vector = rotation_vector;
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:433:9:[m[K [01;31m[Kerror: [m[K'[01m[Klasttranslation_vector[m[K' was not declared in this scope
+         lasttranslation_vector = translation_vector;
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:445:27:[m[K [01;31m[Kerror: [m[K'[01m[Klastrotation_vector[m[K' was not declared in this scope
+         rotation_vector = lastrotation_vector;
+[01;32m[K                           ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:446:30:[m[K [01;31m[Kerror: [m[K'[01m[Klasttranslation_vector[m[K' was not declared in this scope
+         translation_vector = lasttranslation_vector;
+[01;32m[K                              ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:451:9:[m[K [01;31m[Kerror: [m[K'[01m[Klastrotation_vector[m[K' was not declared in this scope
+         lastrotation_vector = rotation_vector;
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:452:9:[m[K [01;31m[Kerror: [m[K'[01m[Klasttranslation_vector[m[K' was not declared in this scope
+         lasttranslation_vector = translation_vector;   
+[01;32m[K         ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

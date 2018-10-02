@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# disable & stop service
+systemctl --no-block stop sixad
+systemctl disable sixad
+systemctl daemon-reload
+
+exit 0

@@ -1,0 +1,3 @@
+[ 50%] [32mBuilding CXX object CMakeFiles/capture_camera_img_node.dir/src/capture_camera_img.cpp.o[0m
+[100%] [32m[1mLinking CXX executable /root/catkin_ws/devel/.private/capture_camera_img/lib/capture_camera_img/capture_camera_img_node[0m
+[100%] Built target capture_camera_img_node

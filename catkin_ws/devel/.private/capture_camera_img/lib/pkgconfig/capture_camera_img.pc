@@ -1,0 +1,8 @@
+prefix=/root/catkin_ws/devel/.private/capture_camera_img
+
+Name: capture_camera_img
+Description: Description of capture_camera_img
+Version: 0.0.0
+Cflags: 
+Libs: -L/root/catkin_ws/devel/.private/capture_camera_img/lib 
+Requires: 

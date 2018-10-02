@@ -1,0 +1,10 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::Calculate_TimeUse(double)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1182:50:[m[K [01;31m[Kerror: [m[Kqualified-id in declaration before '[01m[K([m[K' token
+ void CombiDarknetOpenface::rgbObjectImageCallback(const sensor_msgs::ImageConstPtr& msg)
+[01;32m[K                                                  ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:2028:1:[m[K [01;31m[Kerror: [m[Kexpected '[01m[K}[m[K' at end of input
+ }
+[01;32m[K ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

@@ -1,0 +1,46 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::ChangeViewPoint(double)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:897:5:[m[K [01;31m[Kerror: [m[Kexpected initializer before '[01m[Kstatic[m[K'
+     static int robotmoving = 0;
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:910:9:[m[K [01;31m[Kerror: [m[K'[01m[Krobotmoving[m[K' was not declared in this scope
+     if(!robotmoving)
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:912:9:[m[K [01;31m[Kerror: [m[K'[01m[Kbeforerobotpose[m[K' was not declared in this scope
+         beforerobotpose.push_back(robotpose.at(0));
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:937:20:[m[K [01;31m[Kerror: [m[K'[01m[Krobotmoving[m[K' was not declared in this scope
+                 if(robotmoving==0)
+[01;32m[K                    ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:946:20:[m[K [01;31m[Kerror: [m[K'[01m[Krobotmoving[m[K' was not declared in this scope
+                 if(robotmoving==0)
+[01;32m[K                    ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:955:20:[m[K [01;31m[Kerror: [m[K'[01m[Krobotmoving[m[K' was not declared in this scope
+                 if(robotmoving==0)
+[01;32m[K                    ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:964:20:[m[K [01;31m[Kerror: [m[K'[01m[Krobotmoving[m[K' was not declared in this scope
+                 if(robotmoving==0)
+[01;32m[K                    ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:973:20:[m[K [01;31m[Kerror: [m[K'[01m[Krobotmoving[m[K' was not declared in this scope
+                 if(robotmoving==0)
+[01;32m[K                    ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:984:16:[m[K [01;31m[Kerror: [m[K'[01m[Krobotmoving[m[K' was not declared in this scope
+             if(robotmoving==0)
+[01;32m[K                ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1021:20:[m[K [01;31m[Kerror: [m[K'[01m[Krobotmoving[m[K' was not declared in this scope
+                 if(robotmoving==0)
+[01;32m[K                    ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1037:20:[m[K [01;31m[Kerror: [m[K'[01m[Krobotmoving[m[K' was not declared in this scope
+                 if(robotmoving==0)
+[01;32m[K                    ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1053:20:[m[K [01;31m[Kerror: [m[K'[01m[Krobotmoving[m[K' was not declared in this scope
+                 if(robotmoving==0)
+[01;32m[K                    ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1068:20:[m[K [01;31m[Kerror: [m[K'[01m[Krobotmoving[m[K' was not declared in this scope
+                 if(robotmoving==0)
+[01;32m[K                    ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1086:8:[m[K [01;31m[Kerror: [m[K'[01m[Krobotmoving[m[K' was not declared in this scope
+     if(robotmoving)
+[01;32m[K        ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

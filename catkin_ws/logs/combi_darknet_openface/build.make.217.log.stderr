@@ -1,0 +1,10 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::msgCallback_FaceRecognition(const ConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:371:13:[m[K [01;31m[Kerror: [m[K'[01m[Kv[m[K' has not been declared
+             v::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:378:54:[m[K [01;31m[Kerror: [m[K'[01m[Kcamera_matrix[m[K' was not declared in this scope
+             cv::solvePnP(model_points, image_points, camera_matrix, dist_coeffs, rotation_vector, translation_vector,CV_ITERATIVE);
+[01;32m[K                                                      ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

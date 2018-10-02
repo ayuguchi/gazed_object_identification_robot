@@ -1,0 +1,8 @@
+prefix=/root/catkin_ws/install
+
+Name: image_rotate
+Description: Description of image_rotate
+Version: 1.12.21
+Cflags: -I/root/catkin_ws/install/include
+Libs: -L/root/catkin_ws/install/lib 
+Requires: 

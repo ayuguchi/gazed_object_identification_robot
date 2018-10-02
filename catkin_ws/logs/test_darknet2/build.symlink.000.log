@@ -1,0 +1,4 @@
+Symlinking /root/catkin_ws/devel/lib/pkgconfig/test_darknet2.pc
+Symlinking /root/catkin_ws/devel/lib/test_darknet2/test_darknet_node2
+Symlinking /root/catkin_ws/devel/share/test_darknet2/cmake/test_darknet2Config-version.cmake
+Symlinking /root/catkin_ws/devel/share/test_darknet2/cmake/test_darknet2Config.cmake

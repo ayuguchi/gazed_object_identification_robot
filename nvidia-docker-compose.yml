@@ -1,0 +1,23 @@
+services:
+  mael:
+    build: ros
+    command: /bin/bash
+    container_name: mael
+    devices:
+    - /dev/nvidia0
+    - /dev/nvidiactl
+    - /dev/nvidia-uvm
+    - /dev/nvidia-uvm-tools
+    environment:
+    - DISPLAY
+    - QT_X11_NO_MITSHM=1
+    privileged: true
+    volumes:
+    - /dev:/dev
+    - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    - ./catkin_ws:/root/catkin_ws
+    - nvidia_driver_384.111:/usr/local/nvidia:ro
+version: '2'
+volumes:
+  nvidia_driver_384.111:
+    external: true

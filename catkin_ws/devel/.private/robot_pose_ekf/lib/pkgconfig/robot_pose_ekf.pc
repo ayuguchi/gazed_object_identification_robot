@@ -1,0 +1,8 @@
+prefix=/root/catkin_ws/devel/.private/robot_pose_ekf
+
+Name: robot_pose_ekf
+Description: Description of robot_pose_ekf
+Version: 1.12.13
+Cflags: -I/root/catkin_ws/devel/.private/robot_pose_ekf/include
+Libs: -L/root/catkin_ws/devel/.private/robot_pose_ekf/lib 
+Requires: roscpp

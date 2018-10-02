@@ -1,0 +1,16 @@
+[01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:[m[K In member function '[01m[Kvoid TestHeadposeEstimate::msgCallback_FaceRecognition(const ConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:286:21:[m[K [01;31m[Kerror: [m[Kredeclaration of '[01m[Kcv::Mat camera_matrix[m[K'
+             cv::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
+[01;32m[K                     ^[m[K
+[01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:197:21:[m[K [01;36m[Knote: [m[K'[01m[Kcv::Mat camera_matrix[m[K' previously declared here
+             cv::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
+[01;32m[K                     ^[m[K
+[01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:287:21:[m[K [01;31m[Kerror: [m[Kredeclaration of '[01m[Kcv::Mat dist_coeffs[m[K'
+             cv::Mat dist_coeffs = (cv::Mat_<double>(4,1) << 0.06569569924719, -0.25862424608946, 0.00010394071172, -0.00024019257963);
+[01;32m[K                     ^[m[K
+[01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:198:21:[m[K [01;36m[Knote: [m[K'[01m[Kcv::Mat dist_coeffs[m[K' previously declared here
+             cv::Mat dist_coeffs = (cv::Mat_<double>(4,1) << 0.06569569924719, -0.25862424608946, 0.00010394071172, -0.00024019257963);
+[01;32m[K                     ^[m[K
+make[2]: *** [CMakeFiles/test_headpose_estimate_node.dir/src/test_headpose_estimate_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/test_headpose_estimate_node.dir/all] Error 2
+make: *** [all] Error 2

@@ -1,0 +1,11 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:272:63:[m[K [01;31m[Kerror: [m[K'[01m[Kcombi_darknet_openface2[m[K' does not name a type
+ void CombiDarknetOpenface::msgCallback_FaceRecognition(const  combi_darknet_openface2::Faces::ConstPtr& msg )
+[01;32m[K                                                               ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:272:93:[m[K [01;31m[Kerror: [m[Kexpected unqualified-id before '[01m[K::[m[K' token
+ void CombiDarknetOpenface::msgCallback_FaceRecognition(const  combi_darknet_openface2::Faces::ConstPtr& msg )
+[01;32m[K                                                                                             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:272:93:[m[K [01;31m[Kerror: [m[Kexpected '[01m[K)[m[K' before '[01m[K::[m[K' token
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:272:93:[m[K [01;31m[Kerror: [m[Kexpected initializer before '[01m[K::[m[K' token
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

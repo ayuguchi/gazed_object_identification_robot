@@ -1,0 +1,8 @@
+prefix=/root/catkin_ws/devel/.private/laser_scan_sparsifier
+
+Name: laser_scan_sparsifier
+Description: Description of laser_scan_sparsifier
+Version: 0.3.2
+Cflags: -I/root/catkin_ws/src/scan_tools/laser_scan_sparsifier/include
+Libs: -L/root/catkin_ws/devel/.private/laser_scan_sparsifier/lib -llaser_scan_sparsifier
+Requires: roscpp nodelet sensor_msgs

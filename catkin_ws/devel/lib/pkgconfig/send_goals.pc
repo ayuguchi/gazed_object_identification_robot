@@ -1,0 +1,1 @@
+/root/catkin_ws/devel/.private/send_goals/lib/pkgconfig/send_goals.pc

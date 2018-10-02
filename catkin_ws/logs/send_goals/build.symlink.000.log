@@ -1,0 +1,4 @@
+Symlinking /root/catkin_ws/devel/lib/pkgconfig/send_goals.pc
+Symlinking /root/catkin_ws/devel/lib/send_goals/send_goals
+Symlinking /root/catkin_ws/devel/share/send_goals/cmake/send_goalsConfig.cmake
+Symlinking /root/catkin_ws/devel/share/send_goals/cmake/send_goalsConfig-version.cmake

@@ -1,0 +1,8 @@
+prefix=/root/catkin_ws/devel/.private/ncd_parser
+
+Name: ncd_parser
+Description: Description of ncd_parser
+Version: 0.3.2
+Cflags: 
+Libs: -L/root/catkin_ws/devel/.private/ncd_parser/lib 
+Requires: 

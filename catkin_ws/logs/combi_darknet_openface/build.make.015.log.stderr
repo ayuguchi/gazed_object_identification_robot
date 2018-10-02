@@ -1,0 +1,22 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::rgbImageCallback(const ImageConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:912:5:[m[K [01;31m[Kerror: [m[K'[01m[Kv[m[K' has not been declared
+     v::Mat &test = cv_ptr->image;
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:912:13:[m[K [01;31m[Kerror: [m[K'[01m[Ktest[m[K' was not declared in this scope
+     v::Mat &test = cv_ptr->image;
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:912:13:[m[K [01;36m[Knote: [m[Ksuggested alternative:
+In file included from [01m[K/usr/local/include/dlib/matrix.h:10:0[m[K,
+                 from [01m[K/usr/local/include/dlib/geometry/point_transforms.h:9[m[K,
+                 from [01m[K/usr/local/include/dlib/geometry.h:10[m[K,
+                 from [01m[K/usr/local/include/dlib/image_processing/object_detector.h:7[m[K,
+                 from [01m[K/usr/local/include/dlib/image_processing/frontal_face_detector.h:7[m[K,
+                 from [01m[K/usr/local/include/openface/LandmarkDetectorModel.h:67[m[K,
+                 from [01m[K/usr/local/include/openface/LandmarkCoreIncludes.h:63[m[K,
+                 from [01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:39[m[K:
+[01m[K/usr/local/include/dlib/matrix/matrix_assign.h:287:65:[m[K [01;36m[Knote: [m[K  '[01m[Kdlib::blas_bindings::test[m[K'
+         typename disable_if<same_exp<T,U,layout>,no_type>::type test(U);
+[01;32m[K                                                                 ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

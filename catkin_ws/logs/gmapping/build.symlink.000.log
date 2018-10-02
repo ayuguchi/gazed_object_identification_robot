@@ -1,0 +1,6 @@
+Symlinking /root/catkin_ws/devel/lib/libslam_gmapping_nodelet.so
+Symlinking /root/catkin_ws/devel/lib/pkgconfig/gmapping.pc
+Symlinking /root/catkin_ws/devel/lib/gmapping/slam_gmapping
+Symlinking /root/catkin_ws/devel/lib/gmapping/slam_gmapping_replay
+Symlinking /root/catkin_ws/devel/share/gmapping/cmake/gmappingConfig.cmake
+Symlinking /root/catkin_ws/devel/share/gmapping/cmake/gmappingConfig-version.cmake

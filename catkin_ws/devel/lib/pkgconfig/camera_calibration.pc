@@ -1,0 +1,1 @@
+/root/catkin_ws/devel/.private/camera_calibration/lib/pkgconfig/camera_calibration.pc

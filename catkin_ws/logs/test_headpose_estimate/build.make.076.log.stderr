@@ -1,0 +1,16 @@
+[01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:138:5:[m[K [01;31m[Kerror: [m[K'[01m[Kctd[m[K' does not name a type
+     ctd::vector<double>lastrotation_value;   
+[01;32m[K     ^[m[K
+[01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:[m[K In member function '[01m[Kvoid TestHeadposeEstimate::ModifyHeadOrientation()[m[K':
+[01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:377:13:[m[K [01;31m[Kerror: [m[K'[01m[Klastrotation_value[m[K' was not declared in this scope
+             lastrotation_value.push_back(rotation_vector.at<double>(0,i));
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:401:47:[m[K [01;31m[Kerror: [m[K'[01m[Klastrotation_value[m[K' was not declared in this scope
+             rotation_vector.at<double>(0,i) = lastrotation_value.at(i);
+[01;32m[K                                               ^[m[K
+[01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:407:9:[m[K [01;31m[Kerror: [m[K'[01m[Klastrotation_value[m[K' was not declared in this scope
+         lastrotation_value.clear();
+[01;32m[K         ^[m[K
+make[2]: *** [CMakeFiles/test_headpose_estimate_node.dir/src/test_headpose_estimate_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/test_headpose_estimate_node.dir/all] Error 2
+make: *** [all] Error 2

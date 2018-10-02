@@ -1,0 +1,10 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::ChangeViewPoint(double)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:939:9:[m[K [01;31m[Kerror: [m[K'[01m[Kdisteyrror[m[K' was not declared in this scope
+         disteyrror = targetrobotpose.at(1)-robotpose.at(1);
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1026:42:[m[K [01;31m[Kerror: [m[Kunable to find string literal operator '[01m[Koperator""distyerror[m[K' with '[01m[Kconst char [2][m[K', '[01m[Klong unsigned int[m[K' arguments
+         std::cout<<"error:"<<distxerror<<","distyerror<<","<<angleerror<<std::endl;
+[01;32m[K                                          ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

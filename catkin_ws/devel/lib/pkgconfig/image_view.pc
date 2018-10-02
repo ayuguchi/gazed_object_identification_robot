@@ -1,0 +1,1 @@
+/root/catkin_ws/devel/.private/image_view/lib/pkgconfig/image_view.pc

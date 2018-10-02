@@ -1,0 +1,2 @@
+set(openface_ros_MESSAGE_FILES "msg/ActionUnit.msg;msg/Face.msg;msg/Faces.msg")
+set(openface_ros_SERVICE_FILES "")

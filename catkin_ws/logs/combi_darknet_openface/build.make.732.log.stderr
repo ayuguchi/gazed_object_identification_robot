@@ -1,0 +1,26 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::ChangeViewPoint(double)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1151:9:[m[K [01;31m[Kerror: [m[Kexpected '[01m[K}[m[K' before '[01m[Kelse[m[K'
+         else if((distxerror<=0)&&(abs(distxerror)>0.15)&&(!signalangle))
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1151:60:[m[K [01;31m[Kerror: [m[K'[01m[Ksignalangle[m[K' was not declared in this scope
+         else if((distxerror<=0)&&(abs(distxerror)>0.15)&&(!signalangle))
+[01;32m[K                                                            ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1154:13:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' was not declared in this scope
+             signallinear = 1;
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1159:13:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' was not declared in this scope
+             signallinear = 0; 
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1165:14:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' was not declared in this scope
+         if((!signallinear)&&(!signalangle))
+[01;32m[K              ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1165:31:[m[K [01;31m[Kerror: [m[K'[01m[Ksignalangle[m[K' was not declared in this scope
+         if((!signallinear)&&(!signalangle))
+[01;32m[K                               ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K At global scope:
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1207:1:[m[K [01;31m[Kerror: [m[Kexpected declaration before '[01m[K}[m[K' token
+ }
+[01;32m[K ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

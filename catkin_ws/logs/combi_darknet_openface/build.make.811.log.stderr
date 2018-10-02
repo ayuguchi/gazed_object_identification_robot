@@ -1,0 +1,63 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::Linear_Line(double, double, double, double, double*, double*)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:927:7:[m[K [01;31m[Kerror: [m[Kcannot convert '[01m[Kdouble[m[K' to '[01m[Kdouble*[m[K' in assignment
+     a = (y2-y1)/(x2-x1);
+[01;32m[K       ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:928:14:[m[K [01;31m[Kerror: [m[Kinvalid operands of types '[01m[Kdouble*[m[K' and '[01m[Kdouble[m[K' to binary '[01m[Koperator*[m[K'
+     b = y1-a*x1;
+[01;32m[K              ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::ChangeViewPoint(double)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1204:52:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' was not declared in this scope
+         if((angleerror<=0)&&(abs(angleerror)>5)&&(!signallinear))
+[01;32m[K                                                    ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1233:57:[m[K [01;31m[Kerror: [m[Kno matching function for call to '[01m[KCombiDarknetOpenface::Linear_Line(int, double&, int, int, double&, double&)[m[K'
+                     Linear_Line(45,linearsigval,90,0,a,b);
+[01;32m[K                                                         ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:925:6:[m[K [01;36m[Knote: [m[Kcandidate: void CombiDarknetOpenface::Linear_Line(double, double, double, double, double*, double*)
+ void CombiDarknetOpenface::Linear_Line(double x1,double x2,double y1,double y2,double* a,double* b )
+[01;32m[K      ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:925:6:[m[K [01;36m[Knote: [m[K  no known conversion for argument 5 from '[01m[Kdouble[m[K' to '[01m[Kdouble*[m[K'
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1252:57:[m[K [01;31m[Kerror: [m[Kno matching function for call to '[01m[KCombiDarknetOpenface::Linear_Line(int, double&, int, int, double&, double&)[m[K'
+                     Linear_Line(45,linearsigval,90,0,a,b);
+[01;32m[K                                                         ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:925:6:[m[K [01;36m[Knote: [m[Kcandidate: void CombiDarknetOpenface::Linear_Line(double, double, double, double, double*, double*)
+ void CombiDarknetOpenface::Linear_Line(double x1,double x2,double y1,double y2,double* a,double* b )
+[01;32m[K      ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:925:6:[m[K [01;36m[Knote: [m[K  no known conversion for argument 5 from '[01m[Kdouble[m[K' to '[01m[Kdouble*[m[K'
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1280:62:[m[K [01;31m[Kerror: [m[Kno matching function for call to '[01m[KCombiDarknetOpenface::Linear_Line(int, double, int, int, double&, double&)[m[K'
+                     Linear_Line(45,(-1)*linearsigval,90,0,a,b);
+[01;32m[K                                                              ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:925:6:[m[K [01;36m[Knote: [m[Kcandidate: void CombiDarknetOpenface::Linear_Line(double, double, double, double, double*, double*)
+ void CombiDarknetOpenface::Linear_Line(double x1,double x2,double y1,double y2,double* a,double* b )
+[01;32m[K      ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:925:6:[m[K [01;36m[Knote: [m[K  no known conversion for argument 5 from '[01m[Kdouble[m[K' to '[01m[Kdouble*[m[K'
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1293:17:[m[K [01;31m[Kerror: [m[Kexpected '[01m[K)[m[K' before '[01m[K{[m[K' token
+                 {
+[01;32m[K                 ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1307:13:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before '[01m[K}[m[K' token
+             }
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1316:13:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' was not declared in this scope
+             signallinear = 0; 
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1434:36:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' was not declared in this scope
+         std::cout<<"signalinear:"<<signallinear<<std::endl;
+[01;32m[K                                    ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::Calculate_TimeUseOutofView(double)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1963:9:[m[K [01;31m[Kerror: [m[K'[01m[Kmindistanceindex[m[K' was not declared in this scope
+         mindistanceindex = 0;
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1973:13:[m[K [01;31m[Kerror: [m[K'[01m[Kmindistanceindex[m[K' was not declared in this scope
+             mindistanceindex = std::distance(objectdistance.begin(), citerobdist);
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1978:13:[m[K [01;31m[Kerror: [m[K'[01m[Kmindistanceindex[m[K' was not declared in this scope
+             mindistanceindex = 0;
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1980:44:[m[K [01;31m[Kerror: [m[K'[01m[Kmindistanceindex[m[K' was not declared in this scope
+         std::cout << "mindistanceindex:"<< mindistanceindex << std::endl;
+[01;32m[K                                            ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1982:26:[m[K [01;31m[Kerror: [m[K'[01m[Kmindistanceindex[m[K' was not declared in this scope
+     activityscoreface.at(mindistanceindex) += 1;
+[01;32m[K                          ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

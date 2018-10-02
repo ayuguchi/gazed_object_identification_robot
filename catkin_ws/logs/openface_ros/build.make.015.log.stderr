@@ -1,0 +1,28 @@
+[01m[K/root/catkin_ws/src/openface_ros/src/openface_ros.cpp:[m[K In member function '[01m[Kvoid openface_ros::OpenFaceRos::process_incoming_(const ImageConstPtr&, const CameraInfoConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/openface_ros/src/openface_ros.cpp:218:14:[m[K [01;31m[Kerror: [m[Kredeclaration of '[01m[Kdouble fx[m[K'
+       double fx = 541.20870062659242;
+[01;32m[K              ^[m[K
+[01m[K/root/catkin_ws/src/openface_ros/src/openface_ros.cpp:205:14:[m[K [01;36m[Knote: [m[K'[01m[Kdouble fx[m[K' previously declared here
+       double fx = cam->K[0];
+[01;32m[K              ^[m[K
+[01m[K/root/catkin_ws/src/openface_ros/src/openface_ros.cpp:219:14:[m[K [01;31m[Kerror: [m[Kredeclaration of '[01m[Kdouble fy[m[K'
+       double fy = 540.20435182225424;
+[01;32m[K              ^[m[K
+[01m[K/root/catkin_ws/src/openface_ros/src/openface_ros.cpp:206:14:[m[K [01;36m[Knote: [m[K'[01m[Kdouble fy[m[K' previously declared here
+       double fy = cam->K[4];
+[01;32m[K              ^[m[K
+[01m[K/root/catkin_ws/src/openface_ros/src/openface_ros.cpp:220:14:[m[K [01;31m[Kerror: [m[Kredeclaration of '[01m[Kdouble cx[m[K'
+       double cx = 318.78756964392710;
+[01;32m[K              ^[m[K
+[01m[K/root/catkin_ws/src/openface_ros/src/openface_ros.cpp:207:14:[m[K [01;36m[Knote: [m[K'[01m[Kdouble cx[m[K' previously declared here
+       double cx = cam->K[2];
+[01;32m[K              ^[m[K
+[01m[K/root/catkin_ws/src/openface_ros/src/openface_ros.cpp:221:14:[m[K [01;31m[Kerror: [m[Kredeclaration of '[01m[Kdouble cy[m[K'
+       double cy = 236.43301053278904;
+[01;32m[K              ^[m[K
+[01m[K/root/catkin_ws/src/openface_ros/src/openface_ros.cpp:208:14:[m[K [01;36m[Knote: [m[K'[01m[Kdouble cy[m[K' previously declared here
+       double cy = cam->K[5];
+[01;32m[K              ^[m[K
+make[2]: *** [CMakeFiles/openface_ros.dir/src/openface_ros.cpp.o] Error 1
+make[1]: *** [CMakeFiles/openface_ros.dir/all] Error 2
+make: *** [all] Error 2

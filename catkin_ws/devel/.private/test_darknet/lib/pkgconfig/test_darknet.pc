@@ -1,0 +1,8 @@
+prefix=/root/catkin_ws/devel/.private/test_darknet
+
+Name: test_darknet
+Description: Description of test_darknet
+Version: 0.0.0
+Cflags: 
+Libs: -L/root/catkin_ws/devel/.private/test_darknet/lib 
+Requires: 

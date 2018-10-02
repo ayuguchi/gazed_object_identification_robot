@@ -1,0 +1,12 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:2280:17:[m[K [01;31m[Kerror: [m[Kstray '[01m[K\357[m[K' in program
+                 cv::line(cv_ptr->image,cv::Point(nose_tip[0],nose_tip[1]),cv::Point(nose_end_point2D_draw[0],nose_end_point2D_draw[1]), cv::Scalar（9,0,255), 2);
+[01;32m[K                 ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:2280:17:[m[K [01;31m[Kerror: [m[Kstray '[01m[K\274[m[K' in program
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:2280:17:[m[K [01;31m[Kerror: [m[Kstray '[01m[K\210[m[K' in program
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::rgbImageCallback(const ImageConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:2280:150:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before numeric constant
+                 cv::line(cv_ptr->image,cv::Point(nose_tip[0],nose_tip[1]),cv::Point(nose_end_point2D_draw[0],nose_end_point2D_draw[1]), cv::Scalar（9,0,255), 2);
+[01;32m[K                                                                                                                                                      ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

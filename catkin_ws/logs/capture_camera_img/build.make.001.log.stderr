@@ -1,0 +1,6 @@
+[01m[K/root/catkin_ws/src/capture_camera_img/src/capture_camera_img.cpp:41:99:[m[K [01;35m[Kwarning: [m[Knon-static data member initializers only available with -std=c++11 or -std=gnu++11
+     ros::Publisher marker_pub = nh.advertise<visualization_msgs::Marker>("visualization_marker", 1);
+[01;32m[K                                                                                                   ^[m[K
+[01m[K/root/catkin_ws/src/capture_camera_img/src/capture_camera_img.cpp:42:90:[m[K [01;35m[Kwarning: [m[Knon-static data member initializers only available with -std=c++11 or -std=gnu++11
+     ros::Publisher array_pub = nh.advertise<std_msgs::Float32MultiArray>("human_angle", 1);
+[01;32m[K                                                                                          ^[m[K

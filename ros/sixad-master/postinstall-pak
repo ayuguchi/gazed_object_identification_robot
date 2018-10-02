@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# enable systemd service
+systemctl enable sixad
+systemctl --no-block start sixad
+systemctl daemon-reload
+
+exit 0

@@ -1,0 +1,5 @@
+[ 35%] Built target amcl_pf
+[ 40%] Built target amcl_gencfg
+[ 70%] Built target amcl_map
+[ 90%] Built target amcl_sensors
+[100%] Built target amcl

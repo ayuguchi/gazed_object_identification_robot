@@ -1,0 +1,1 @@
+set(ORDERED_PATHS "/root/catkin_ws/devel/.private/openslam_gmapping/lib;/opt/ros/kinetic/lib")

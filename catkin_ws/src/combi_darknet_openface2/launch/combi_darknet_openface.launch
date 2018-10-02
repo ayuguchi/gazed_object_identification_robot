@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<launch>
+    <node pkg="combi_darknet_openface" type="combi_darknet_openface_node" name="combi_darknet_openface_node"  output="screen"/>
+    <node pkg="person_tracking_kalman" type="person_tracking_kalman_node" name="person_tracking_kalman_node"  output="screen"/>
+</launch>

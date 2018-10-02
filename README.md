@@ -1,0 +1,62 @@
+This program is about Mr. Inoue's master's thesis.
+
+## How to use
+
+### Set up
+
+* 機器の接続
+
+1. Pepperくんの電源を入れて，オートインタラクションモードをオフにして，通常の姿勢にします．
+1. PCとPepperをLANケーブルで接続します．
+1. LRFとXtionをPCに接続します．
+
+* 実験準備
+
+本環境はdocker上で構築しています．
+
+1. terminatorを起動 //terminator -l ros1207
+1. Dockerを起動
+
+```
+cd ~/Documents/env && sudo nvidia-docker-compose run mael bash
+terminatorの各タブで
+cd ~/Documents/env && sudo docker exec -it env_mael_run_1 bash
+終了するときはdockerを使ってないタブで
+cd ~/Documents/env &&sudo nvidia-docker-compose down
+```
+
+* プログラムの起動
+
+1. カメラのキャリブレーションファイルを移動
+
+```
+cd /calibration
+cp rgb_PS1080_PrimeSense.yaml /root/.ros/camera_info
+```
+
+2. 各タブで順番にプログラムを起動
+
+```
+roscore	\\roscore
+roslaunch pepper_bringup pepper_full.launch nao_ip:=169.254.246.15 \\ペッパーのrosパッケージ
+chmod 777 /dev/ttyACM0
+roslaunch urg_node urg_node.launch \\LRFのノード
+roslaunch openni2_launch openni2.launch \\Xtionのノード
+rosrun openface_ros openface_ros _image_topic:=/camera/rgb/image_rect_color \\顔認識のノード
+roslaunch darknet_ros darknet_ros.launch \\物体認識のノード
+rosrun person_tracking_kalman person_tracking_kalman_node \\人物追跡のノード
+cd ~/catkin_ws/src/pioneer_2dnav/launch/
+roslaunch pepper_move_base.launch \\自己位置推定のノード \\起動したRviz上でロボットのマップとLRFの点群を位置合わせしてロボットの初期位置を決定してください．
+rosrun simple_navigation_goals simple_navigation_goals \\ロボットの自己位置を出力するノード
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py \\キーボード操作ノード
+cd catkin_ws/py_ws/timeuse_test/datatimeuse/
+```
+
+3. 最終的なプログラムの実行
+
+```
+rosrun combi_darknet_openface combi_darknet_openface_node | tee -a log.txt \\最終的なプログラム
+```
+
+## Authors
+Tomoaki Inoue/ Akishige Yuguchi

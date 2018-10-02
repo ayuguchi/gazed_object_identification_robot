@@ -1,0 +1,8 @@
+prefix=/root/catkin_ws/install
+
+Name: naoqi_driver
+Description: Description of naoqi_driver
+Version: 0.5.9
+Cflags: 
+Libs: -L/root/catkin_ws/install/lib -lnaoqi_driver_module -lnaoqi_driver
+Requires: 

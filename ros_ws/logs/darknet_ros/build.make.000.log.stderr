@@ -1,0 +1,59 @@
+nvcc fatal   : redefinition of argument 'std'
+nvcc fatal   : redefinition of argument 'std'
+CMake Error at darknet_ros_generated_activation_kernels.cu.o.cmake:207 (message):
+  Error generating
+  /root/catkin_ws/build/darknet_ros/CMakeFiles/darknet_ros.dir/__/darknet/src/./darknet_ros_generated_activation_kernels.cu.o
+
+
+nvcc fatal   : redefinition of argument 'std'
+CMake Error at darknet_ros_generated_blas_kernels.cu.o.cmake:207 (message):
+  Error generating
+  /root/catkin_ws/build/darknet_ros/CMakeFiles/darknet_ros.dir/__/darknet/src/./darknet_ros_generated_blas_kernels.cu.o
+
+
+make[2]: *** [CMakeFiles/darknet_ros.dir/__/darknet/src/darknet_ros_generated_activation_kernels.cu.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[2]: *** [CMakeFiles/darknet_ros.dir/__/darknet/src/darknet_ros_generated_blas_kernels.cu.o] Error 1
+CMake Error at darknet_ros_generated_avgpool_layer_kernels.cu.o.cmake:207 (message):
+  Error generating
+  /root/catkin_ws/build/darknet_ros/CMakeFiles/darknet_ros.dir/__/darknet/src/./darknet_ros_generated_avgpool_layer_kernels.cu.o
+
+
+make[2]: *** [CMakeFiles/darknet_ros.dir/__/darknet/src/darknet_ros_generated_avgpool_layer_kernels.cu.o] Error 1
+nvcc fatal   : redefinition of argument 'std'
+nvcc fatal   : redefinition of argument 'std'
+CMake Error at darknet_ros_generated_crop_layer_kernels.cu.o.cmake:207 (message):
+  Error generating
+  /root/catkin_ws/build/darknet_ros/CMakeFiles/darknet_ros.dir/__/darknet/src/./darknet_ros_generated_crop_layer_kernels.cu.o
+
+
+CMake Error at darknet_ros_generated_deconvolutional_kernels.cu.o.cmake:207 (message):
+  Error generating
+  /root/catkin_ws/build/darknet_ros/CMakeFiles/darknet_ros.dir/__/darknet/src/./darknet_ros_generated_deconvolutional_kernels.cu.o
+
+
+make[2]: *** [CMakeFiles/darknet_ros.dir/__/darknet/src/darknet_ros_generated_deconvolutional_kernels.cu.o] Error 1
+make[2]: *** [CMakeFiles/darknet_ros.dir/__/darknet/src/darknet_ros_generated_crop_layer_kernels.cu.o] Error 1
+nvcc fatal   : redefinition of argument 'std'
+CMake Error at darknet_ros_generated_col2im_kernels.cu.o.cmake:207 (message):
+  Error generating
+  /root/catkin_ws/build/darknet_ros/CMakeFiles/darknet_ros.dir/__/darknet/src/./darknet_ros_generated_col2im_kernels.cu.o
+
+
+make[2]: *** [CMakeFiles/darknet_ros.dir/__/darknet/src/darknet_ros_generated_col2im_kernels.cu.o] Error 1
+nvcc fatal   : redefinition of argument 'std'
+CMake Error at darknet_ros_generated_dropout_layer_kernels.cu.o.cmake:207 (message):
+  Error generating
+  /root/catkin_ws/build/darknet_ros/CMakeFiles/darknet_ros.dir/__/darknet/src/./darknet_ros_generated_dropout_layer_kernels.cu.o
+
+
+make[2]: *** [CMakeFiles/darknet_ros.dir/__/darknet/src/darknet_ros_generated_dropout_layer_kernels.cu.o] Error 1
+nvcc fatal   : redefinition of argument 'std'
+CMake Error at darknet_ros_generated_im2col_kernels.cu.o.cmake:207 (message):
+  Error generating
+  /root/catkin_ws/build/darknet_ros/CMakeFiles/darknet_ros.dir/__/darknet/src/./darknet_ros_generated_im2col_kernels.cu.o
+
+
+make[2]: *** [CMakeFiles/darknet_ros.dir/__/darknet/src/darknet_ros_generated_im2col_kernels.cu.o] Error 1
+make[1]: *** [CMakeFiles/darknet_ros.dir/all] Error 2
+make: *** [all] Error 2

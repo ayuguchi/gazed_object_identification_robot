@@ -1,0 +1,52 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::ChangeViewPoint(double)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:941:16:[m[K [01;31m[Kerror: [m[K'[01m[Ksignalangle[m[K' does not name a type
+         static signalangle = 0;
+[01;32m[K                ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:942:16:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' does not name a type
+         static signallinear = 0;
+[01;32m[K                ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:944:92:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' was not declared in this scope
+         if((robotyaw-targetrobotpose.at(2)>=0)&&(abs(robotyaw-targetrobotpose.at(2))>5)&&(!signallinear))
+[01;32m[K                                                                                            ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:947:13:[m[K [01;31m[Kerror: [m[K'[01m[Ksignalangle[m[K' was not declared in this scope
+             signalangle = 1;
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:952:13:[m[K [01;31m[Kerror: [m[K'[01m[Ksignalangle[m[K' was not declared in this scope
+             signalangle = 1;
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:957:13:[m[K [01;31m[Kerror: [m[K'[01m[Ksignalangle[m[K' was not declared in this scope
+             signalangle = 0; 
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:960:108:[m[K [01;31m[Kerror: [m[K'[01m[Ksignalangle[m[K' was not declared in this scope
+         if((targetrobotpose.at(0)-robotpose.at(0)>=0)&&(abs(targetrobotpose.at(0)-robotpose.at(0))>0.1)&&(!signalangle))
+[01;32m[K                                                                                                            ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:963:13:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' was not declared in this scope
+             signallinear = 1;
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:968:13:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' was not declared in this scope
+             signallinear = 1;
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:973:13:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' was not declared in this scope
+             signallinear = 0; 
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:975:108:[m[K [01;31m[Kerror: [m[K'[01m[Ksignalangle[m[K' was not declared in this scope
+         if((targetrobotpose.at(1)-robotpose.at(1)>=0)&&(abs(targetrobotpose.at(1)-robotpose.at(1))>0.1)&&(!signalangle))
+[01;32m[K                                                                                                            ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:978:13:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' was not declared in this scope
+             signallinear = 1; 
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:983:13:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' was not declared in this scope
+             signallinear = 1;
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:988:13:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' was not declared in this scope
+             signallinear = 0;
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:991:14:[m[K [01;31m[Kerror: [m[K'[01m[Ksignallinear[m[K' was not declared in this scope
+         if((!signallinear)&&(!signalangle))
+[01;32m[K              ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:991:31:[m[K [01;31m[Kerror: [m[K'[01m[Ksignalangle[m[K' was not declared in this scope
+         if((!signallinear)&&(!signalangle))
+[01;32m[K                               ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

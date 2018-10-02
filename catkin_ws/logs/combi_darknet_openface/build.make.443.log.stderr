@@ -1,0 +1,10 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::depthImageCallback(const ImageConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1625:9:[m[K [01;31m[Kerror: [m[K'[01m[Kisualization_msgs[m[K' has not been declared
+         isualization_msgs::Marker robotposearrow;
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1627:9:[m[K [01;31m[Kerror: [m[K'[01m[Krobotposearrow[m[K' was not declared in this scope
+         robotposearrow.header.frame_id = fixed_frame;
+[01;32m[K         ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

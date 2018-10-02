@@ -1,0 +1,9 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1574:6:[m[K [01;31m[Kerror: [m[Kredefinition of '[01m[Kvoid CombiDarknetOpenface::msgCallback_FilterMsg(const ConstPtr&)[m[K'
+ void CombiDarknetOpenface::msgCallback_FilterMsg(const geometry_msgs::PoseStamped::ConstPtr& msg)
+[01;32m[K      ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1492:6:[m[K [01;36m[Knote: [m[K'[01m[Kvoid CombiDarknetOpenface::msgCallback_FilterMsg(const ConstPtr&)[m[K' previously defined here
+ void CombiDarknetOpenface::msgCallback_FilterMsg(const geometry_msgs::PoseStamped::ConstPtr& msg)
+[01;32m[K      ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

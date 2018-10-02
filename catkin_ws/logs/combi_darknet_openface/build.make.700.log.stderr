@@ -1,0 +1,13 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::Calculate_TimeUse(double)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1348:17:[m[K [01;31m[Kerror: [m[K'[01m[Knoseendminindexu[m[K' was not declared in this scope
+             if(!noseendminindexu
+[01;32m[K                 ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1365:17:[m[K [01;31m[Kerror: [m[Kexpected initializer before '[01m[Ktx[m[K'
+                 tx = boxcenterx.at(noseendminindextmp2)-nose_tip[0];
+[01;32m[K                 ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1367:60:[m[K [01;31m[Kerror: [m[K'[01m[Kgazeobjectx[m[K' was not declared in this scope
+                 double thetagazeobject = atan2(gazeobjecty,gazeobjectx)* 180 / PI;
+[01;32m[K                                                            ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

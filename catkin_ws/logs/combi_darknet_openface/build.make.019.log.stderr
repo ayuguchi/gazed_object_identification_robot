@@ -1,0 +1,42 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::rgbImageCallback(const ImageConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:906:9:[m[K [01;31m[Kerror: [m[K'[01m[KMat[m[K' was not declared in this scope
+         Mat test = cv_bridge::toCvShare(msg, "bgr8")->image;
+[01;32m[K         ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:906:9:[m[K [01;36m[Knote: [m[Ksuggested alternatives:
+In file included from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core.hpp:59:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/core.hpp:48[m[K,
+                 from [01m[K/opt/ros/kinetic/include/cv_bridge/cv_bridge.h:43[m[K,
+                 from [01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:8[m[K:
+[01m[K/opt/ros/kinetic/include/opencv-3.2.0-dev/opencv2/core/mat.hpp:740:18:[m[K [01;36m[Knote: [m[K  '[01m[Kcv::Mat[m[K'
+ class CV_EXPORTS Mat
+[01;32m[K                  ^[m[K
+In file included from [01m[K/usr/local/include/dlib/matrix/matrix_utilities.h:20:0[m[K,
+                 from [01m[K/usr/local/include/dlib/matrix.h:7[m[K,
+                 from [01m[K/usr/local/include/dlib/geometry/point_transforms.h:9[m[K,
+                 from [01m[K/usr/local/include/dlib/geometry.h:10[m[K,
+                 from [01m[K/usr/local/include/dlib/image_processing/object_detector.h:7[m[K,
+                 from [01m[K/usr/local/include/dlib/image_processing/frontal_face_detector.h:7[m[K,
+                 from [01m[K/usr/local/include/openface/LandmarkDetectorModel.h:67[m[K,
+                 from [01m[K/usr/local/include/openface/LandmarkCoreIncludes.h:63[m[K,
+                 from [01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:39[m[K:
+[01m[K/usr/local/include/dlib/matrix/matrix_mat.h:457:33:[m[K [01;36m[Knote: [m[K  '[01m[Karma::Mat[m[K'
+     template <typename T> class Mat;
+[01;32m[K                                 ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:907:20:[m[K [01;31m[Kerror: [m[K'[01m[Ktest[m[K' was not declared in this scope
+         cv::resize(test, test, cv::Size(), 0.1, 0.1);        
+[01;32m[K                    ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:907:20:[m[K [01;36m[Knote: [m[Ksuggested alternative:
+In file included from [01m[K/usr/local/include/dlib/matrix.h:10:0[m[K,
+                 from [01m[K/usr/local/include/dlib/geometry/point_transforms.h:9[m[K,
+                 from [01m[K/usr/local/include/dlib/geometry.h:10[m[K,
+                 from [01m[K/usr/local/include/dlib/image_processing/object_detector.h:7[m[K,
+                 from [01m[K/usr/local/include/dlib/image_processing/frontal_face_detector.h:7[m[K,
+                 from [01m[K/usr/local/include/openface/LandmarkDetectorModel.h:67[m[K,
+                 from [01m[K/usr/local/include/openface/LandmarkCoreIncludes.h:63[m[K,
+                 from [01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:39[m[K:
+[01m[K/usr/local/include/dlib/matrix/matrix_assign.h:287:65:[m[K [01;36m[Knote: [m[K  '[01m[Kdlib::blas_bindings::test[m[K'
+         typename disable_if<same_exp<T,U,layout>,no_type>::type test(U);
+[01;32m[K                                                                 ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

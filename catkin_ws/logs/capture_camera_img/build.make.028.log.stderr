@@ -1,0 +1,10 @@
+[01m[K/root/catkin_ws/src/capture_camera_img/src/capture_camera_img.cpp:[m[K In function '[01m[Kvoid msgCallback_rgbimage(const ImageConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/capture_camera_img/src/capture_camera_img.cpp:38:21:[m[K [01;31m[Kerror: [m[K'[01m[Kto_string[m[K' is not a member of '[01m[Kstd[m[K'
+         cv::imwrite(std::to_string(darknet_cnt)+".png", test);   
+[01;32m[K                     ^[m[K
+[01m[K/root/catkin_ws/src/capture_camera_img/src/capture_camera_img.cpp:50:22:[m[K [01;31m[Kerror: [m[K'[01m[Krgb_ptr[m[K' was not declared in this scope
+     cv::Mat rgb_im = rgb_ptr->image;
+[01;32m[K                      ^[m[K
+make[2]: *** [CMakeFiles/capture_camera_img_node.dir/src/capture_camera_img.cpp.o] Error 1
+make[1]: *** [CMakeFiles/capture_camera_img_node.dir/all] Error 2
+make: *** [all] Error 2

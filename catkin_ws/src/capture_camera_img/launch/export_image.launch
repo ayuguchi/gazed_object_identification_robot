@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<launch>
+  <!-- rosbag を再生するノード -->
+  <node pkg="rosbag" type="play" name="rosbag" args="/root/test_bag/1013_stop_record.bag
+"/>
+  <!-- カメラ映像から画像ファイルを生成するノード -->
+  <node name="extract" pkg="image_view" type="extract_images" respawn="false" output="screen">
+    <remap from="image" to="/camera/rgb/image_rect_color"/>
+    <param name="filename_format" value="/root/catkin_ws/py_ws/timeuse_test/image/frame%04d.png)" />
+  </node>
+</launch>

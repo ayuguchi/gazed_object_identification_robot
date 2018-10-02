@@ -1,0 +1,5 @@
+capture_camera_img
+/root/catkin_ws/devel/.private/capture_camera_img/lib/pkgconfig/capture_camera_img.pc /root/catkin_ws/devel/lib/pkgconfig/capture_camera_img.pc
+/root/catkin_ws/devel/.private/capture_camera_img/lib/capture_camera_img/capture_camera_img_node /root/catkin_ws/devel/lib/capture_camera_img/capture_camera_img_node
+/root/catkin_ws/devel/.private/capture_camera_img/share/capture_camera_img/cmake/capture_camera_imgConfig-version.cmake /root/catkin_ws/devel/share/capture_camera_img/cmake/capture_camera_imgConfig-version.cmake
+/root/catkin_ws/devel/.private/capture_camera_img/share/capture_camera_img/cmake/capture_camera_imgConfig.cmake /root/catkin_ws/devel/share/capture_camera_img/cmake/capture_camera_imgConfig.cmake

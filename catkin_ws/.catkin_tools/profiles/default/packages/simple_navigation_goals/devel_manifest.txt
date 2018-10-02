@@ -1,0 +1,5 @@
+navigation/simple_navigation_goals
+/root/catkin_ws/devel/.private/simple_navigation_goals/lib/simple_navigation_goals/simple_navigation_goals /root/catkin_ws/devel/lib/simple_navigation_goals/simple_navigation_goals
+/root/catkin_ws/devel/.private/simple_navigation_goals/lib/pkgconfig/simple_navigation_goals.pc /root/catkin_ws/devel/lib/pkgconfig/simple_navigation_goals.pc
+/root/catkin_ws/devel/.private/simple_navigation_goals/share/simple_navigation_goals/cmake/simple_navigation_goalsConfig-version.cmake /root/catkin_ws/devel/share/simple_navigation_goals/cmake/simple_navigation_goalsConfig-version.cmake
+/root/catkin_ws/devel/.private/simple_navigation_goals/share/simple_navigation_goals/cmake/simple_navigation_goalsConfig.cmake /root/catkin_ws/devel/share/simple_navigation_goals/cmake/simple_navigation_goalsConfig.cmake

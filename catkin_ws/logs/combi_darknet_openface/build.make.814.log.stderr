@@ -1,0 +1,17 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::Linear_Line(double, double, double, double, double*, double*)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:928:7:[m[K [01;31m[Kerror: [m[Kcannot convert '[01m[Kdouble[m[K' to '[01m[Kdouble*[m[K' in assignment
+     a = (y2-y1)/(x2-x1);
+[01;32m[K       ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:929:14:[m[K [01;31m[Kerror: [m[Kinvalid operands of types '[01m[Kdouble*[m[K' and '[01m[Kdouble[m[K' to binary '[01m[Koperator*[m[K'
+     b = y1-a*x1;
+[01;32m[K              ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::ChangeViewPoint(double)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1294:17:[m[K [01;31m[Kerror: [m[Kexpected '[01m[K)[m[K' before '[01m[K{[m[K' token
+                 {
+[01;32m[K                 ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1308:13:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before '[01m[K}[m[K' token
+             }
+[01;32m[K             ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

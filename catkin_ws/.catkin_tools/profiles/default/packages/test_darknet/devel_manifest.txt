@@ -1,0 +1,5 @@
+test_darknet
+/root/catkin_ws/devel/.private/test_darknet/lib/pkgconfig/test_darknet.pc /root/catkin_ws/devel/lib/pkgconfig/test_darknet.pc
+/root/catkin_ws/devel/.private/test_darknet/lib/test_darknet/test_darknet_node /root/catkin_ws/devel/lib/test_darknet/test_darknet_node
+/root/catkin_ws/devel/.private/test_darknet/share/test_darknet/cmake/test_darknetConfig.cmake /root/catkin_ws/devel/share/test_darknet/cmake/test_darknetConfig.cmake
+/root/catkin_ws/devel/.private/test_darknet/share/test_darknet/cmake/test_darknetConfig-version.cmake /root/catkin_ws/devel/share/test_darknet/cmake/test_darknetConfig-version.cmake

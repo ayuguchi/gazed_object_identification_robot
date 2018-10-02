@@ -1,0 +1,1 @@
+/root/catkin_ws/devel/.private/test_darknet/lib/pkgconfig/test_darknet.pc

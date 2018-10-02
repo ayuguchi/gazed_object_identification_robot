@@ -1,0 +1,8 @@
+prefix=/root/catkin_ws/install
+
+Name: depth_image_proc
+Description: Description of depth_image_proc
+Version: 1.12.21
+Cflags: -I/root/catkin_ws/install/include
+Libs: -L/root/catkin_ws/install/lib -ldepth_image_proc
+Requires: 

@@ -1,0 +1,5 @@
+navigation/send_goals
+/root/catkin_ws/devel/.private/send_goals/lib/pkgconfig/send_goals.pc /root/catkin_ws/devel/lib/pkgconfig/send_goals.pc
+/root/catkin_ws/devel/.private/send_goals/lib/send_goals/send_goals /root/catkin_ws/devel/lib/send_goals/send_goals
+/root/catkin_ws/devel/.private/send_goals/share/send_goals/cmake/send_goalsConfig.cmake /root/catkin_ws/devel/share/send_goals/cmake/send_goalsConfig.cmake
+/root/catkin_ws/devel/.private/send_goals/share/send_goals/cmake/send_goalsConfig-version.cmake /root/catkin_ws/devel/share/send_goals/cmake/send_goalsConfig-version.cmake

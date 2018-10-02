@@ -1,0 +1,1 @@
+/root/catkin_ws/devel/.private/darknet_ros_msgs/share/darknet_ros_msgs/msg/CheckForObjectsActionGoal.msg

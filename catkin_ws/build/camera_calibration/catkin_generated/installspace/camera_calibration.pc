@@ -1,0 +1,8 @@
+prefix=/root/catkin_ws/install
+
+Name: camera_calibration
+Description: Description of camera_calibration
+Version: 1.12.21
+Cflags: 
+Libs: -L/root/catkin_ws/install/lib 
+Requires: 

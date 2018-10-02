@@ -1,0 +1,23 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::msgCallback_FaceRecognition(const ConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:274:17:[m[K [01;31m[Kerror: [m[K'[01m[Kcombi_darknet_openface2[m[K' was not declared in this scope
+     std::vector<combi_darknet_openface2::Face> detectedfaces = msg->faces;
+[01;32m[K                 ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:274:46:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+     std::vector<combi_darknet_openface2::Face> detectedfaces = msg->faces;
+[01;32m[K                                              ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:274:46:[m[K [01;31m[Kerror: [m[Ktemplate argument 2 is invalid
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:274:69:[m[K [01;31m[Kerror: [m[Kcannot convert '[01m[Kconst _faces_type {aka const std::vector<combi_darknet_openface::Face_<std::allocator<void> >, std::allocator<combi_darknet_openface::Face_<std::allocator<void> > > >}[m[K' to '[01m[Kint[m[K' in initialization
+     std::vector<combi_darknet_openface2::Face> detectedfaces = msg->faces;
+[01;32m[K                                                                     ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:276:23:[m[K [01;31m[Kerror: [m[Krequest for member '[01m[Kempty[m[K' in '[01m[Kdetectedfaces[m[K', which is of non-class type '[01m[Kint[m[K'
+     if(!detectedfaces.empty())
+[01;32m[K                       ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:298:81:[m[K [01;31m[Kerror: [m[Krequest for member '[01m[Kbegin[m[K' in '[01m[Kdetectedfaces[m[K', which is of non-class type '[01m[Kint[m[K'
+     for(std::vector<combi_darknet_openface::Face>::iterator itr = detectedfaces.begin(); itr != detectedfaces.end() ; ++itr)
+[01;32m[K                                                                                 ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:298:111:[m[K [01;31m[Kerror: [m[Krequest for member '[01m[Kend[m[K' in '[01m[Kdetectedfaces[m[K', which is of non-class type '[01m[Kint[m[K'
+     for(std::vector<combi_darknet_openface::Face>::iterator itr = detectedfaces.begin(); itr != detectedfaces.end() ; ++itr)
+[01;32m[K                                                                                                               ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

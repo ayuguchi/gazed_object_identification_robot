@@ -1,0 +1,14 @@
+[01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:[m[K In member function '[01m[Kvoid TestHeadposeEstimate::msgCallback_FaceRecognition(const ConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:165:8:[m[K [01;31m[Kerror: [m[K'[01m[Kinit[m[K' was not declared in this scope
+     if(init)
+[01;32m[K        ^[m[K
+[01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:165:8:[m[K [01;36m[Knote: [m[Ksuggested alternative:
+In file included from [01m[K/opt/ros/kinetic/include/ros/node_handle.h:46:0[m[K,
+                 from [01m[K/opt/ros/kinetic/include/ros/ros.h:45[m[K,
+                 from [01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:1[m[K:
+[01m[K/opt/ros/kinetic/include/ros/init.h:103:18:[m[K [01;36m[Knote: [m[K  '[01m[Kros::init[m[K'
+ ROSCPP_DECL void init(const VP_string& remapping_args, const std::string& name, uint32_t options = 0);
+[01;32m[K                  ^[m[K
+make[2]: *** [CMakeFiles/test_headpose_estimate_node.dir/src/test_headpose_estimate_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/test_headpose_estimate_node.dir/all] Error 2
+make: *** [all] Error 2

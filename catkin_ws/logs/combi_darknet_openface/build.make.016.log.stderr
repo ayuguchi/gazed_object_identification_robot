@@ -1,0 +1,16 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::rgbImageCallback(const ImageConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:918:90:[m[K [01;31m[Kerror: [m[Kno matching function for call to '[01m[KtoCvShare(cv::Mat&, const char [5])[m[K'
+         cv::imwrite(std::to_string(darknet_cnt)+".png", cv_bridge::toCvShare(test, "bgr8")->image);    
+[01;32m[K                                                                                          ^[m[K
+In file included from [01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:8:0[m[K:
+[01m[K/opt/ros/kinetic/include/cv_bridge/cv_bridge.h:240:17:[m[K [01;36m[Knote: [m[Kcandidate: cv_bridge::CvImageConstPtr cv_bridge::toCvShare(const Image&, const boost::shared_ptr<const void>&, const string&)
+ CvImageConstPtr toCvShare(const sensor_msgs::Image& source,
+[01;32m[K                 ^[m[K
+[01m[K/opt/ros/kinetic/include/cv_bridge/cv_bridge.h:240:17:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from '[01m[Kcv::Mat[m[K' to '[01m[Kconst Image& {aka const sensor_msgs::Image_<std::allocator<void> >&}[m[K'
+[01m[K/opt/ros/kinetic/include/cv_bridge/cv_bridge.h:213:17:[m[K [01;36m[Knote: [m[Kcandidate: cv_bridge::CvImageConstPtr cv_bridge::toCvShare(const ImageConstPtr&, const string&)
+ CvImageConstPtr toCvShare(const sensor_msgs::ImageConstPtr& source,
+[01;32m[K                 ^[m[K
+[01m[K/opt/ros/kinetic/include/cv_bridge/cv_bridge.h:213:17:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from '[01m[Kcv::Mat[m[K' to '[01m[Kconst ImageConstPtr& {aka const boost::shared_ptr<const sensor_msgs::Image_<std::allocator<void> > >&}[m[K'
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

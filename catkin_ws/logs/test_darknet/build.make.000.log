@@ -1,0 +1,4 @@
+[35m[1mScanning dependencies of target test_darknet_node[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/test_darknet_node.dir/src/test_darknet_node.cpp.o[0m
+[100%] [32m[1mLinking CXX executable /root/catkin_ws/devel/.private/test_darknet/lib/test_darknet/test_darknet_node[0m
+[100%] Built target test_darknet_node

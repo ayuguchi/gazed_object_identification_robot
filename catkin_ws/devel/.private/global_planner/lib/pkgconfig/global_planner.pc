@@ -1,0 +1,8 @@
+prefix=/root/catkin_ws/devel/.private/global_planner
+
+Name: global_planner
+Description: Description of global_planner
+Version: 1.12.13
+Cflags: -I/root/catkin_ws/devel/.private/global_planner/include -I/root/catkin_ws/src/navigation/global_planner/include
+Libs: -L/root/catkin_ws/devel/.private/global_planner/lib -lglobal_planner
+Requires: costmap_2d dynamic_reconfigure geometry_msgs nav_core navfn nav_msgs pluginlib roscpp tf

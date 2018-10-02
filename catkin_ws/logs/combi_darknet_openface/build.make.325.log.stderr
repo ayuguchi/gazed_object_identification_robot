@@ -1,0 +1,9 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1931:65:[m[K [01;31m[Kerror: [m[Kdeclaration of '[01m[Kvoid CombiDarknetOpenface::ChangeViewPoint(double)[m[K' outside of class is not definition [-fpermissive]
+ void CombiDarknetOpenface::ChangeViewPoint(double currenttimesec);
+[01;32m[K                                                                 ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1932:1:[m[K [01;31m[Kerror: [m[Kexpected unqualified-id before '[01m[K{[m[K' token
+ {
+[01;32m[K ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

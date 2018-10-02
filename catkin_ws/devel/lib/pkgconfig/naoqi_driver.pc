@@ -1,0 +1,1 @@
+/root/catkin_ws/devel/.private/naoqi_driver/lib/pkgconfig/naoqi_driver.pc

@@ -1,0 +1,11 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::msgCallback_ObjectRecognition(const ConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:902:7:[m[K [01;31m[Kerror: [m[K'[01m[Kmoving_cnt[m[K' was not declared in this scope
+     <<moving_cnt<<std::endl;    
+[01;32m[K       ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In function '[01m[Kint main(int, char**)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:2688:5:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before '[01m[K<<[m[K' token
+     <<std::endl; 
+[01;32m[K     ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

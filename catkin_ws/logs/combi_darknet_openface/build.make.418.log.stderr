@@ -1,0 +1,17 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:220:12:[m[K [01;31m[Kerror: [m[Kexpected '[01m[K;[m[K' at end of member declaration
+     double headarrowtheta
+[01;32m[K            ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::msgCallback_FaceRecognition(const ConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:369:65:[m[K [01;31m[Kerror: [m[K'[01m[KproojMatrix[m[K' was not declared in this scope
+             cv::decomposeProjectionMatrix( cv::Mat(3,4,CV_64FC1,proojMatrix),
+[01;32m[K                                                                 ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::ChangeViewPoint(double)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:755:26:[m[K [01;31m[Kerror: [m[Kredeclaration of '[01m[Kgeometry_msgs::Twist twist[m[K'
+     geometry_msgs::Twist twist;
+[01;32m[K                          ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:754:26:[m[K [01;36m[Knote: [m[K'[01m[Kgeometry_msgs::Twist twist[m[K' previously declared here
+     geometry_msgs::Twist twist;
+[01;32m[K                          ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

@@ -1,0 +1,7 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::depthImageCallback(const ImageConstPtr&)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1448:44:[m[K [01;31m[Kerror: [m[Kinvalid operands of types '[01m[Kint[m[K' and '[01m[Kconst char [3][m[K' to binary '[01m[Koperator<<[m[K'
+             std::cout<<"point_center:"<xc<<", "<<yc<<std::endl;
+[01;32m[K                                            ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

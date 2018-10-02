@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+# check if sixpair was running the last 5 seconds
+# and abort if it is true.
+# retry limit = 5s
+if [ -f /tmp/sixpair.tmp ]; then
+    oldtimestamp=`cat /tmp/sixpair.tmp`
+    secondsDiff=$(( `date '+%Y%m%d%H%M%S'` - $oldtimestamp ))
+    if [ $secondsDiff -lt 5 ]; then
+        exit 1
+    fi
+fi
+
+params="$1"
+if hciconfig | grep -q "hci0"; then
+    # Check if sixad is running
+    if ps -e | grep -q "sixad-bin"; then
+        # activate bt dongle if necessary
+        if !(hciconfig | grep -q "RUNNING"); then
+            hciconfig hci0 up
+        fi
+        # Make bt dongle discoverable
+        if !(hciconfig | grep -q "PSCAN"); then
+            hciconfig hci0 pscan
+        fi
+        if [[ "$params" == "sixpair" ]]; then
+            # Write bt dongle's mac address into controller
+            date '+%Y%m%d%H%M%S' > /tmp/sixpair.tmp
+            /usr/sbin/sixpair
+        fi
+    else
+        echo "sixad is not running!"
+        exit 1
+    fi
+fi
+exit 0

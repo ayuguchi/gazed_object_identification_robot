@@ -1,0 +1,111 @@
+cnt,time,label
+1,9.53674e-07,none,person,tv,laptop
+2,0.320397,none,person,tv,laptop,remote
+3,0.404961,none,person,tv,laptop,remote
+4,0.656536,none,person,tv,laptop,remote,oven
+5,0.808529,none,person,tv,laptop,remote,oven
+6,0.987758,none,person,tv,laptop,remote,oven
+7,1.16498,none,person,tv,laptop,remote,oven
+8,1.30457,none,person,tv,laptop,remote,oven
+9,1.51705,none,person,tv,laptop,remote,oven
+10,1.7967,none,person,tv,laptop,remote,oven
+11,1.97917,none,person,tv,laptop,remote,oven,dining table
+12,2.13118,none,person,tv,laptop,remote,oven,dining table
+13,2.36684,none,person,tv,laptop,remote,oven,dining table
+14,2.52379,none,person,tv,laptop,remote,oven,dining table
+15,2.82789,none,person,tv,laptop,remote,oven,dining table
+16,2.9631,none,person,tv,laptop,remote,oven,dining table
+17,3.18831,none,person,tv,laptop,remote,oven,dining table
+18,3.39124,none,person,tv,laptop,remote,oven,dining table
+19,3.59033,none,person,tv,laptop,remote,oven,dining table
+20,3.72207,none,person,tv,laptop,remote,oven,dining table
+21,4.04984,none,person,tv,laptop,remote,oven,dining table
+22,4.24722,none,person,tv,laptop,remote,oven,dining table
+23,4.44883,none,person,tv,laptop,remote,oven,dining table
+24,4.6827,none,person,tv,laptop,remote,oven,dining table
+25,4.83881,none,person,tv,laptop,remote,oven,dining table
+26,5.12863,none,person,tv,laptop,remote,oven,dining table
+27,5.35089,none,person,tv,laptop,remote,oven,dining table
+28,5.55601,none,person,tv,laptop,remote,oven,dining table
+29,5.82254,none,person,tv,laptop,remote,oven,dining table
+30,6.0093,none,person,tv,laptop,remote,oven,dining table
+31,6.25198,none,person,tv,laptop,remote,oven,dining table
+32,6.51323,none,person,tv,laptop,remote,oven,dining table
+33,6.68342,none,person,tv,laptop,remote,oven,dining table
+34,6.9606,none,person,tv,laptop,remote,oven,dining table
+35,7.2204,none,person,tv,laptop,remote,oven,dining table
+36,7.48448,none,person,tv,laptop,remote,oven,dining table
+37,7.60513,none,person,tv,laptop,remote,oven,dining table
+38,7.90003,none,person,tv,laptop,remote,oven,dining table,tie
+39,8.11173,none,person,tv,laptop,remote,oven,dining table,tie
+40,8.34395,none,person,tv,laptop,remote,oven,dining table,tie
+41,8.52106,none,person,tv,laptop,remote,oven,dining table,tie
+42,8.67801,none,person,tv,laptop,remote,oven,dining table,tie
+43,8.94637,none,person,tv,laptop,remote,oven,dining table,tie
+44,9.13168,none,person,tv,laptop,remote,oven,dining table,tie
+45,9.39335,none,person,tv,laptop,remote,oven,dining table,tie
+46,9.50411,none,person,tv,laptop,remote,oven,dining table,tie
+47,9.77464,none,person,tv,laptop,remote,oven,dining table,tie
+48,10.0451,none,person,tv,laptop,remote,oven,dining table,tie
+49,10.3668,none,person,tv,laptop,remote,oven,dining table,tie
+50,10.4777,none,person,tv,laptop,remote,oven,dining table,tie
+51,10.7268,none,person,tv,laptop,remote,oven,dining table,tie
+52,10.9441,none,person,tv,laptop,remote,oven,dining table,tie
+53,11.2402,none,person,tv,laptop,remote,oven,dining table,tie
+54,11.5821,none,person,tv,laptop,remote,oven,dining table,tie
+55,11.8339,none,person,tv,laptop,remote,oven,dining table,tie
+56,12.0691,none,person,tv,laptop,remote,oven,dining table,tie
+57,12.329,none,person,tv,laptop,remote,oven,dining table,tie
+58,12.6429,none,person,tv,laptop,remote,oven,dining table,tie
+59,12.8567,none,person,tv,laptop,remote,oven,dining table,tie
+60,13.0699,none,person,tv,laptop,remote,oven,dining table,tie
+61,13.2477,none,person,tv,laptop,remote,oven,dining table,tie
+62,13.5137,none,person,tv,laptop,remote,oven,dining table,tie
+63,13.7921,none,person,tv,laptop,remote,oven,dining table,tie
+64,14.01,none,person,tv,laptop,remote,oven,dining table,tie
+65,14.2427,none,person,tv,laptop,remote,oven,dining table,tie,book
+66,14.3842,none,person,tv,laptop,remote,oven,dining table,tie,book
+67,14.5898,none,person,tv,laptop,remote,oven,dining table,tie,book
+68,14.8431,none,person,tv,laptop,remote,oven,dining table,tie,book
+69,15.0706,none,person,tv,laptop,remote,oven,dining table,tie,book
+70,15.2338,none,person,tv,laptop,remote,oven,dining table,tie,book
+71,15.3872,none,person,tv,laptop,remote,oven,dining table,tie,book
+72,15.6748,none,person,tv,laptop,remote,oven,dining table,tie,book
+73,15.8359,none,person,tv,laptop,remote,oven,dining table,tie,book
+74,16.0076,none,person,tv,laptop,remote,oven,dining table,tie,book
+75,16.1748,none,person,tv,laptop,remote,oven,dining table,tie,book
+76,16.3885,none,person,tv,laptop,remote,oven,dining table,tie,book
+77,16.6795,none,person,tv,laptop,remote,oven,dining table,tie,book
+78,16.8215,none,person,tv,laptop,remote,oven,dining table,tie,book
+79,17.0145,none,person,tv,laptop,remote,oven,dining table,tie,book
+80,17.2313,none,person,tv,laptop,remote,oven,dining table,tie,book
+81,17.4849,none,person,tv,laptop,remote,oven,dining table,tie,book
+82,17.6422,none,person,tv,laptop,remote,oven,dining table,tie,book
+83,17.8388,none,person,tv,laptop,remote,oven,dining table,tie,book
+84,18.1012,none,person,tv,laptop,remote,oven,dining table,tie,book
+85,18.2479,none,person,tv,laptop,remote,oven,dining table,tie,book
+86,18.4911,none,person,tv,laptop,remote,oven,dining table,tie,book
+87,18.622,none,person,tv,laptop,remote,oven,dining table,tie,book
+88,18.8954,none,person,tv,laptop,remote,oven,dining table,tie,book
+89,19.1012,none,person,tv,laptop,remote,oven,dining table,tie,book
+90,19.283,none,person,tv,laptop,remote,oven,dining table,tie,book
+91,19.3723,none,person,tv,laptop,remote,oven,dining table,tie,book
+92,19.6189,none,person,tv,laptop,remote,oven,dining table,tie,book
+93,19.8351,none,person,tv,laptop,remote,oven,dining table,tie,book
+94,20.0811,none,person,tv,laptop,remote,oven,dining table,tie,book
+95,20.2117,none,person,tv,laptop,remote,oven,dining table,tie,book
+96,20.3876,none,person,tv,laptop,remote,oven,dining table,tie,book
+97,20.5878,none,person,tv,laptop,remote,oven,dining table,tie,book
+98,20.8225,none,person,tv,laptop,remote,oven,dining table,tie,book,bed
+99,21.0836,none,person,tv,laptop,remote,oven,dining table,tie,book,bed
+100,21.1904,none,person,tv,laptop,remote,oven,dining table,tie,book,bed
+101,21.4666,none,person,tv,laptop,remote,oven,dining table,tie,book,bed
+102,21.5957,none,person,tv,laptop,remote,oven,dining table,tie,book,bed
+103,21.7784,none,person,tv,laptop,remote,oven,dining table,tie,book,bed
+104,21.974,none,person,tv,laptop,remote,oven,dining table,tie,book,bed
+105,22.1837,none,person,tv,laptop,remote,oven,dining table,tie,book,bed,cell phone
+106,22.3675,none,person,tv,laptop,remote,oven,dining table,tie,book,bed,cell phone
+107,22.5724,none,person,tv,laptop,remote,oven,dining table,tie,book,bed,cell phone
+108,22.8503,none,person,tv,laptop,remote,oven,dining table,tie,book,bed,cell phone
+109,23.0564,none,person,tv,laptop,remote,oven,dining table,tie,book,bed,cell phone
+110,23.2449,none,person,tv,laptop,remote,oven,dining table,tie,book,bed,cell phone

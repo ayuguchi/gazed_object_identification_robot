@@ -1,0 +1,19 @@
+[01m[K/root/catkin_ws/src/capture_camera_img/src/capture_camera_img.cpp:46:26:[m[K [01;31m[Kerror: [m[K'[01m[Ksync_policies[m[K' in namespace '[01m[Kmessage_filters[m[K' does not name a type
+ typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::Image, std_msgs::Int16> SyncPolicy;
+[01;32m[K                          ^[m[K
+[01m[K/root/catkin_ws/src/capture_camera_img/src/capture_camera_img.cpp:[m[K In function '[01m[Kint main(int, char**)[m[K':
+[01m[K/root/catkin_ws/src/capture_camera_img/src/capture_camera_img.cpp:53:35:[m[K [01;31m[Kerror: [m[K'[01m[KSyncPolicy[m[K' was not declared in this scope
+     message_filters::Synchronizer<SyncPolicy> sync(SyncPolicy(10), rgb_img_sub, capture_cnt_sub);
+[01;32m[K                                   ^[m[K
+[01m[K/root/catkin_ws/src/capture_camera_img/src/capture_camera_img.cpp:53:45:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+     message_filters::Synchronizer<SyncPolicy> sync(SyncPolicy(10), rgb_img_sub, capture_cnt_sub);
+[01;32m[K                                             ^[m[K
+[01m[K/root/catkin_ws/src/capture_camera_img/src/capture_camera_img.cpp:53:96:[m[K [01;31m[Kerror: [m[Kexpression list treated as compound expression in initializer [-fpermissive]
+     message_filters::Synchronizer<SyncPolicy> sync(SyncPolicy(10), rgb_img_sub, capture_cnt_sub);
+[01;32m[K                                                                                                ^[m[K
+[01m[K/root/catkin_ws/src/capture_camera_img/src/capture_camera_img.cpp:54:10:[m[K [01;31m[Kerror: [m[Krequest for member '[01m[KregisterCallback[m[K' in '[01m[Ksync[m[K', which is of non-class type '[01m[Kint[m[K'
+     sync.registerCallback(boost::bind(&syncMsgsCB, _1, _2));
+[01;32m[K          ^[m[K
+make[2]: *** [CMakeFiles/capture_camera_img_node.dir/src/capture_camera_img.cpp.o] Error 1
+make[1]: *** [CMakeFiles/capture_camera_img_node.dir/all] Error 2
+make: *** [all] Error 2

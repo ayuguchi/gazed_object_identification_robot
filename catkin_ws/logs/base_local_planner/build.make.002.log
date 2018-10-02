@@ -1,0 +1,17 @@
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  3%] Built target base_local_planner_gencfg
+[  3%] Built target std_msgs_generate_messages_lisp
+[  3%] Built target std_msgs_generate_messages_py
+[  3%] Built target std_msgs_generate_messages_eus
+[  3%] Built target _base_local_planner_generate_messages_check_deps_Position2DInt
+[  9%] Built target point_grid
+[ 15%] Built target base_local_planner_generate_messages_lisp
+[ 15%] Built target base_local_planner_generate_messages_nodejs
+[ 21%] Built target base_local_planner_generate_messages_py
+[ 25%] Built target base_local_planner_generate_messages_cpp
+[ 31%] Built target base_local_planner_generate_messages_eus
+[ 31%] Built target base_local_planner_gencpp
+[ 31%] Built target base_local_planner_generate_messages
+[ 90%] Built target base_local_planner
+[100%] Built target trajectory_planner_ros

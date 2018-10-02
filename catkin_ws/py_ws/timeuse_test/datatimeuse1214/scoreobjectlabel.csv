@@ -1,0 +1,201 @@
+cnt,time,label
+1,4.76837e-07,none,person,laptop
+2,0.360978,none,person,laptop,tv
+3,0.468542,none,person,laptop,tv
+4,0.566699,none,person,laptop,tv
+5,0.729056,none,person,laptop,tv
+6,0.872745,none,person,laptop,tv
+7,0.994392,none,person,laptop,tv
+8,1.13699,none,person,laptop,tv
+9,1.26882,none,person,laptop,tv
+10,1.39408,none,person,laptop,tv
+11,1.54801,none,person,laptop,tv
+12,1.67648,none,person,laptop,tv
+13,1.80998,none,person,laptop,tv
+14,1.92168,none,person,laptop,tv
+15,2.08962,none,person,laptop,tv
+16,2.20926,none,person,laptop,tv
+17,2.34259,none,person,laptop,tv
+18,2.49411,none,person,laptop,tv
+19,2.6426,none,person,laptop,tv
+20,2.77313,none,person,laptop,tv
+21,2.92887,none,person,laptop,tv
+22,3.07707,none,person,laptop,tv
+23,3.21243,none,person,laptop,tv
+24,3.37005,none,person,laptop,tv
+25,3.48061,none,person,laptop,tv
+26,3.638,none,person,laptop,tv
+27,3.80453,none,person,laptop,tv
+28,3.92173,none,person,laptop,tv
+29,4.05305,none,person,laptop,tv
+30,4.20064,none,person,laptop,tv
+31,4.35268,none,person,laptop,tv
+32,4.52525,none,person,laptop,tv
+33,4.66175,none,person,laptop,tv
+34,4.81125,none,person,laptop,tv
+35,4.9574,none,person,laptop,tv
+36,5.08177,none,person,laptop,tv
+37,5.23315,none,person,laptop,tv
+38,5.40705,none,person,laptop,tv
+39,5.50572,none,person,laptop,tv
+40,5.64172,none,person,laptop,tv
+41,5.76642,none,person,laptop,tv
+42,5.89978,none,person,laptop,tv
+43,6.04187,none,person,laptop,tv
+44,6.19657,none,person,laptop,tv
+45,6.3115,none,person,laptop,tv
+46,6.45879,none,person,laptop,tv
+47,6.591,none,person,laptop,tv
+48,6.72161,none,person,laptop,tv
+49,6.8233,none,person,laptop,tv
+50,6.96818,none,person,laptop,tv
+51,7.09932,none,person,laptop,tv
+52,7.20675,none,person,laptop,tv
+53,7.37154,none,person,laptop,tv
+54,7.47984,none,person,laptop,tv
+55,7.59839,none,person,laptop,tv
+56,7.74078,none,person,laptop,tv
+57,7.8712,none,person,laptop,tv
+58,8.011,none,person,laptop,tv
+59,8.14044,none,person,laptop,tv
+60,8.27094,none,person,laptop,tv
+61,8.41425,none,person,laptop,tv
+62,8.53098,none,person,laptop,tv
+63,8.67966,none,person,laptop,tv
+64,8.77458,none,person,laptop,tv
+65,8.91224,none,person,laptop,tv
+66,9.04658,none,person,laptop,tv
+67,9.1679,none,person,laptop,tv
+68,9.30298,none,person,laptop,tv
+69,9.44959,none,person,laptop,tv
+70,9.5734,none,person,laptop,tv
+71,9.68011,none,person,laptop,tv
+72,9.81028,none,person,laptop,tv
+73,9.94915,none,person,laptop,tv
+74,10.2211,none,person,laptop,tv
+75,10.3398,none,person,laptop,tv
+76,10.4666,none,person,laptop,tv
+77,10.5805,none,person,laptop,tv
+78,10.7109,none,person,laptop,tv
+79,10.8567,none,person,laptop,tv
+80,10.9879,none,person,laptop,tv
+81,11.1221,none,person,laptop,tv
+82,11.2514,none,person,laptop,tv
+83,11.3869,none,person,laptop,tv
+84,11.5173,none,person,laptop,tv
+85,11.6342,none,person,laptop,tv
+86,11.7666,none,person,laptop,tv
+87,11.9006,none,person,laptop,tv
+88,12.043,none,person,laptop,tv
+89,12.1797,none,person,laptop,tv
+90,12.3185,none,person,laptop,tv
+91,12.4473,none,person,laptop,tv
+92,12.5981,none,person,laptop,tv
+93,12.7184,none,person,laptop,tv
+94,12.8612,none,person,laptop,tv
+95,13.0027,none,person,laptop,tv
+96,13.148,none,person,laptop,tv
+97,13.291,none,person,laptop,tv
+98,13.42,none,person,laptop,tv,chair
+99,13.5714,none,person,laptop,tv,chair
+100,13.7083,none,person,laptop,tv,chair,dining table
+101,13.8594,none,person,laptop,tv,chair,dining table
+102,13.9933,none,person,laptop,tv,chair,dining table
+103,14.1467,none,person,laptop,tv,chair,dining table
+104,14.2894,none,person,laptop,tv,chair,dining table
+105,14.4435,none,person,laptop,tv,chair,dining table
+106,14.5934,none,person,laptop,tv,chair,dining table
+107,14.7165,none,person,laptop,tv,chair,dining table
+108,14.8497,none,person,laptop,tv,chair,dining table
+109,15.0235,none,person,laptop,tv,chair,dining table
+110,15.1569,none,person,laptop,tv,chair,dining table
+111,15.2929,none,person,laptop,tv,chair,dining table
+112,15.4213,none,person,laptop,tv,chair,dining table,book
+113,15.5862,none,person,laptop,tv,chair,dining table,book
+114,15.7174,none,person,laptop,tv,chair,dining table,book
+115,15.8774,none,person,laptop,tv,chair,dining table,book
+116,16.0096,none,person,laptop,tv,chair,dining table,book
+117,16.155,none,person,laptop,tv,chair,dining table,book
+118,16.2872,none,person,laptop,tv,chair,dining table,book
+119,16.426,none,person,laptop,tv,chair,dining table,book
+120,16.5607,none,person,laptop,tv,chair,dining table,book
+121,16.6906,none,person,laptop,tv,chair,dining table,book
+122,16.8291,none,person,laptop,tv,chair,dining table,book,bottle
+123,16.9544,none,person,laptop,tv,chair,dining table,book,bottle
+124,17.0795,none,person,laptop,tv,chair,dining table,book,bottle
+125,17.2153,none,person,laptop,tv,chair,dining table,book,bottle
+126,17.3655,none,person,laptop,tv,chair,dining table,book,bottle
+127,17.4811,none,person,laptop,tv,chair,dining table,book,bottle
+128,17.628,none,person,laptop,tv,chair,dining table,book,bottle,oven
+129,17.7666,none,person,laptop,tv,chair,dining table,book,bottle,oven
+130,17.9159,none,person,laptop,tv,chair,dining table,book,bottle,oven
+131,18.0584,none,person,laptop,tv,chair,dining table,book,bottle,oven
+132,18.1978,none,person,laptop,tv,chair,dining table,book,bottle,oven
+133,18.3471,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+134,18.4849,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+135,18.5934,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+136,18.7186,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+137,18.8391,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+138,18.9945,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+139,19.1087,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+140,19.2569,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+141,19.3674,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+142,19.5198,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+143,19.6543,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+144,19.7781,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+145,19.8846,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+146,20.0112,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+147,20.1432,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+148,20.2766,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+149,20.4386,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+150,20.56,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+151,20.6886,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+152,20.8199,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+153,20.9403,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+154,21.0618,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+155,21.2219,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+156,21.341,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+157,21.4339,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+158,21.5814,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+159,21.7141,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+160,21.8393,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+161,21.9655,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+162,22.0893,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+163,22.2167,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+164,22.3225,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+165,22.4388,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+166,22.5738,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+167,22.7079,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+168,22.858,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+169,22.9794,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+170,23.1149,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+171,23.2088,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+172,23.3511,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+173,23.4745,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+174,23.5995,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+175,23.7136,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+176,23.8653,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+177,23.9809,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+178,24.1193,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+179,24.2634,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+180,24.3979,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+181,24.5645,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+182,24.6816,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+183,24.8267,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+184,24.9651,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+185,25.0908,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+186,25.2286,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+187,25.388,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+188,25.5177,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+189,25.6555,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+190,25.7928,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+191,25.9237,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+192,26.0593,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+193,26.1944,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+194,26.3233,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+195,26.462,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+196,26.5862,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+197,26.7342,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+198,26.8325,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+199,26.9791,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup
+200,27.2142,none,person,laptop,tv,chair,dining table,book,bottle,oven,cup

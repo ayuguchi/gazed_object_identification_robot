@@ -1,0 +1,20 @@
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::ChangeViewPoint(double)[m[K':
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1033:13:[m[K [01;31m[Kerror: [m[K'[01m[Kel[m[K' was not declared in this scope
+             el
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1043:13:[m[K [01;31m[Kerror: [m[Kexpected '[01m[K}[m[K' before '[01m[Kelse[m[K'
+             else if(((headarrowtheta-180)>0))
+[01;32m[K             ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1048:21:[m[K [01;31m[Kerror: [m[K'[01m[Kdeltatheta[m[K' was not declared in this scope
+                     deltatheta = -(180-robotyaw-headarrowtheta);
+[01;32m[K                     ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1064:27:[m[K [01;31m[Kerror: [m[K'[01m[Kdeltatheta[m[K' was not declared in this scope
+                 A1 << cos(deltatheta/180.0*M_PI), sin(deltatheta/180.0*M_PI), 0, 
+[01;32m[K                           ^[m[K
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K At global scope:
+[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:1183:5:[m[K [01;31m[Kerror: [m[Kexpected unqualified-id before '[01m[Kelse[m[K'
+     else if(move_mode==RobotPoseReset)
+[01;32m[K     ^[m[K
+make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
+make: *** [all] Error 2

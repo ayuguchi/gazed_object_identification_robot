@@ -1,0 +1,2 @@
+set(openface_ros_MESSAGE_FILES "/root/catkin_ws/src/openface_ros/msg/ActionUnit.msg;/root/catkin_ws/src/openface_ros/msg/Face.msg;/root/catkin_ws/src/openface_ros/msg/Faces.msg")
+set(openface_ros_SERVICE_FILES "")

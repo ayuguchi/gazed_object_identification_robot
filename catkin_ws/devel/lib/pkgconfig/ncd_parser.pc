@@ -1,0 +1,1 @@
+/root/catkin_ws/devel/.private/ncd_parser/lib/pkgconfig/ncd_parser.pc
