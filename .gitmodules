@@ -1,0 +1,12 @@
+[submodule "ros/opencv"]
+	path = ros/opencv
+	url = https://github.com/opencv/opencv.git
+[submodule "ros/dlib"]
+	path = ros/dlib
+	url = https://github.com/davisking/dlib.git
+[submodule "ros/OpenFace"]
+	path = ros/OpenFace
+	url = https://github.com/interaction-lab/OpenFace.git
+[submodule "ros/openface_ros"]
+	path = ros/openface_ros
+	url = https://github.com/interaction-lab/openface_ros.git
