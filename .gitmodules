@@ -10,3 +10,6 @@
 [submodule "ros/openface_ros"]
 	path = ros/openface_ros
 	url = https://github.com/interaction-lab/openface_ros.git
+[submodule "ros/darknet_ros"]
+	path = ros/darknet_ros
+	url = https://github.com/leggedrobotics/darknet_ros.git
