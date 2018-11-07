@@ -1,1 +1,0 @@
-/root/catkin_ws/devel/.private/test_darknet/share/test_darknet/cmake/test_darknetConfig.cmake

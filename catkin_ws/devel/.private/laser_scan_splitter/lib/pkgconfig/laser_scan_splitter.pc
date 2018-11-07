@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/devel/.private/laser_scan_splitter
-
-Name: laser_scan_splitter
-Description: Description of laser_scan_splitter
-Version: 0.3.2
-Cflags: -I/root/catkin_ws/src/scan_tools/laser_scan_splitter/include
-Libs: -L/root/catkin_ws/devel/.private/laser_scan_splitter/lib -llaser_scan_splitter
-Requires: roscpp nodelet sensor_msgs

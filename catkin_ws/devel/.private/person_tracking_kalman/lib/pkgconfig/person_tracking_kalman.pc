@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/devel/.private/person_tracking_kalman
-
-Name: person_tracking_kalman
-Description: Description of person_tracking_kalman
-Version: 0.0.0
-Cflags: -I/root/catkin_ws/src/person_tracking_kalman/include
-Libs: -L/root/catkin_ws/devel/.private/person_tracking_kalman/lib -lperson_tracking_kalman
-Requires: roscpp

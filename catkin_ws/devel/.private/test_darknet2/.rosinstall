@@ -1,2 +1,0 @@
-- setup-file:
-    local-name: /root/catkin_ws/devel/.private/test_darknet2/setup.sh

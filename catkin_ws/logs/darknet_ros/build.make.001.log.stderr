@@ -1,2 +1,0 @@
-layer     filters    size              input                output
-    0 CUDA Error: all CUDA-capable devices are busy or unavailable: No such file or directory

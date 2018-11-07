@@ -1,6 +1,0 @@
-Symlinking /root/catkin_ws/devel/lib/liblaser_scan_sparsifier_nodelet.so
-Symlinking /root/catkin_ws/devel/lib/liblaser_scan_sparsifier.so
-Symlinking /root/catkin_ws/devel/lib/laser_scan_sparsifier/laser_scan_sparsifier_node
-Symlinking /root/catkin_ws/devel/lib/pkgconfig/laser_scan_sparsifier.pc
-Symlinking /root/catkin_ws/devel/share/laser_scan_sparsifier/cmake/laser_scan_sparsifierConfig.cmake
-Symlinking /root/catkin_ws/devel/share/laser_scan_sparsifier/cmake/laser_scan_sparsifierConfig-version.cmake

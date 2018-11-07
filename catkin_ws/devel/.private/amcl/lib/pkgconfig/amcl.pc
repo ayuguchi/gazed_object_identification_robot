@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/devel/.private/amcl
-
-Name: amcl
-Description: Description of amcl
-Version: 1.12.13
-Cflags: -I/root/catkin_ws/devel/.private/amcl/include -I/root/catkin_ws/src/navigation/amcl/include
-Libs: -L/root/catkin_ws/devel/.private/amcl/lib -lamcl_sensors -lamcl_map -lamcl_pf
-Requires: rosbag roscpp dynamic_reconfigure tf

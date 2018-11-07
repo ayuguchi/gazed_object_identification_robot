@@ -1,8 +1,0 @@
-[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:120:1:[m[K [01;31m[Kerror: [m[Kstray '[01m[K\343[m[K' in program
- int　after_flag = 0;
-[01;32m[K ^[m[K
-[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:120:1:[m[K [01;31m[Kerror: [m[Kstray '[01m[K\200[m[K' in program
-[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:120:1:[m[K [01;31m[Kerror: [m[Kstray '[01m[K\200[m[K' in program
-make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
-make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
-make: *** [all] Error 2

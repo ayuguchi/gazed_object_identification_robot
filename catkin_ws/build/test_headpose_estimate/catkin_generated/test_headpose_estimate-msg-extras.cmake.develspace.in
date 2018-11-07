@@ -1,2 +1,0 @@
-set(test_headpose_estimate_MESSAGE_FILES "/root/catkin_ws/src/test_headpose_estimate/msg/ActionUnit.msg;/root/catkin_ws/src/test_headpose_estimate/msg/Face.msg;/root/catkin_ws/src/test_headpose_estimate/msg/Faces.msg")
-set(test_headpose_estimate_SERVICE_FILES "")

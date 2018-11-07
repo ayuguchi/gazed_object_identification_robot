@@ -1,5 +1,0 @@
-image_pipeline/depth_image_proc
-/root/catkin_ws/devel/.private/depth_image_proc/lib/libdepth_image_proc.so /root/catkin_ws/devel/lib/libdepth_image_proc.so
-/root/catkin_ws/devel/.private/depth_image_proc/lib/pkgconfig/depth_image_proc.pc /root/catkin_ws/devel/lib/pkgconfig/depth_image_proc.pc
-/root/catkin_ws/devel/.private/depth_image_proc/share/depth_image_proc/cmake/depth_image_procConfig-version.cmake /root/catkin_ws/devel/share/depth_image_proc/cmake/depth_image_procConfig-version.cmake
-/root/catkin_ws/devel/.private/depth_image_proc/share/depth_image_proc/cmake/depth_image_procConfig.cmake /root/catkin_ws/devel/share/depth_image_proc/cmake/depth_image_procConfig.cmake

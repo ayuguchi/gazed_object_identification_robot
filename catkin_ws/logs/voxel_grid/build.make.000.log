@@ -1,4 +1,0 @@
-[35m[1mScanning dependencies of target voxel_grid[0m
-[ 50%] [32mBuilding CXX object CMakeFiles/voxel_grid.dir/src/voxel_grid.cpp.o[0m
-[100%] [32m[1mLinking CXX shared library /root/catkin_ws/devel/.private/voxel_grid/lib/libvoxel_grid.so[0m
-[100%] Built target voxel_grid

@@ -1,1 +1,0 @@
-/root/catkin_ws/devel/.private/capture_camera_img/share/capture_camera_img/cmake/capture_camera_imgConfig.cmake

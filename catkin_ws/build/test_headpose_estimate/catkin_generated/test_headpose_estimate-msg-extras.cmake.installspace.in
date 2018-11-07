@@ -1,2 +1,0 @@
-set(test_headpose_estimate_MESSAGE_FILES "msg/ActionUnit.msg;msg/Face.msg;msg/Faces.msg")
-set(test_headpose_estimate_SERVICE_FILES "")

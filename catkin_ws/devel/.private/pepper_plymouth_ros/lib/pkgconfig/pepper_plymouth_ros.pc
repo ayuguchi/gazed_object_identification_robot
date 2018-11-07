@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/devel/.private/pepper_plymouth_ros
-
-Name: pepper_plymouth_ros
-Description: Description of pepper_plymouth_ros
-Version: 0.1.0
-Cflags: 
-Libs: -L/root/catkin_ws/devel/.private/pepper_plymouth_ros/lib 
-Requires: 

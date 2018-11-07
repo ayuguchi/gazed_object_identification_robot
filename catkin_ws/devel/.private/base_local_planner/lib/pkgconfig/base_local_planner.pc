@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/devel/.private/base_local_planner
-
-Name: base_local_planner
-Description: Description of base_local_planner
-Version: 1.12.13
-Cflags: -I/root/catkin_ws/devel/.private/base_local_planner/include -I/root/catkin_ws/src/navigation/base_local_planner/include
-Libs: -L/root/catkin_ws/devel/.private/base_local_planner/lib -lbase_local_planner -ltrajectory_planner_ros
-Requires: roscpp dynamic_reconfigure message_generation tf pluginlib costmap_2d nav_core angles
