@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/devel/.private/dwa_local_planner
-
-Name: dwa_local_planner
-Description: Description of dwa_local_planner
-Version: 1.12.13
-Cflags: -I/root/catkin_ws/devel/.private/dwa_local_planner/include -I/root/catkin_ws/src/navigation/dwa_local_planner/include
-Libs: -L/root/catkin_ws/devel/.private/dwa_local_planner/lib -ldwa_local_planner
-Requires: dynamic_reconfigure pluginlib roscpp

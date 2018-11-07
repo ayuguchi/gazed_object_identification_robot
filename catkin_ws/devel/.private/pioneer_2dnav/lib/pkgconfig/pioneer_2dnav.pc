@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/devel/.private/pioneer_2dnav
-
-Name: pioneer_2dnav
-Description: Description of pioneer_2dnav
-Version: 0.0.0
-Cflags: 
-Libs: -L/root/catkin_ws/devel/.private/pioneer_2dnav/lib 
-Requires: 

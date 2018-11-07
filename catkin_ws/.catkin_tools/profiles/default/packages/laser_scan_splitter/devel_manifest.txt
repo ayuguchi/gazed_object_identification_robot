@@ -1,7 +1,0 @@
-scan_tools/laser_scan_splitter
-/root/catkin_ws/devel/.private/laser_scan_splitter/lib/liblaser_scan_splitter.so /root/catkin_ws/devel/lib/liblaser_scan_splitter.so
-/root/catkin_ws/devel/.private/laser_scan_splitter/lib/liblaser_scan_splitter_nodelet.so /root/catkin_ws/devel/lib/liblaser_scan_splitter_nodelet.so
-/root/catkin_ws/devel/.private/laser_scan_splitter/lib/pkgconfig/laser_scan_splitter.pc /root/catkin_ws/devel/lib/pkgconfig/laser_scan_splitter.pc
-/root/catkin_ws/devel/.private/laser_scan_splitter/lib/laser_scan_splitter/laser_scan_splitter_node /root/catkin_ws/devel/lib/laser_scan_splitter/laser_scan_splitter_node
-/root/catkin_ws/devel/.private/laser_scan_splitter/share/laser_scan_splitter/cmake/laser_scan_splitterConfig-version.cmake /root/catkin_ws/devel/share/laser_scan_splitter/cmake/laser_scan_splitterConfig-version.cmake
-/root/catkin_ws/devel/.private/laser_scan_splitter/share/laser_scan_splitter/cmake/laser_scan_splitterConfig.cmake /root/catkin_ws/devel/share/laser_scan_splitter/cmake/laser_scan_splitterConfig.cmake

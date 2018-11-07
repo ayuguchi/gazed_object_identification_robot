@@ -1,1 +1,0 @@
-/root/catkin_ws/devel/.private/combi_darknet_openface/lib/python2.7/dist-packages/combi_darknet_openface/msg/__init__.py

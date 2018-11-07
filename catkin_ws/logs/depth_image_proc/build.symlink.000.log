@@ -1,4 +1,0 @@
-Symlinking /root/catkin_ws/devel/lib/libdepth_image_proc.so
-Symlinking /root/catkin_ws/devel/lib/pkgconfig/depth_image_proc.pc
-Symlinking /root/catkin_ws/devel/share/depth_image_proc/cmake/depth_image_procConfig-version.cmake
-Symlinking /root/catkin_ws/devel/share/depth_image_proc/cmake/depth_image_procConfig.cmake

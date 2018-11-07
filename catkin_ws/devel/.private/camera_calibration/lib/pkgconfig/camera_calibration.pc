@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/devel/.private/camera_calibration
-
-Name: camera_calibration
-Description: Description of camera_calibration
-Version: 1.12.21
-Cflags: 
-Libs: -L/root/catkin_ws/devel/.private/camera_calibration/lib 
-Requires: 

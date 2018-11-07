@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/devel/.private/map_cv_converter
-
-Name: map_cv_converter
-Description: Description of map_cv_converter
-Version: 0.0.0
-Cflags: 
-Libs: -L/root/catkin_ws/devel/.private/map_cv_converter/lib 
-Requires: 

@@ -1,1 +1,0 @@
-/root/catkin_ws/devel/.private/openface_ros/share/roseus/ros/openface_ros/manifest.l

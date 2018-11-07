@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/devel/.private/image_proc
-
-Name: image_proc
-Description: Description of image_proc
-Version: 1.12.21
-Cflags: -I/root/catkin_ws/devel/.private/image_proc/include -I/root/catkin_ws/src/image_pipeline/image_proc/include
-Libs: -L/root/catkin_ws/devel/.private/image_proc/lib -limage_proc
-Requires: image_geometry roscpp sensor_msgs

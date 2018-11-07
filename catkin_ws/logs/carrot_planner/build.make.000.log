@@ -1,4 +1,0 @@
-[35m[1mScanning dependencies of target carrot_planner[0m
-[ 50%] [32mBuilding CXX object CMakeFiles/carrot_planner.dir/src/carrot_planner.cpp.o[0m
-[100%] [32m[1mLinking CXX shared library /root/catkin_ws/devel/.private/carrot_planner/lib/libcarrot_planner.so[0m
-[100%] Built target carrot_planner

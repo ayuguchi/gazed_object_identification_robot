@@ -1,5 +1,0 @@
-[01m[K/root/catkin_ws/src/combi_darknet_openface2/src/combi_darknet_openface_node2.cpp:32:47:[m[K [01;31m[Kfatal error: [m[Kcombi_darknet_openface/ActionUnit.h: No such file or directory
-compilation terminated.
-make[2]: *** [CMakeFiles/combi_darknet_openface_node2.dir/src/combi_darknet_openface_node2.cpp.o] Error 1
-make[1]: *** [CMakeFiles/combi_darknet_openface_node2.dir/all] Error 2
-make: *** [all] Error 2

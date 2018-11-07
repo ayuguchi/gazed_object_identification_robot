@@ -1,2 +1,0 @@
-set(combi_darknet_openface_MESSAGE_FILES "msg/ActionUnit.msg;msg/Face.msg;msg/Faces.msg")
-set(combi_darknet_openface_SERVICE_FILES "")

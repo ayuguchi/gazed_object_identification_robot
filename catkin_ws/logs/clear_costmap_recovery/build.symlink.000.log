@@ -1,4 +1,0 @@
-Symlinking /root/catkin_ws/devel/lib/libclear_costmap_recovery.so
-Symlinking /root/catkin_ws/devel/lib/pkgconfig/clear_costmap_recovery.pc
-Symlinking /root/catkin_ws/devel/share/clear_costmap_recovery/cmake/clear_costmap_recoveryConfig.cmake
-Symlinking /root/catkin_ws/devel/share/clear_costmap_recovery/cmake/clear_costmap_recoveryConfig-version.cmake

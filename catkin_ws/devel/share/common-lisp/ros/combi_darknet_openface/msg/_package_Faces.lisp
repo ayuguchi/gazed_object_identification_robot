@@ -1,1 +1,0 @@
-/root/catkin_ws/devel/.private/combi_darknet_openface/share/common-lisp/ros/combi_darknet_openface/msg/_package_Faces.lisp

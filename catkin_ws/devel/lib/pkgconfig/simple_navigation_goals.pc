@@ -1,1 +1,0 @@
-/root/catkin_ws/devel/.private/simple_navigation_goals/lib/pkgconfig/simple_navigation_goals.pc

@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/install
-
-Name: test_darknet
-Description: Description of test_darknet
-Version: 0.0.0
-Cflags: 
-Libs: -L/root/catkin_ws/install/lib 
-Requires: 

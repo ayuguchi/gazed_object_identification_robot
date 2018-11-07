@@ -1,1 +1,0 @@
-/root/catkin_ws/devel/.private/test_headpose_estimate/share/gennodejs/ros/test_headpose_estimate/msg/Face.js

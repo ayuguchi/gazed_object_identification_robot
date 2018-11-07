@@ -1,1 +1,0 @@
-/root/catkin_ws/devel/.private/openslam_gmapping/lib/pkgconfig/openslam_gmapping.pc
