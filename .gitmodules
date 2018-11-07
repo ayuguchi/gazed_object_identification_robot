@@ -13,3 +13,6 @@
 [submodule "ros/darknet_ros"]
 	path = ros/darknet_ros
 	url = https://github.com/leggedrobotics/darknet_ros.git
+[submodule "ros/sixad"]
+	path = ros/sixad
+	url = https://github.com/RetroPie/sixad.git
