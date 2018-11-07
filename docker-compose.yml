@@ -1,8 +1,8 @@
 version: "2"
 services:
-    mael:
+    GazedObjectEstimation:
         build: ros
-        container_name: mael
+        container_name: gazed_object_estimation
         environment:
             # to transport X11 application window 
             - DISPLAY

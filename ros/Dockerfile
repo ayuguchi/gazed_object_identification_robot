@@ -4,9 +4,6 @@ RUN apt update
 # System normal libraries
 RUN apt install -y git wget apt-utils
 
-# install opencv
-# RUN apt install -y libopencv-dev 
-
 # install ros
 RUN apt-get update && apt-get install -y --no-install-recommends \
     dirmngr \
