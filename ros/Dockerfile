@@ -8,6 +8,7 @@ RUN set -x \
         git \
         wget \
         apt-utils\
+        software-properties-common \
         build-essential \
         llvm \
         clang-3.7 \
@@ -80,14 +81,14 @@ RUN set -x \
 # install librealsense
 RUN set -x && \
     apt-key adv --keyserver keys.gnupg.net --recv-key C8B3A55A6F3EFCDE || apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C8B3A55A6F3EFCDE && \
-    add-apt-repository "deb http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo bionic main" -u && \
+    add-apt-repository "deb http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo xenial main" -u && \
     apt update && \
     apt install -y \
         librealsense2-dkms \
-        librealsense2=2.16.3-0~realsense0.116 \
-        librealsense2-utils=2.16.3-0~realsense0.116 \
-        librealsense2-dev=2.16.3-0~realsense0.116 \
-        librealsense2-dbg=2.16.3-0~realsense0.116
+        librealsense2=2.15.0-0~realsense0.83 \
+        librealsense2-utils=2.15.0-0~realsense0.83 \
+        librealsense2-dev=2.15.0-0~realsense0.83 \
+        librealsense2-dbg=2.15.0-0~realsense0.83
 
 #install opencv3
 WORKDIR /root/
