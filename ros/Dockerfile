@@ -56,6 +56,7 @@ RUN set -x \
     && apt install -y \
         python-pip \
         python-sympy \
+        python-scipy \
         libbullet-dev\
         ros-kinetic-amcl \
         ros-kinetic-move-base\
@@ -117,13 +118,6 @@ RUN set -x \
     echo "alias cw='cd ~/catkin_ws'" >> ~/.bashrc\
     && echo "alias cs='cd ~/catkin_ws/src'" >> ~/.bashrc\
     && echo "alias cm='cd ~/catkin_ws && catkin build'" >> ~/.bashrc
-
-#setup python scipy
-WORKDIR /root/
-RUN set -x\
-    && pip install --upgrade pip\
-    && pip install scipy\
-    && pip install --upgrade matplotlib
 
 WORKDIR /root/catkin_ws
 ADD ./utils /root/utils
