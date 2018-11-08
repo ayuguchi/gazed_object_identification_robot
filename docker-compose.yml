@@ -1,6 +1,6 @@
 version: "2"
 services:
-    GazedObjectEstimation:
+    gazed_object_estimation:
         build: ros
         container_name: gazed_object_estimation
         environment:
