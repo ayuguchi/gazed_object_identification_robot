@@ -4,3 +4,4 @@ catkin_ws/build
 ros/opencv-3.2.0
 ros/dlib-19.6
 ros/sixad-master
+.catkin_workspace
