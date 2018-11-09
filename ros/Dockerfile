@@ -121,7 +121,7 @@ RUN set -x\
     && cd OpenFace\
     && mkdir build\
     && cd build\
-    && cmake -D CMAKE_BUILD_TYPE=RELEASE ..\
+    && cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_CXX_FLAGS="-DOPENCV_TRAITS_ENABLE_DEPRECATED" ..\
     && make -j$(nproc)\
     && make install
 
