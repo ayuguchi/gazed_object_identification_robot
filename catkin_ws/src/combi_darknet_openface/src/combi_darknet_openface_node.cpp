@@ -1,4 +1,4 @@
-#include <combi_darknet_openface_node.hpp>
+#include "combi_darknet_openface_node.hpp"
 
 CombiDarknetOpenface::CombiDarknetOpenface(ros::NodeHandle nh):
 nh1(nh)
