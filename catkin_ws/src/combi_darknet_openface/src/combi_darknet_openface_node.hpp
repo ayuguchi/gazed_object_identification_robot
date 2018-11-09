@@ -1,3 +1,4 @@
+#define OPENCV_TRAITS_ENABLE_DEPRECATED
 #include <ros/ros.h>
 #include <fstream>
 #include <math.h>

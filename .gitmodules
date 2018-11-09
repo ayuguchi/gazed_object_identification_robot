@@ -16,3 +16,12 @@
 [submodule "ros/sixad"]
 	path = ros/sixad
 	url = https://github.com/RetroPie/sixad.git
+[submodule "catkin_ws/src/openface_ros"]
+	path = catkin_ws/src/openface_ros
+	url = https://github.com/interaction-lab/openface_ros.git
+[submodule "catkin_ws/src/darknet_ros"]
+	path = catkin_ws/src/darknet_ros
+	url = https://github.com/leggedrobotics/darknet_ros.git
+[submodule "catkin_ws/src/realsense"]
+	path = catkin_ws/src/realsense
+	url = https://github.com/intel-ros/realsense.git

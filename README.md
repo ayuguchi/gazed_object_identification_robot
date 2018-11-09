@@ -58,5 +58,13 @@ cd catkin_ws/py_ws/timeuse_test/datatimeuse/
 rosrun combi_darknet_openface combi_darknet_openface_node | tee -a log.txt \\最終的なプログラム
 ```
 
+# 注意点
+
+初回コンパイル時には以下のコマンドがいるかも...
+
+```
+$ catkin_make -DCMAKE_CXX_FLAGS="-DOPENCV_TRAITS_ENABLE_DEPRECATED"
+```
+
 ## Authors
-Tomoaki Inoue/ Akishige Yuguchi
+Tomoaki Inoue/ Akishige Yuguchi / Takumi Nakamura

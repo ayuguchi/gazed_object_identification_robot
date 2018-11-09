@@ -48,6 +48,7 @@ link_directories(${Boost_LIBRARY_DIRS})
 
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  ${combi_darknet_openface_INCLUDE_DIRS}
   ${OPENLIB_INCLUDE_DIR}
   ${DLIB_INCLUDE_DIR}
   ${Boost_INCLUDE_DIRS}

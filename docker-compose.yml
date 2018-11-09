@@ -1,8 +1,9 @@
-version: "2"
+version: "2.3"
 services:
-    GazedObjectEstimation:
+    gazed_object_estimation:
         build: ros
         container_name: gazed_object_estimation
+        runtime: nvidia
         environment:
             # to transport X11 application window 
             - DISPLAY
