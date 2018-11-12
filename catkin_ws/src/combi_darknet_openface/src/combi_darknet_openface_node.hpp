@@ -175,29 +175,27 @@ class CombiDarknetOpenface
 public:
     CombiDarknetOpenface(ros::NodeHandle nh);
     ~CombiDarknetOpenface();
-    void msgCallback_FaceRecognition(const combi_darknet_openface::Faces::ConstPtr& msg );
-    void ModifyHeadOrientation();
-    void ModifyPersonDistance(double* distance);
-    void ModifyObjectDistance(double* distance);
-    void Calculate_TimeUse(double currenttimesec);
-    void Linear_Line(double x1,double x2,double y1,double y2,double* a,double* b );
-    void Calculate_TimeUseOutofView(double currenttimesec);
-    void msgCallback_ObjectRecognition(const darknet_ros_msgs::BoundingBoxes::ConstPtr& msg );
-    void rgbObjectImageCallback(const sensor_msgs::ImageConstPtr& msg);
-    void rgbImageCallback(const sensor_msgs::ImageConstPtr& msg);//face_feature
-    void depthImageCallback(const sensor_msgs::ImageConstPtr& msg);
-    void msgCallback_FilterMsg(const geometry_msgs::PoseStamped::ConstPtr& msg);
-    void msgCallback_RobotPoseMsg(const geometry_msgs::PoseStamped::ConstPtr& msg);
-    void PublishPersonMeasurement(double measurementx, double measurementy);//input for KF
-    void PublishPersonMarker(double theta, double measurementx, double measurementy);//input for KF
-    void PublishObjectMarker(double measurementx, double measurementy);
-    void PublishHeadposeArrow();
-    void ChangeViewPoint(double currenttimesec);
+    void onRecognizedFace(const combi_darknet_openface::Faces::ConstPtr& msg );
+    void modifyHeadOrientation();
+    void modifyPersonDistance(double* distance);
+    void modifyObjectDistance(double* distance);
+    void calculateTimeUse(double currenttimesec);
+    void linearLine(double x1,double x2,double y1,double y2,double* a,double* b );
+    void calculateTimeUseOutofView(double currenttimesec);
+    void onRecognizedObject(const darknet_ros_msgs::BoundingBoxes::ConstPtr& msg );
+    void onRgbImageUpdated(const sensor_msgs::ImageConstPtr& msg);//face_feature
+    void onDepthImageUpdated(const sensor_msgs::ImageConstPtr& msg);
+    void onPersonPositionEstimated(const geometry_msgs::PoseStamped::ConstPtr& msg);
+    void onRobotPoseUpdated(const geometry_msgs::PoseStamped::ConstPtr& msg);
+    void publishPersonMeasurement(double measurementx, double measurementy);//input for KF
+    void publishPersonMarker(double theta, double measurementx, double measurementy);//input for KF
+    void publishObjectMarker(double measurementx, double measurementy);
+    void publishHeadPoseArrow();
+    void changeViewPoint(double currenttimesec);
         
 
 private:
     ros::Subscriber ros_object_sub;
-    ros::Subscriber rgb_object_sub;
     ros::Subscriber cmd_vel_sub;
     
     ros::Subscriber ros_face_sub;
