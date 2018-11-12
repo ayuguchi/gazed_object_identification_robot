@@ -1,4 +1,4 @@
-This program is about Mr. Inoue's master's thesis.
+This program is about Mr. Inoue's master's thesis "Gazed object Estimation for Obtaining Detailed Time-usage Data Using a Mobile Robot".
 
 ## How to use
 
@@ -18,11 +18,11 @@ This program is about Mr. Inoue's master's thesis.
 1. Dockerを起動
 
 ```
-cd ~/Documents/env && sudo nvidia-docker-compose run mael bash
+sudo nvidia-docker-compose run gazed_object_estimation bash
 terminatorの各タブで
-cd ~/Documents/env && sudo docker exec -it env_mael_run_1 bash
+sudo docker exec -it gazed_object_estimation_run_1 bash
 終了するときはdockerを使ってないタブで
-cd ~/Documents/env &&sudo nvidia-docker-compose down
+sudo nvidia-docker-compose down
 ```
 
 * プログラムの起動
@@ -37,7 +37,6 @@ cp rgb_PS1080_PrimeSense.yaml /root/.ros/camera_info
 2. 各タブで順番にプログラムを起動
 
 ```
-roscore	\\roscore
 roslaunch pepper_bringup pepper_full.launch nao_ip:=169.254.246.15 \\ペッパーのrosパッケージ
 chmod 777 /dev/ttyACM0
 roslaunch urg_node urg_node.launch \\LRFのノード
@@ -58,13 +57,15 @@ cd catkin_ws/py_ws/timeuse_test/datatimeuse/
 rosrun combi_darknet_openface combi_darknet_openface_node | tee -a log.txt \\最終的なプログラム
 ```
 
-# 注意点
+#Tips
 
 初回コンパイル時には以下のコマンドがいるかも...
 
 ```
 $ catkin_make -DCMAKE_CXX_FLAGS="-DOPENCV_TRAITS_ENABLE_DEPRECATED"
 ```
+
+OpenFace requires OpenCV 3.2.0? & dlib 19.6?
 
 ## Authors
 Tomoaki Inoue/ Akishige Yuguchi / Takumi Nakamura

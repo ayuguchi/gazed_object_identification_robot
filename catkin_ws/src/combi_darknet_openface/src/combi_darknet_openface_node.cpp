@@ -2508,7 +2508,6 @@ int main(int argc, char **argv)
         <<"move_mode"<<","
         <<"robot_moving"<<std::endl;
 
-
     activityscoreobjectdata<<"cnt"<<","
         <<"time"<<","
         <<"class"<<std::endl;
@@ -2545,41 +2544,6 @@ int main(int argc, char **argv)
         <<"move_mode"<<","
         <<"robot_moving"<<","
         <<"moving_cnt"<<std::endl;
-
-    personvelocitydata<<"darknet_cnt"<<","
-        <<"time"<<","
-        <<"personpose_x"<<","
-        <<"personpose_y"<<","
-        <<"personvelocity_x"<<","
-        <<"personvelocity_y"<<","
-        <<"person_move_cnt"<<","
-        <<"person_move"<<std::endl;
-
-    robotvelocitydata<<"darknet_cnt"<<","
-        <<"time"<<","
-        <<"robotpose_x"<<","
-        <<"robotpose_y"<<","
-        <<"robotvelocity_x"<<","
-        <<"robotvelocity_y"<<","
-        <<"robot_move_cnt"<<","
-        <<"robot_move"<<std::endl;
-
-    robotcmdveldata<<"darknet_cnt"<<","
-        <<"time"<<","
-        <<"msg.linear.x"<<","
-        <<"msg.linear.y"<<","
-        <<"msg.angular.z"<<","
-        <<"robot_move"<<std::endl;
-
-    depthdata<<"darknet_cnt"<<","
-        <<"time"<<","
-        <<"distancetmp"<<","
-        <<"distance"<<","
-        <<"xc"<<","
-        <<"yc"<<","
-        <<"modify_distance_cnt"<<","
-        <<"person_move_cnt"<<","
-        <<"person_move"<<std::endl;
 
     noseobjecttheta<<"darknet_cnt"<<","
         <<"time"<<","

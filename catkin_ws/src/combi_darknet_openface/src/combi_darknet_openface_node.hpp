@@ -35,7 +35,6 @@
 #include "combi_darknet_openface/Faces.h"
 
 #include <sensor_msgs/Image.h>
-
 #include <sensor_msgs/image_encodings.h>
 
 #include <openface/LandmarkCoreIncludes.h>
@@ -161,13 +160,8 @@ std::ofstream scorefacedata("scorefacedata.csv", std::ios::trunc);
 std::ofstream scoreobjectdata("scoreobjectdata.csv", std::ios::trunc);
 std::ofstream scorefacelabel("scorefacelabel.csv", std::ios::trunc);
 std::ofstream scoreobjectlabel("scoreobjectlabel.csv", std::ios::trunc);
-std::ofstream robotcmdveldata("robotcmdveldata.csv", std::ios::trunc);
-std::ofstream personvelocitydata("personvelocitydata.csv", std::ios::trunc);
-std::ofstream robotvelocitydata("robotvelocitydata.csv", std::ios::trunc);
-std::ofstream depthdata("depthdata.csv", std::ios::trunc);
 std::ofstream alltimerecord("alltimerecord.csv", std::ios::trunc);
 std::ofstream noseobjecttheta("noseobjecttheta.csv", std::ios::trunc);
-std::ofstream robot_movingdata("robot_movingdata.csv", std::ios::trunc);
 
 class CombiDarknetOpenface
 {
