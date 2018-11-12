@@ -7,12 +7,6 @@
 [submodule "ros/OpenFace"]
 	path = ros/OpenFace
 	url = https://github.com/interaction-lab/OpenFace.git
-[submodule "ros/openface_ros"]
-	path = ros/openface_ros
-	url = https://github.com/interaction-lab/openface_ros.git
-[submodule "ros/darknet_ros"]
-	path = ros/darknet_ros
-	url = https://github.com/leggedrobotics/darknet_ros.git
 [submodule "ros/sixad"]
 	path = ros/sixad
 	url = https://github.com/RetroPie/sixad.git
