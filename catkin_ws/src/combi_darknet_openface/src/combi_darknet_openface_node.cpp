@@ -39,199 +39,124 @@ CombiDarknetOpenface::~CombiDarknetOpenface()
 {
 }
 
-void CombiDarknetOpenface::onRecognizedFace(const  combi_darknet_openface::Faces::ConstPtr& msg )
+void CombiDarknetOpenface::onRecognizedFace(const combi_darknet_openface::Faces::ConstPtr& msg)
 {
-    std::vector<combi_darknet_openface::Face> detectedfaces = msg->faces;
+    this->nose_tip_position_ptr.reset();
+    this->chin_position_ptr.reset();
+    this->left_eye_position_ptr.reset();
+    this->right_eye_position_ptr.reset();
+    this->left_mouth_position_ptr.reset();
+    this->right_mouth_position_ptr.reset();
+    this->nose_end_point2D_drawtmp.reset();
 
-    if(!detectedfaces.empty())
+    for(const auto& detected_face : msg->faces)
     {
-        face_cnt += 1;
-        std::cout<<"face_callback:"<<face_cnt<<std::endl;
-    }
-
-    nose_tip.clear();
-    chin.clear();
-    left_eye.clear();
-    right_eye.clear();
-    left_mouth.clear();
-    right_mouth.clear();
-    nose_end_point2D_drawtmp.clear();
-    headorientation.clear();
-
-    for(std::vector<combi_darknet_openface::Face>::iterator itr = detectedfaces.begin(); itr != detectedfaces.end() ; ++itr)
-    {
-        static ros::Time firsttime = ros::Time::now();
-        ros::Time nowtime = ros::Time::now();
-
-        double firsttimesec,nowtimesec,currenttimesec;
-
-        firsttimesec = firsttime.toSec();
-        nowtimesec = nowtime.toSec();
-
-        currenttimesec = nowtimesec-firsttimesec;
-
-        int i = 0;
-        if((*itr).landmarks_2d.size())
+        if(detected_face.landmarks_2d.empty())
         {
-            std::vector<cv::Point2f> image_points;
-            std::vector<cv::Point3f> model_points;
-
-            nose_tip.push_back(std::round((*itr).landmarks_2d[33].x));
-            nose_tip.push_back(std::round((*itr).landmarks_2d[33].y));
-            chin.push_back(std::round((*itr).landmarks_2d[8].x));
-            chin.push_back(std::round((*itr).landmarks_2d[8].y));
-            left_eye.push_back(std::round((*itr).landmarks_2d[36].x));
-            left_eye.push_back(std::round((*itr).landmarks_2d[36].y));
-            right_eye.push_back(std::round((*itr).landmarks_2d[45].x));
-            right_eye.push_back(std::round((*itr).landmarks_2d[45].y));
-            left_mouth.push_back(std::round((*itr).landmarks_2d[48].x));
-            left_mouth.push_back(std::round((*itr).landmarks_2d[48].y));
-            right_mouth.push_back(std::round((*itr).landmarks_2d[54].x));
-            right_mouth.push_back(std::round((*itr).landmarks_2d[54].y));
-
-            image_points.push_back( cv::Point2f(nose_tip[0], nose_tip[1])) ; // Nose tip
-            image_points.push_back( cv::Point2f(chin[0], chin[1])) ; // Chin
-            image_points.push_back( cv::Point2f(left_eye[0], left_eye[1])) ; // Left eye left corner
-            image_points.push_back( cv::Point2f(right_eye[0], right_eye[1])) ;// Right eye left corner
-            image_points.push_back( cv::Point2f(left_mouth[0], left_mouth[1])) ;// Left Mouth corner
-            image_points.push_back( cv::Point2f(right_mouth[0], right_mouth[1])) ; // Right Mouth corner
-
-            float facemodelscale = 0.225;
-            model_points.push_back(cv::Point3f(0.0f, 0.0f, 0.0f));// Nose tip
-            model_points.push_back(cv::Point3f(0.0f, -330.0*facemodelscale, -65.0*facemodelscale));// Chin
-            model_points.push_back(cv::Point3f(-225.0*facemodelscale, 170.0*facemodelscale, -135.0*facemodelscale));// Left eye left corner
-            model_points.push_back(cv::Point3f(225.0*facemodelscale, 170.0*facemodelscale, -135.0*facemodelscale));// Right eye right corner
-            model_points.push_back(cv::Point3f(-150.0*facemodelscale, -150.0*facemodelscale, -125.0*facemodelscale));// Left Mouth corner
-            model_points.push_back(cv::Point3f(150.0*facemodelscale, -150.0*facemodelscale, -125.0*facemodelscale));// Right mouth corner
-
-            //11/18
-            cv::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
-            cv::Mat dist_coeffs = (cv::Mat_<double>(4,1) << 0.06569569924719, -0.25862424608946, 0.00010394071172, -0.00024019257963);
-
-            rotation_vector  = cv::Mat::zeros(3, 1, CV_64FC1); // Rotation in axis-angle form
-            translation_vector = cv::Mat::zeros(3, 1, CV_64FC1);
-            cv::Mat rotation_matrix  = cv::Mat::zeros(3, 3, CV_64FC1); // Rotation in axis-angle form
-
-            cv::solvePnP(model_points, image_points, camera_matrix, dist_coeffs, rotation_vector, translation_vector,CV_ITERATIVE);
-
-            vector<cv::Point3f> nose_end_point3D;
-            vector<cv::Point2f> nose_end_point2D;
-            nose_end_point3D.push_back(cv::Point3f(0.0,0.0,TmpDistance));
-            projectPoints(nose_end_point3D, rotation_vector, translation_vector, camera_matrix, dist_coeffs, nose_end_point2D);
-            nose_end_point2D_drawtmp.push_back(std::round(nose_end_point2D[0].x));
-            nose_end_point2D_drawtmp.push_back(std::round(nose_end_point2D[0].y));
-
-            cv::Mat rotation_vector2; // Rotation in axis-angle form
-            cv::Mat translation_vector2;
-            rotation_vector2 = rotation_vector;
-            translation_vector2 = translation_vector;
-
-            cv::Rodrigues(rotation_vector2, rotation_matrix);
-
-            cv::Mat rotMatrixX,rotMatrixY,rotMatrixZ;
-            cv::Vec3d eulerAngles;
-            double* _r = rotation_matrix.ptr<double>();
-            double projMatrix[12] = {
-                _r[0],_r[1],_r[2],0,
-                _r[3],_r[4],_r[5],0,
-                _r[6],_r[7],_r[8],0
-            };
-
-            cv::decomposeProjectionMatrix(
-                cv::Mat(3,4,CV_64FC1,projMatrix),
-                camera_matrix,
-                rotation_matrix,
-                translation_vector2,
-                rotMatrixX,
-                rotMatrixY,
-                rotMatrixZ,
-                eulerAngles
-            );
-
-            headorientation.push_back(eulerAngles[2]);//roll
-            headorientation.push_back(eulerAngles[0]);//pitch
-            headorientation.push_back(eulerAngles[1]);//yaw
-            CombiDarknetOpenface::modifyHeadOrientation();
-
-            camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
-            dist_coeffs = (cv::Mat_<double>(4,1) << 0.06569569924719, -0.25862424608946, 0.00010394071172, -0.00024019257963);
-            nose_end_point2D.clear();
-            nose_end_point3D.clear();
-            nose_end_point2D_drawtmp.clear();
-            nose_end_point3D.push_back(cv::Point3f(0.0,0.0,TmpDistance));
-            projectPoints(nose_end_point3D, rotation_vector, translation_vector, camera_matrix, dist_coeffs, nose_end_point2D);
-            nose_end_point2D_drawtmp.push_back(std::round(nose_end_point2D[0].x));
-            nose_end_point2D_drawtmp.push_back(std::round(nose_end_point2D[0].y));
-
-            nose_end_point2D_draw.clear();
-            nose_end_point2D_draw2.clear();
-            nose_end_point2D_draw3.clear();
-            nose_end_point2D_draw4.clear();
-
-            nose_end_point2D.clear();
-            nose_end_point3D.clear();
-
-            nose_end_point3D.push_back(cv::Point3f(0.0,0.0,FirstDistance));
-            projectPoints(nose_end_point3D, rotation_vector, translation_vector, camera_matrix, dist_coeffs, nose_end_point2D);
-            nose_end_point2D_draw.push_back(std::round(nose_end_point2D[0].x));
-            nose_end_point2D_draw.push_back(std::round(nose_end_point2D[0].y));
-
-            nose_end_point2D.clear();
-            nose_end_point3D.clear();
-            nose_end_point3D.push_back(cv::Point3f(0.0,0.0,SecondDistance));
-            projectPoints(nose_end_point3D, rotation_vector, translation_vector, camera_matrix, dist_coeffs, nose_end_point2D);
-
-            nose_end_point2D_draw2.push_back(std::round(nose_end_point2D[0].x));
-            nose_end_point2D_draw2.push_back(std::round(nose_end_point2D[0].y));
-
-            nose_end_point2D.clear();
-            nose_end_point3D.clear();
-            nose_end_point3D.push_back(cv::Point3f(0,0,ThirdDistance));
-            projectPoints(nose_end_point3D, rotation_vector, translation_vector, camera_matrix, dist_coeffs, nose_end_point2D);
-            nose_end_point2D_draw3.push_back(std::round(nose_end_point2D[0].x));
-            nose_end_point2D_draw3.push_back(std::round(nose_end_point2D[0].y));
-
-            if((!estimateposition.empty())&&(!headorientation.empty()))
-            {
-                if((0<=headorientation[2])&&(headorientation[2]<90))
-                {
-                    headarrowtheta = 180-headorientation[2];
-                }
-                else if((-90<=headorientation[2])&&(headorientation[2]<0))
-                {
-                    headarrowtheta = std::abs(headorientation[2])+180;
-                }
-                else
-                {
-                    headarrowtheta = headorientation[2];
-                }
-
-                headarrowangle = headorientation[2];
-
-                headarrowtheta += robotyaw;
-                if(headarrowtheta>=360)
-                {
-                    headarrowtheta-=360;
-                }
-                this->publishHeadPoseArrow(estimateposition[0], estimateposition[1], headarrowtheta);
-            }
-
-            cout << "headorientation:" << headorientation[0] <<", "<< headorientation[1] << ", "<< headorientation[2] << endl;
-
-            headposedata<<currenttimesec<<", "
-            <<(*itr).head_pose.position.x<<", "
-            <<(*itr).head_pose.position.y<<", "
-            <<(*itr).head_pose.position.z<<","
-            <<headorientation[0]<<", "
-            <<headorientation[1]<<", "
-            <<headorientation[2]<<std::endl;
+            continue;
         }
+
+        this->nose_tip_position_ptr.reset(new cv::Point2i(std::round(detected_face.landmarks_2d[33].x), std::round(detected_face.landmarks_2d[33].y)));
+        this->chin_position_ptr.reset(new cv::Point2i(std::round(detected_face.landmarks_2d[8].x), std::round(detected_face.landmarks_2d[8].y)));
+        this->left_eye_position_ptr.reset(new cv::Point2i(std::round(detected_face.landmarks_2d[36].x), std::round(detected_face.landmarks_2d[36].y)));
+        this->right_eye_position_ptr.reset(new cv::Point2i(std::round(detected_face.landmarks_2d[45].x), std::round(detected_face.landmarks_2d[45].y)));
+        this->left_mouth_position_ptr.reset(new cv::Point2i(std::round(detected_face.landmarks_2d[48].x), std::round(detected_face.landmarks_2d[48].y)));
+        this->right_mouth_position_ptr.reset(new cv::Point2i(std::round(detected_face.landmarks_2d[54].x), std::round(detected_face.landmarks_2d[54].y)));
+
+        this->updateExtrinsicParameters(
+            *this->nose_tip_position_ptr,
+            *this->chin_position_ptr,
+            *this->left_eye_position_ptr,
+            *this->right_eye_position_ptr,
+            *this->left_mouth_position_ptr,
+            *this->right_mouth_position_ptr
+        );
+
+        nose_end_point2D_drawtmp.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, TmpDistance))));
+
+        cv::Mat rotation_matrix  = cv::Mat::zeros(3, 3, CV_64FC1); // Rotation in axis-angle form
+        cv::Rodrigues(this->rotation_vector, rotation_matrix);
+        cv::Mat proj_matrix = (cv::Mat_<double>(3,4) <<
+            rotation_matrix.at<double>(0, 0), rotation_matrix.at<double>(0, 1), rotation_matrix.at<double>(0, 2), 0,
+            rotation_matrix.at<double>(1, 0), rotation_matrix.at<double>(1, 1), rotation_matrix.at<double>(1, 2), 0,
+            rotation_matrix.at<double>(2, 0), rotation_matrix.at<double>(2, 1), rotation_matrix.at<double>(2, 2), 0
+        );
+        cv::Mat rot_matrix_x, rot_matrix_y, rot_matrix_z;
+        cv::Vec3d euler_angles;
+        cv::decomposeProjectionMatrix(
+            proj_matrix,
+            this->camera_matrix,
+            rotation_matrix,
+            this->translation_vector,
+            rot_matrix_x,
+            rot_matrix_y,
+            rot_matrix_z,
+            euler_angles
+        );
+        EulerAngles head_orientation = {
+            euler_angles[2],  // roll
+            euler_angles[0],  // pitch
+            euler_angles[1]  // yaw
+        };
+        this->modifyHeadOrientation(head_orientation);
+
+        nose_end_point2D_draw.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, FirstDistance))));
+        nose_end_point2D_draw2.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, SecondDistance))));
+        nose_end_point2D_draw3.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, ThirdDistance))));
+
+        if((!estimateposition.empty())&&(!head_orientation.empty()))
+        {
+            this->head_arrow_theta = calcHeadArrowAngle(head_orientation);
+            this->publishHeadPoseArrow(estimateposition[0], estimateposition[1], this->head_arrow_theta);
+            this->head_arrow_angle = head_orientation[2];
+        }
+
+        // headposedata << time_from_run_sec << ", "
+        //     << detected_face.head_pose.position.x << ", "
+        //     << detected_face.head_pose.position.y << ", "
+        //     << detected_face.head_pose.position.z << ","
+        //     << head_orientation[0] << ", "
+        //     << head_orientation[1] << ", "
+        //     << head_orientation[2] << std::endl;
     }
-    std::cout<<"face detect finish"<<std::endl;
-    std::cout<< " " <<std::endl;
 }
 
-void CombiDarknetOpenface::modifyHeadOrientation()
+
+void CombiDarknetOpenface::updateExtrinsicParameters(const cv::Point2i& nose_tip_position, const cv::Point2i& chin_position, const cv::Point2i& left_eye_position, const cv::Point2i& right_eye_position, const cv::Point2i& left_mouth_position, const cv::Point2i& right_mouth_position)
+{
+    std::vector<cv::Point2f> image_points = {
+        nose_tip_position,
+        chin_position,
+        left_eye_position,
+        right_eye_position,
+        left_mouth_position,
+        right_mouth_position
+    };
+
+    const float face_model_scale = 0.225;
+    std::vector<cv::Point3f> model_points = {
+        cv::Point3f(0.0f, 0.0f, 0.0f),  // Nose tip
+        cv::Point3f(0.0f, -330.0*face_model_scale, -65.0*face_model_scale),  // Chin
+        cv::Point3f(-225.0*face_model_scale, 170.0*face_model_scale, -135.0*face_model_scale),  // Left eye left corner
+        cv::Point3f(225.0*face_model_scale, 170.0*face_model_scale, -135.0*face_model_scale),  // Right eye right corner
+        cv::Point3f(-150.0*face_model_scale, -150.0*face_model_scale, -125.0*face_model_scale),  // Left Mouth corner
+        cv::Point3f(150.0*face_model_scale, -150.0*face_model_scale, -125.0*face_model_scale)  // Right mouth corner
+    };
+
+    this->updateExtrinsicParameters(model_points, image_points);
+}
+
+
+void CombiDarknetOpenface::updateExtrinsicParameters(const std::vector<cv::Point3f>& model_points, const std::vector<cv::Point2f>& image_points)
+{
+    this->rotation_vector  = cv::Mat::zeros(3, 1, CV_64FC1); // Rotation in axis-angle form
+    this->translation_vector = cv::Mat::zeros(3, 1, CV_64FC1);
+
+    cv::solvePnP(model_points, image_points, this->camera_matrix, this->dist_coeffs, this->rotation_vector, this->translation_vector, CV_ITERATIVE);
+}
+
+
+void CombiDarknetOpenface::modifyHeadOrientation(EulerAngles& head_orientation)
 {
     static int init = 0;
 
@@ -242,26 +167,26 @@ void CombiDarknetOpenface::modifyHeadOrientation()
     if(!init)
     {
         std::cout<<"init"<<std::endl;
-        lastheadori[2] =  headorientation[2];
+        lastheadori[2] =  head_orientation[2];
         for(int i=0;i<3;i++)
         {
             lastrotation_value.push_back(rotation_vector.at<double>(0,i));
             lasttranslation_value.push_back(translation_vector.at<double>(0,i));
         }
         init = 1;
-        lastnose_end_point2D_drawtmptheta = math_util::radToDeg(atan2(nose_end_point2D_drawtmp.at(0)-nose_tip[0],nose_end_point2D_drawtmp.at(1)-nose_tip[1]));
+        lastnose_end_point2D_drawtmptheta = math_util::radToDeg(atan2(nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x,nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y));
     }
 
-    nose_end_point2D_drawtmptheta = math_util::radToDeg(atan2(nose_end_point2D_drawtmp.at(0)-nose_tip[0],nose_end_point2D_drawtmp.at(1)-nose_tip[1]));
+    nose_end_point2D_drawtmptheta = math_util::radToDeg(atan2(nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x,nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y));
 
     std::cout<<"nose_end_point2D_drawtmptheta:"<<nose_end_point2D_drawtmptheta<<","<<lastnose_end_point2D_drawtmptheta<<","<<lastnose_end_point2D_drawtmptheta-nose_end_point2D_drawtmptheta<<std::endl;
 
-    if(!(((nose_end_point2D_drawtmp[0]>0)&&(nose_end_point2D_drawtmp[0]<640))&&((nose_end_point2D_drawtmp[1]>0)&&(nose_end_point2D_drawtmp[1]<480))))
+    if(!(((nose_end_point2D_drawtmp->x>0)&&(nose_end_point2D_drawtmp->x<640))&&((nose_end_point2D_drawtmp->y>0)&&(nose_end_point2D_drawtmp->y<480))))
     {
         std::cout<<"modify drawpoint"<<std::endl;
         for(int i=0;i<3;i++)
         {
-            headorientation[i] = lastheadori[i];
+            head_orientation[i] = lastheadori[i];
             rotation_vector.at<double>(0,i) = lastrotation_value.at(i);
             translation_vector.at<double>(0,i) = lasttranslation_value.at(i);
         }
@@ -273,12 +198,46 @@ void CombiDarknetOpenface::modifyHeadOrientation()
         std::cout<<"save last data"<<std::endl;
         for(int i=0;i<3;i++)
         {
-            lastheadori[i] = headorientation[i];
+            lastheadori[i] = head_orientation[i];
             lastrotation_value.push_back(rotation_vector.at<double>(0,i));
             lasttranslation_value.push_back(translation_vector.at<double>(0,i));
         }
-        lastnose_end_point2D_drawtmptheta = math_util::radToDeg(atan2(nose_end_point2D_drawtmp.at(0)-nose_tip[0],nose_end_point2D_drawtmp.at(1)-nose_tip[1]));
+        lastnose_end_point2D_drawtmptheta = math_util::radToDeg(atan2(nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x,nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y));
     }
+}
+
+
+cv::Point2i CombiDarknetOpenface::getProjectedPoint(const cv::Point3f& point_3d) const
+{
+    std::vector<cv::Point3f> point_3d_list = {point_3d};
+    std::vector<cv::Point2f> point_2d_list;
+    cv::projectPoints(point_3d_list, this->rotation_vector, this->translation_vector, this->camera_matrix, this->dist_coeffs, point_2d_list);
+    return cv::Point2i(std::round(point_2d_list[0].x), std::round(point_2d_list[0].y));
+}
+
+
+double CombiDarknetOpenface::calcHeadArrowAngle(const EulerAngles& head_orientation) const
+{
+    double ret_val = 0.0;
+    if(0 <= head_orientation[2] && head_orientation[2] < 90)
+    {
+        ret_val = 180 - head_orientation[2];
+    }
+    else if(-90 <= head_orientation[2] && head_orientation[2]<0)
+    {
+        ret_val = std::abs(head_orientation[2]) + 180;
+    }
+    else
+    {
+        ret_val = head_orientation[2];
+    }
+
+    ret_val += this->robotyaw;
+    if(ret_val>=360)
+    {
+        ret_val-=360;
+    }
+    return ret_val;
 }
 
 void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBoxes::ConstPtr& msg )
@@ -476,15 +435,15 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     std::cout<<"robot_moving:"<<robot_moving<<std::endl;
     std::cout<<"pose_reset:"<<pose_reset<<std::endl;
     std::cout<<"pose_reset_cnt:"<<pose_reset_cnt<<std::endl;
-    std::cout<<"headarrowtheta:"<<headarrowtheta<<std::endl;
+    std::cout<<"head_arrow_theta:"<<head_arrow_theta<<std::endl;
     std::cout<<"robotyaw:"<<robotyaw<<std::endl;
 
-    double headarrowthetatmp = headarrowtheta+180;
-    if(headarrowthetatmp>360)
+    double head_arrow_thetatmp = head_arrow_theta+180;
+    if(head_arrow_thetatmp>360)
     {
-        headarrowthetatmp -= 360;
+        head_arrow_thetatmp -= 360;
     }
-    headrobottheta = robotyaw-headarrowthetatmp;
+    headrobottheta = robotyaw-head_arrow_thetatmp;
     std::cout<<"headrobottheta:"<<headrobottheta<<std::endl;
 
     if(((!personbox.empty())&&(!robot_move)&&(!person_move))&&(notmeasurement_cnt<RobotMoveCount)&&(!robot_moving)&&(!pose_reset))
@@ -690,7 +649,7 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
 
     double robotyawtmp = robotyaw;
 
-    if((!robotpose.empty())&&(!nose_end_point2D_drawtmp.empty()&&(!pose_reset)))
+    if((!robotpose.empty())&&(nose_end_point2D_drawtmp&&(!pose_reset)))
     {
         if(move_mode==OrientationInView)
         {
@@ -698,7 +657,7 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
             if(robot_moving==0)
             {
                 double deltatheta = 0;
-                targetrobotpose.at(2) = headarrowtheta+180;
+                targetrobotpose.at(2) = head_arrow_theta+180;
                 if(targetrobotpose.at(2)>360)
                 {
                     targetrobotpose.at(2)-=360;
@@ -706,8 +665,8 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
 
                 double r = std::sqrt(std::pow(robotpose.at(0)-estimateposition.at(0), 2) + std::pow(robotpose.at(1)-estimateposition.at(1), 2));
 
-                targetrobotpose.at(0) = r*cos(math_util::degToRad(headarrowtheta))+estimateposition.at(0);
-                targetrobotpose.at(1) = r*sin(math_util::degToRad(headarrowtheta))+estimateposition.at(1);
+                targetrobotpose.at(0) = r*cos(math_util::degToRad(head_arrow_theta))+estimateposition.at(0);
+                targetrobotpose.at(1) = r*sin(math_util::degToRad(head_arrow_theta))+estimateposition.at(1);
 
                 double r2 = std::sqrt(std::pow(targetrobotpose.at(0)-estimateposition.at(0), 2) + std::pow(targetrobotpose.at(1)-estimateposition.at(1), 2));
 
@@ -716,7 +675,7 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
                 std::cout<<"r2:"<<r2<<std::endl;
                 std::cout<<"robot pose:"<<robotpose.at(0)<<","<<robotpose.at(1)<<std::endl;
                 std::cout<<"person pose:"<<estimateposition.at(0)<<","<<estimateposition.at(1)<<std::endl;
-                std::cout<<"headarrowtheta:"<<headarrowtheta<<std::endl;
+                std::cout<<"head_arrow_theta:"<<head_arrow_theta<<std::endl;
             }
         }
         else if(move_mode==OrientationOutView)
@@ -738,7 +697,7 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
                 else if((10<=headrobottheta)&&(headrobottheta<=30))
                 {
                     std::cout<<"out of view mode:2"<<std::endl;
-                    targetrobotpose.at(2) = headarrowtheta;
+                    targetrobotpose.at(2) = head_arrow_theta;
                     out_view_mode=2;
                 }
                 else if((30<=headrobottheta)&&(headrobottheta<=90))
@@ -757,7 +716,7 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
                 else if((-10>=headrobottheta)&&(headrobottheta>-30))
                 {
                     std::cout<<"out of view mode:5"<<std::endl;
-                    targetrobotpose.at(2) = headarrowtheta;
+                    targetrobotpose.at(2) = head_arrow_theta;
                     out_view_mode=5;
                 }
                 else if((-30>=headrobottheta)&&(headrobottheta>-90))
@@ -769,8 +728,8 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
                 else
                 {
                     std::cout<<"out of view mode error"<<std::endl;
-                    std::cout<<"headarrowangle:"<<headarrowangle<<std::endl;
-                    std::cout<<"headarrowtheta:"<<headarrowtheta<<std::endl;
+                    std::cout<<"headarrowangle:"<<head_arrow_angle<<std::endl;
+                    std::cout<<"head_arrow_theta:"<<head_arrow_theta<<std::endl;
                     std::cout<<"headrobottheta:"<<headrobottheta<<std::endl;
                 }
                 targetthetatmp = targetrobotpose.at(2);
@@ -1169,7 +1128,7 @@ void CombiDarknetOpenface::calculateTimeUse(double currenttimesec)
     noseendminindex = 0;
     nose_end_point2D_drawmin.clear();
     detectedobjectbox.clear();
-    if((!nose_end_point2D_draw.empty())&&(!personbox.empty()))
+    if(nose_end_point2D_draw &&(!personbox.empty()))
     {
         //11/18
         cv::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
@@ -1185,18 +1144,18 @@ void CombiDarknetOpenface::calculateTimeUse(double currenttimesec)
             i += DistanceStep;
             distancestep.push_back(i);
         }
-        double thetanoseendtmpx = nose_end_point2D_drawtmp[0]-nose_tip[0];
-        double thetanoseendtmpy = nose_end_point2D_drawtmp[1]-nose_tip[1];
+        double thetanoseendtmpx = nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x;
+        double thetanoseendtmpy = nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y;
         double thetanoseendtmp = math_util::radToDeg(atan2(thetanoseendtmpy,thetanoseendtmpx));
 
-        double thetanoseend3x = nose_end_point2D_draw3[0]-nose_tip[0];
-        double thetanoseend3y = nose_end_point2D_draw3[1]-nose_tip[1];
+        double thetanoseend3x = nose_end_point2D_draw3->x-nose_tip_position_ptr->x;
+        double thetanoseend3y = nose_end_point2D_draw3->y-nose_tip_position_ptr->y;
         double thetanoseend3 = math_util::radToDeg(atan2(thetanoseend3y,thetanoseend3x));
-        double thetanoseend2x = nose_end_point2D_draw2[0]-nose_tip[0];
-        double thetanoseend2y = nose_end_point2D_draw2[1]-nose_tip[1];
+        double thetanoseend2x = nose_end_point2D_draw2->x-nose_tip_position_ptr->x;
+        double thetanoseend2y = nose_end_point2D_draw2->y-nose_tip_position_ptr->y;
         double thetanoseend2 = math_util::radToDeg(atan2(thetanoseend2y,thetanoseend2x));
-        double thetanoseendx = nose_end_point2D_draw[0]-nose_tip[0];
-        double thetanoseendy = nose_end_point2D_draw[1]-nose_tip[1];
+        double thetanoseendx = nose_end_point2D_draw->x-nose_tip_position_ptr->x;
+        double thetanoseendy = nose_end_point2D_draw->y-nose_tip_position_ptr->y;
         double thetanoseend = math_util::radToDeg(atan2(thetanoseendy,thetanoseendx));
 
         std::vector<float> noseenddistance;
@@ -1222,8 +1181,8 @@ void CombiDarknetOpenface::calculateTimeUse(double currenttimesec)
             nose_end_point3D.push_back(cv::Point3d(0,0,distancestep.at(i)));
             projectPoints(nose_end_point3D, rotation_vector, translation_vector, camera_matrix, dist_coeffs, nose_end_point2D);
 
-            double thetanoseendmintmpx = nose_end_point2D[0].x-nose_tip[0];
-            double thetanoseendmintmpy = nose_end_point2D[0].y-nose_tip[1];
+            double thetanoseendmintmpx = nose_end_point2D[0].x-nose_tip_position_ptr->x;
+            double thetanoseendmintmpy = nose_end_point2D[0].y-nose_tip_position_ptr->y;
             double thetanoseendmintmp = math_util::radToDeg(atan2(thetanoseendmintmpy,thetanoseendmintmpx));
 
             if(abs(thetanoseendtmp-thetanoseendmintmp)<10)
@@ -1296,18 +1255,18 @@ void CombiDarknetOpenface::calculateTimeUse(double currenttimesec)
 
             if(!noseendminindex)
             {
-                double nosetoendmin = std::sqrt(std::pow(nose_end_point2D_drawmin[0]-nose_tip[0], 2) + std::pow(nose_end_point2D_drawmin[1]-nose_tip[1], 2));
+                double nosetoendmin = std::sqrt(std::pow(nose_end_point2D_drawmin[0]-nose_tip_position_ptr->x, 2) + std::pow(nose_end_point2D_drawmin[1]-nose_tip_position_ptr->y, 2));
 
-                double nosetoendconst3 = std::sqrt(std::pow(nose_end_point2D_draw3[0]-nose_tip[0], 2) + std::pow(nose_end_point2D_draw3[1]-nose_tip[1], 2));
-                double nosetoendconst2 = std::sqrt(std::pow(nose_end_point2D_draw2[0]-nose_tip[0], 2) + std::pow(nose_end_point2D_draw2[1]-nose_tip[1], 2));
-                double nosetoendconsttmp = std::sqrt(std::pow(nose_end_point2D_drawtmp[0]-nose_tip[0], 2) + std::pow(nose_end_point2D_drawtmp[1]-nose_tip[1], 2));
+                double nosetoendconst3 = std::sqrt(std::pow(nose_end_point2D_draw3->x-nose_tip_position_ptr->x, 2) + std::pow(nose_end_point2D_draw3->y-nose_tip_position_ptr->y, 2));
+                double nosetoendconst2 = std::sqrt(std::pow(nose_end_point2D_draw2->x-nose_tip_position_ptr->x, 2) + std::pow(nose_end_point2D_draw2->y-nose_tip_position_ptr->y, 2));
+                double nosetoendconsttmp = std::sqrt(std::pow(nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x, 2) + std::pow(nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y, 2));
 
-                int gazeobjectx = boxcenterx.at(noseendminindextmp2)-nose_tip[0];
-                int gazeobjecty = boxcentery.at(noseendminindextmp2)-nose_tip[1];
+                int gazeobjectx = boxcenterx.at(noseendminindextmp2)-nose_tip_position_ptr->x;
+                int gazeobjecty = boxcentery.at(noseendminindextmp2)-nose_tip_position_ptr->y;
                 double thetagazeobject = math_util::radToDeg(atan2(gazeobjecty,gazeobjectx));
 
-                double thetanoseendminx = nose_end_point2D_drawmin[0]-nose_tip[0];
-                double thetanoseendminy = nose_end_point2D_drawmin[1]-nose_tip[1];
+                double thetanoseendminx = nose_end_point2D_drawmin[0]-nose_tip_position_ptr->x;
+                double thetanoseendminy = nose_end_point2D_drawmin[1]-nose_tip_position_ptr->y;
                 double thetanoseendmin = math_util::radToDeg(atan2(thetanoseendminy,thetanoseendminx));
 
                 if(abs(thetagazeobject-thetanoseendmin)<30)
@@ -1323,10 +1282,10 @@ void CombiDarknetOpenface::calculateTimeUse(double currenttimesec)
                     move_mode = OrientationOutView;
                 }
 
-                double nosetoend = std::sqrt(std::pow(nose_end_point2D_drawtmp[0]-nose_tip[0], 2) + std::pow(nose_end_point2D_drawtmp[1]-nose_tip[1], 2));
+                double nosetoend = std::sqrt(std::pow(nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x, 2) + std::pow(nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y, 2));
 
                 std::cout << "######indicator########"<< std::endl;
-                std::cout << "nose:" << nose_tip[0] << "," << nose_tip[1]<< std::endl;
+                std::cout << "nose:" << nose_tip_position_ptr->x << "," << nose_tip_position_ptr->y<< std::endl;
                 std::cout << "noseendminindextmp2:"<< noseendminindextmp2 << std::endl;
                 std::cout << "boxcenter.at(noseendminindextmp2)  :"<<boxcenterx.at(noseendminindextmp2)<<","<<boxcentery.at(noseendminindextmp2)<< endl;
                 std::cout << "thetagazeobject:"<< thetagazeobject << std::endl;
@@ -1618,32 +1577,32 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
                 cv::putText(cv_ptr->image, "cannot measure", cv::Point(20,60), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,0,255), 2,CV_AA);
             }
 
-            cv::circle(cv_ptr->image, cv::Point(nose_end_point2D_draw3[0], nose_end_point2D_draw3[1]), 5, cv::Scalar(255,255,255), 3);
+            cv::circle(cv_ptr->image, *nose_end_point2D_draw3, 5, cv::Scalar(255,255,255), 3);
 
-            double thetanoseendtmpx = nose_end_point2D_drawtmp[0]-nose_tip[0];
-            double thetanoseendtmpy = nose_end_point2D_drawtmp[1]-nose_tip[1];
+            double thetanoseendtmpx = nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x;
+            double thetanoseendtmpy = nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y;
             double thetanoseendtmp = math_util::radToDeg(atan2(thetanoseendtmpy,thetanoseendtmpx));
-            double thetanoseend3x = nose_end_point2D_draw3[0]-nose_tip[0];
-            double thetanoseend3y = nose_end_point2D_draw3[1]-nose_tip[1];
+            double thetanoseend3x = nose_end_point2D_draw3->x-nose_tip_position_ptr->x;
+            double thetanoseend3y = nose_end_point2D_draw3->y-nose_tip_position_ptr->y;
             double thetanoseend3 = math_util::radToDeg(atan2(thetanoseend3y,thetanoseend3x));
-            double thetanoseend2x = nose_end_point2D_draw2[0]-nose_tip[0];
-            double thetanoseend2y = nose_end_point2D_draw2[1]-nose_tip[1];
+            double thetanoseend2x = nose_end_point2D_draw2->x-nose_tip_position_ptr->x;
+            double thetanoseend2y = nose_end_point2D_draw2->y-nose_tip_position_ptr->y;
             double thetanoseend2 = math_util::radToDeg(atan2(thetanoseend2y,thetanoseend2x));
-            double thetanoseendx = nose_end_point2D_draw[0]-nose_tip[0];
-            double thetanoseendy = nose_end_point2D_draw[1]-nose_tip[1];
+            double thetanoseendx = nose_end_point2D_draw->x-nose_tip_position_ptr->x;
+            double thetanoseendy = nose_end_point2D_draw->y-nose_tip_position_ptr->y;
             double thetanoseend = math_util::radToDeg(atan2(thetanoseendy,thetanoseendx));
 
-            if((((nose_end_point2D_draw3[0]>0)&&(nose_end_point2D_draw3[0]<640))&&((nose_end_point2D_draw3[1]>0)&&(nose_end_point2D_draw3[1]<480)))&&(abs(thetanoseendtmp-thetanoseend3)<10))
+            if((((nose_end_point2D_draw3->x>0)&&(nose_end_point2D_draw3->x<640))&&((nose_end_point2D_draw3->y>0)&&(nose_end_point2D_draw3->y<480)))&&(abs(thetanoseendtmp-thetanoseend3)<10))
             {
-                cv::line(cv_ptr->image,cv::Point(nose_tip[0],nose_tip[1]),cv::Point(nose_end_point2D_draw3[0],nose_end_point2D_draw3[1]), cv::Scalar(0,255,0), 2);
+                cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw3, cv::Scalar(0,255,0), 2);
             }
-            else if((((nose_end_point2D_draw2[0]>0)&&(nose_end_point2D_draw2[0]<640))&&((nose_end_point2D_draw2[1]>0)&&(nose_end_point2D_draw2[1]<480)))&&(abs(thetanoseendtmp-thetanoseend2)<10))
+            else if((((nose_end_point2D_draw2->x>0)&&(nose_end_point2D_draw2->x<640))&&((nose_end_point2D_draw2->y>0)&&(nose_end_point2D_draw2->y<480)))&&(abs(thetanoseendtmp-thetanoseend2)<10))
             {
-                cv::line(cv_ptr->image,cv::Point(nose_tip[0],nose_tip[1]),cv::Point(nose_end_point2D_draw2[0],nose_end_point2D_draw2[1]), cv::Scalar(0,255,0), 2);
+                cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw2, cv::Scalar(0,255,0), 2);
             }
-            else if((((nose_end_point2D_draw[0]>0)&&(nose_end_point2D_draw[0]<640))&&((nose_end_point2D_draw[1]>0)&&(nose_end_point2D_draw[1]<480)))&&(abs(thetanoseendtmp-thetanoseend)<10))
+            else if((((nose_end_point2D_draw->x>0)&&(nose_end_point2D_draw->x<640))&&((nose_end_point2D_draw->y>0)&&(nose_end_point2D_draw->y<480)))&&(abs(thetanoseendtmp-thetanoseend)<10))
             {
-                cv::line(cv_ptr->image,cv::Point(nose_tip[0],nose_tip[1]),cv::Point(nose_end_point2D_draw[0],nose_end_point2D_draw[1]), cv::Scalar(0,255,0), 2);
+                cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw, cv::Scalar(0,255,0), 2);
 
             }
 
@@ -1708,8 +1667,8 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
     cv::putText(dataimage, tostr(errortmptheta), cv::Point(140,120), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
     cv::putText(dataimage, tostr(errortmpx), cv::Point(140,150), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
     cv::putText(dataimage, tostr(errortmpy), cv::Point(140,180), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
-    cv::putText(dataimage, tostr(headarrowangle), cv::Point(20,210), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
-    cv::putText(dataimage, tostr(headarrowtheta), cv::Point(20,240), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
+    cv::putText(dataimage, tostr(head_arrow_angle), cv::Point(20,210), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
+    cv::putText(dataimage, tostr(head_arrow_theta), cv::Point(20,240), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
     cv::putText(dataimage, tostr(headrobottheta), cv::Point(20,270), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
 
     cv::putText(dataimage, tostr(robotyaw), cv::Point(20,330), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
@@ -1841,13 +1800,13 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
             x2 = x2ori;
             y2 = y2ori;
 
-            if(!nose_tip.empty())
+            if(nose_tip_position_ptr)
             {
-                pointx1 = nose_tip[0]-1;
-                pointy1 = nose_tip[1]-1;
-                pointx2 = nose_tip[0]+1;
-                pointy2 = nose_tip[1]+1;
-                std::cout<<"point_nose:"<<nose_tip[0]<<", "<<nose_tip[1]<<std::endl;
+                pointx1 = nose_tip_position_ptr->x-1;
+                pointy1 = nose_tip_position_ptr->y-1;
+                pointx2 = nose_tip_position_ptr->x+1;
+                pointy2 = nose_tip_position_ptr->y+1;
+                std::cout<<"point_nose:"<<nose_tip_position_ptr->x<<", "<<nose_tip_position_ptr->x<<std::endl;
             }
             else
             {
@@ -1968,9 +1927,9 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
             }
 
             cv::rectangle(img, cv::Point(x1ori, y1ori), cv::Point(x2ori, y2ori), cv::Scalar(0, 0, 255), 5, 4);
-            if(!nose_tip.empty())
+            if(nose_tip_position_ptr)
             {
-                cv::circle(img, cv::Point(nose_tip[0],nose_tip[1]), 8, cv::Scalar(0, 0, 0), 3);
+                cv::circle(img, *nose_tip_position_ptr, 8, cv::Scalar(0, 0, 0), 3);
             }
             else
             {
