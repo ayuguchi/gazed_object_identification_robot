@@ -56,8 +56,6 @@
 #include <boost/foreach.hpp>
 #include <algorithm>
 
-#define PI 3.14159265
-
 #define FaceYawLimMin -110
 #define FaceYawLimMax -70
 #define FaceYawOffset 0

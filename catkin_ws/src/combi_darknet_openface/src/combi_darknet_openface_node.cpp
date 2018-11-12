@@ -227,10 +227,10 @@ void CombiDarknetOpenface::ModifyHeadOrientation()
             lasttranslation_value.push_back(translation_vector.at<double>(0,i));
         }
         init = 1;
-        lastnose_end_point2D_drawtmptheta = atan2(nose_end_point2D_drawtmp.at(0)-nose_tip[0],nose_end_point2D_drawtmp.at(1)-nose_tip[1])* 180 / PI;
+        lastnose_end_point2D_drawtmptheta = atan2(nose_end_point2D_drawtmp.at(0)-nose_tip[0],nose_end_point2D_drawtmp.at(1)-nose_tip[1])* 180 / M_PI;
     }
 
-    nose_end_point2D_drawtmptheta = atan2(nose_end_point2D_drawtmp.at(0)-nose_tip[0],nose_end_point2D_drawtmp.at(1)-nose_tip[1])* 180 / PI;
+    nose_end_point2D_drawtmptheta = atan2(nose_end_point2D_drawtmp.at(0)-nose_tip[0],nose_end_point2D_drawtmp.at(1)-nose_tip[1])* 180 / M_PI;
 
     std::cout<<"nose_end_point2D_drawtmptheta:"<<nose_end_point2D_drawtmptheta<<","<<lastnose_end_point2D_drawtmptheta<<","<<lastnose_end_point2D_drawtmptheta-nose_end_point2D_drawtmptheta<<std::endl;
 
@@ -255,7 +255,7 @@ void CombiDarknetOpenface::ModifyHeadOrientation()
             lastrotation_value.push_back(rotation_vector.at<double>(0,i));
             lasttranslation_value.push_back(translation_vector.at<double>(0,i));
         }
-        lastnose_end_point2D_drawtmptheta = atan2(nose_end_point2D_drawtmp.at(0)-nose_tip[0],nose_end_point2D_drawtmp.at(1)-nose_tip[1])* 180 / PI;
+        lastnose_end_point2D_drawtmptheta = atan2(nose_end_point2D_drawtmp.at(0)-nose_tip[0],nose_end_point2D_drawtmp.at(1)-nose_tip[1])* 180 / M_PI;
     }
 }
 
@@ -1165,17 +1165,17 @@ void CombiDarknetOpenface::Calculate_TimeUse(double currenttimesec)
         }
         double thetanoseendtmpx = nose_end_point2D_drawtmp[0]-nose_tip[0];
         double thetanoseendtmpy = nose_end_point2D_drawtmp[1]-nose_tip[1];
-        double thetanoseendtmp = atan2(thetanoseendtmpy,thetanoseendtmpx)* 180 / PI;
+        double thetanoseendtmp = atan2(thetanoseendtmpy,thetanoseendtmpx)* 180 / M_PI;
 
         double thetanoseend3x = nose_end_point2D_draw3[0]-nose_tip[0];
         double thetanoseend3y = nose_end_point2D_draw3[1]-nose_tip[1];
-        double thetanoseend3 = atan2(thetanoseend3y,thetanoseend3x)* 180 / PI;
+        double thetanoseend3 = atan2(thetanoseend3y,thetanoseend3x)* 180 / M_PI;
         double thetanoseend2x = nose_end_point2D_draw2[0]-nose_tip[0];
         double thetanoseend2y = nose_end_point2D_draw2[1]-nose_tip[1];
-        double thetanoseend2 = atan2(thetanoseend2y,thetanoseend2x)* 180 / PI;
+        double thetanoseend2 = atan2(thetanoseend2y,thetanoseend2x)* 180 / M_PI;
         double thetanoseendx = nose_end_point2D_draw[0]-nose_tip[0];
         double thetanoseendy = nose_end_point2D_draw[1]-nose_tip[1];
-        double thetanoseend = atan2(thetanoseendy,thetanoseendx)* 180 / PI;
+        double thetanoseend = atan2(thetanoseendy,thetanoseendx)* 180 / M_PI;
 
         std::vector<float> noseenddistance;
         std::vector<float> noseenddistancetmp;
@@ -1202,7 +1202,7 @@ void CombiDarknetOpenface::Calculate_TimeUse(double currenttimesec)
 
             double thetanoseendmintmpx = nose_end_point2D[0].x-nose_tip[0];
             double thetanoseendmintmpy = nose_end_point2D[0].y-nose_tip[1];
-            double thetanoseendmintmp = atan2(thetanoseendmintmpy,thetanoseendmintmpx)* 180 / PI;
+            double thetanoseendmintmp = atan2(thetanoseendmintmpy,thetanoseendmintmpx)* 180 / M_PI;
 
             if(abs(thetanoseendtmp-thetanoseendmintmp)<10)
             {
@@ -1282,11 +1282,11 @@ void CombiDarknetOpenface::Calculate_TimeUse(double currenttimesec)
 
                 int gazeobjectx = boxcenterx.at(noseendminindextmp2)-nose_tip[0];
                 int gazeobjecty = boxcentery.at(noseendminindextmp2)-nose_tip[1];
-                double thetagazeobject = atan2(gazeobjecty,gazeobjectx)* 180 / PI;
+                double thetagazeobject = atan2(gazeobjecty,gazeobjectx)* 180 / M_PI;
 
                 double thetanoseendminx = nose_end_point2D_drawmin[0]-nose_tip[0];
                 double thetanoseendminy = nose_end_point2D_drawmin[1]-nose_tip[1];
-                double thetanoseendmin = atan2(thetanoseendminy,thetanoseendminx)* 180 / PI;
+                double thetanoseendmin = atan2(thetanoseendminy,thetanoseendminx)* 180 / M_PI;
 
                 if(abs(thetagazeobject-thetanoseendmin)<30)
                 {
@@ -1632,16 +1632,16 @@ void CombiDarknetOpenface::rgbImageCallback(const sensor_msgs::ImageConstPtr& ms
 
             double thetanoseendtmpx = nose_end_point2D_drawtmp[0]-nose_tip[0];
             double thetanoseendtmpy = nose_end_point2D_drawtmp[1]-nose_tip[1];
-            double thetanoseendtmp = atan2(thetanoseendtmpy,thetanoseendtmpx)* 180 / PI;
+            double thetanoseendtmp = atan2(thetanoseendtmpy,thetanoseendtmpx)* 180 / M_PI;
             double thetanoseend3x = nose_end_point2D_draw3[0]-nose_tip[0];
             double thetanoseend3y = nose_end_point2D_draw3[1]-nose_tip[1];
-            double thetanoseend3 = atan2(thetanoseend3y,thetanoseend3x)* 180 / PI;
+            double thetanoseend3 = atan2(thetanoseend3y,thetanoseend3x)* 180 / M_PI;
             double thetanoseend2x = nose_end_point2D_draw2[0]-nose_tip[0];
             double thetanoseend2y = nose_end_point2D_draw2[1]-nose_tip[1];
-            double thetanoseend2 = atan2(thetanoseend2y,thetanoseend2x)* 180 / PI;
+            double thetanoseend2 = atan2(thetanoseend2y,thetanoseend2x)* 180 / M_PI;
             double thetanoseendx = nose_end_point2D_draw[0]-nose_tip[0];
             double thetanoseendy = nose_end_point2D_draw[1]-nose_tip[1];
-            double thetanoseend = atan2(thetanoseendy,thetanoseendx)* 180 / PI;
+            double thetanoseend = atan2(thetanoseendy,thetanoseendx)* 180 / M_PI;
 
             if((((nose_end_point2D_draw3[0]>0)&&(nose_end_point2D_draw3[0]<640))&&((nose_end_point2D_draw3[1]>0)&&(nose_end_point2D_draw3[1]<480)))&&(abs(thetanoseendtmp-thetanoseend3)<10))
             {
