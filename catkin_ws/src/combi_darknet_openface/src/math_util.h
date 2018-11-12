@@ -3,6 +3,8 @@
 #include <cmath>
 
 namespace math_util{
+    const double PI = 3.14159265358979323846;
+
     /** round the value to the specified number of digits
      * 
      * \param value the value
@@ -11,6 +13,16 @@ namespace math_util{
     template<typename VALUE_T, typename SIZE_T>
     inline VALUE_T round(VALUE_T value, SIZE_T num_digit){
         return static_cast<double>(static_cast<int>(value * std::pow(10.0, num_digit) + 0.5)) * std::pow(10.0, -num_digit);
+    }
+
+    template<typename T>
+    inline T radToDeg(T value){
+        return value * 180 / PI;
+    }
+
+    template<typename T>
+    inline T degToRad(T value){
+        return value * PI / 180;
     }
 };
 #endif
