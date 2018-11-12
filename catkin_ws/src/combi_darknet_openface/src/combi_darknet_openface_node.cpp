@@ -191,7 +191,30 @@ void CombiDarknetOpenface::onRecognizedFace(const  combi_darknet_openface::Faces
             nose_end_point2D_draw3.push_back(std::round(nose_end_point2D[0].x));
             nose_end_point2D_draw3.push_back(std::round(nose_end_point2D[0].y));
 
-            CombiDarknetOpenface::publishHeadPoseArrow();
+            if((!estimateposition.empty())&&(!headorientation.empty()))
+            {
+                if((0<=headorientation[2])&&(headorientation[2]<90))
+                {
+                    headarrowtheta = 180-headorientation[2];
+                }
+                else if((-90<=headorientation[2])&&(headorientation[2]<0))
+                {
+                    headarrowtheta = std::abs(headorientation[2])+180;
+                }
+                else
+                {
+                    headarrowtheta = headorientation[2];
+                }
+
+                headarrowangle = headorientation[2];
+
+                headarrowtheta += robotyaw;
+                if(headarrowtheta>=360)
+                {
+                    headarrowtheta-=360;
+                }
+                this->publishHeadPoseArrow(estimateposition[0], estimateposition[1], headarrowtheta);
+            }
 
             cout << "headorientation:" << headorientation[0] <<", "<< headorientation[1] << ", "<< headorientation[2] << endl;
 
@@ -1933,15 +1956,15 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
 
                 std::cout<<"personmeasurement:"<<personmeasurementx<<","<<personmeasurementy<<std::endl;
 
-                CombiDarknetOpenface::publishPersonMeasurement(personmeasurementx,personmeasurementy);
-                CombiDarknetOpenface::publishPersonMarker(personangle,personmeasurementx,personmeasurementy);
+                this->publishPersonMeasurement(personmeasurementx, personmeasurementy, estimateposition);
+                this->publishPersonMarker(personangle,personmeasurementx,personmeasurementy);
             }
             else if(fixed_frame =="base_link")
             {
                 double personmeasurementx = persondist * cos(math_util::degToRad(personangle));
                 double personmeasurementy = persondist * sin(math_util::degToRad(personangle));
-                CombiDarknetOpenface::publishPersonMeasurement(personmeasurementx,personmeasurementy);
-                CombiDarknetOpenface::publishPersonMarker(personangle,personmeasurementx,personmeasurementy);
+                this->publishPersonMeasurement(personmeasurementx, personmeasurementy, estimateposition);
+                this->publishPersonMarker(personangle,personmeasurementx,personmeasurementy);
             }
 
             cv::rectangle(img, cv::Point(x1ori, y1ori), cv::Point(x2ori, y2ori), cv::Scalar(0, 0, 255), 5, 4);
@@ -1985,7 +2008,7 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
                 std::cout<<"objectmeasurement:"<<objectmeasurementx<<","<<objectmeasurementy<<std::endl;
                 cv::rectangle(img, cv::Point(detectedobjectbox.at(0), detectedobjectbox.at(1)), cv::Point(detectedobjectbox.at(2), detectedobjectbox.at(3)), cv::Scalar(0, 0, 255), 5, 4);
 
-                CombiDarknetOpenface::publishObjectMarker(objectmeasurementx,objectmeasurementy);
+                this->publishObjectMarker(objectmeasurementx,objectmeasurementy);
             }
         }
     }
@@ -2326,35 +2349,32 @@ void CombiDarknetOpenface::onRobotPoseUpdated(const geometry_msgs::PoseStamped::
 }
 
 
-void CombiDarknetOpenface::publishPersonMeasurement(double measurementx, double measurementy)
+void CombiDarknetOpenface::publishPersonMeasurement(double measurement_x, double measurement_y, const std::vector<double>& estimated_position) const
 {
-    geometry_msgs::PoseStamped inputpose;
-
-    inputpose.pose.position.x = measurementx;
-    inputpose.pose.position.y = measurementy;
-
-    double disterror;
-    if(estimateposition.empty())
+    static int kf_failed_cnt = 0;
+    geometry_msgs::PoseStamped input_pose;
+    input_pose.pose.position.x = measurement_x;
+    input_pose.pose.position.y = measurement_y;
+    if(estimated_position.empty())
     {
-        inputpose.pose.position.z = 1;
-        measurement_pub.publish(inputpose);
+        input_pose.pose.position.z = 1;
+        measurement_pub.publish(input_pose);
     }
     else
     {
-        disterror = std::sqrt(std::pow(measurementx-estimateposition[0] , 2) + std::pow(measurementy-estimateposition[1], 2));
-
-        if(disterror<1.2)
+        double dist_error = std::sqrt(std::pow(measurement_x - estimated_position[0], 2) + std::pow(measurement_y - estimated_position[1], 2));
+        if(dist_error<1.2)
         {
             kf_failed_cnt = 0;
-            inputpose.pose.position.z = 0;
-            measurement_pub.publish(inputpose);
+            input_pose.pose.position.z = 0;
+            measurement_pub.publish(input_pose);
         }
         else
         {
             if(kf_failed_cnt == 5)
             {
-                inputpose.pose.position.z = 1;
-                measurement_pub.publish(inputpose);
+                input_pose.pose.position.z = 1;
+                measurement_pub.publish(input_pose);
                 kf_failed_cnt = 0;
             }
             else
@@ -2365,136 +2385,95 @@ void CombiDarknetOpenface::publishPersonMeasurement(double measurementx, double 
     }
 }
 
-void CombiDarknetOpenface::publishHeadPoseArrow()
+void CombiDarknetOpenface::publishHeadPoseArrow(double position_x, double position_y, double head_arrow_angle_deg) const
 {
-    visualization_msgs::Marker headposearrow;
-
-    if((!estimateposition.empty())&&(!headorientation.empty()))
-    {
-        headposearrow.header.frame_id = fixed_frame;
-        headposearrow.header.stamp = ros::Time::now();
-        headposearrow.ns = "basic_shapes";
-        headposearrow.type = visualization_msgs::Marker::ARROW;
-        headposearrow.action = visualization_msgs::Marker::ADD;
-
-        headposearrow.pose.position.x = estimateposition[0];
-        headposearrow.pose.position.y = estimateposition[1];
-
-        if((0<=headorientation[2])&&(headorientation[2]<90))
-        {
-            headarrowtheta = 180-headorientation[2];
-        }
-        else if((-90<=headorientation[2])&&(headorientation[2]<0))
-        {
-            headarrowtheta = std::abs(headorientation[2])+180;
-        }
-        else
-        {
-            headarrowtheta = headorientation[2];
-        }
-
-        headarrowangle = headorientation[2];
-
-        headarrowtheta += robotyaw;
-        if(headarrowtheta>=360)
-            headarrowtheta-=360;
-
-        headposearrow.pose.orientation=tf::createQuaternionMsgFromYaw(math_util::degToRad(headarrowtheta));
-
-        // Set the scale of the marker -- 1x1x1 here means 1m on a side
-        headposearrow.scale.x = 0.3;
-        headposearrow.scale.y = 0.1;
-        headposearrow.scale.z = 0.1;
-        // Set the color -- be sure to set alpha to something non-zero!
-        headposearrow.color.r = 0.0f;
-        headposearrow.color.g = 0.0f;
-        headposearrow.color.b = 1.0f;
-        headposearrow.color.a = 1.0f;
-
-        headposearrow.lifetime = ros::Duration();
-        headpose_arrow_pub.publish(headposearrow);
-
-    }
-
+    visualization_msgs::Marker head_pose_arrow;
+    head_pose_arrow.header.frame_id = FIXED_FRAME;
+    head_pose_arrow.header.stamp = ros::Time::now();
+    head_pose_arrow.ns = "basic_shapes";
+    head_pose_arrow.type = visualization_msgs::Marker::ARROW;
+    head_pose_arrow.action = visualization_msgs::Marker::ADD;
+    head_pose_arrow.pose.position.x = position_x;
+    head_pose_arrow.pose.position.y = position_y;
+    head_pose_arrow.pose.orientation = tf::createQuaternionMsgFromYaw(math_util::degToRad(head_arrow_angle_deg));
+    head_pose_arrow.scale.x = 0.3;
+    head_pose_arrow.scale.y = 0.1;
+    head_pose_arrow.scale.z = 0.1;
+    head_pose_arrow.color.r = 0.0f;
+    head_pose_arrow.color.g = 0.0f;
+    head_pose_arrow.color.b = 1.0f;
+    head_pose_arrow.color.a = 1.0f;
+    head_pose_arrow.lifetime = ros::Duration();
+    headpose_arrow_pub.publish(head_pose_arrow);
 }
 
-void CombiDarknetOpenface::publishPersonMarker(double theta, double measurementx, double measurementy)
+void CombiDarknetOpenface::publishPersonMarker(double theta, double measurement_x, double measurement_y) const
 {
-    visualization_msgs::Marker personarrow;
+    visualization_msgs::Marker person_arrow;
+    person_arrow.header.frame_id = FIXED_FRAME;
+    person_arrow.header.stamp = ros::Time::now();
+    person_arrow.ns = "basic_shapes";
+    person_arrow.type = visualization_msgs::Marker::ARROW;
+    person_arrow.action = visualization_msgs::Marker::ADD;
+    person_arrow.pose.position.x = measurement_x;
+    person_arrow.pose.position.y = measurement_y;
+    person_arrow.pose.orientation = tf::createQuaternionMsgFromYaw(math_util::degToRad(theta));
+    person_arrow.scale.x = 0.3;
+    person_arrow.scale.y = 0.1;
+    person_arrow.scale.z = 0.1;
+    person_arrow.color.r = 1.0f;
+    person_arrow.color.g = 0.0f;
+    person_arrow.color.b = 0.0f;
+    person_arrow.color.a = 1.0f;
+    person_arrow.lifetime = ros::Duration();
+    person_arrow_pub.publish(person_arrow);
 
-    personarrow.header.frame_id = fixed_frame;
-    personarrow.header.stamp = ros::Time::now();
-    personarrow.ns = "basic_shapes";
-    personarrow.type = visualization_msgs::Marker::ARROW;
-    personarrow.action = visualization_msgs::Marker::ADD;
+    visualization_msgs::Marker person_marker;
+    person_marker.header.stamp = ros::Time::now();
+    person_marker.header.frame_id = FIXED_FRAME;
+    person_marker.pose.position.x = measurement_x;
+    person_marker.pose.position.y = measurement_y;
+    person_marker.lifetime = ros::Duration();
+    person_marker.scale.x = 0.2;
+    person_marker.scale.y = 0.2;
+    person_marker.scale.z = 0.01;
+    person_marker.type = visualization_msgs::Marker::CUBE;
+    person_marker.color.a = 0.75;
+    person_marker.color.g =  1.0;
+    person_marker_pub.publish(person_marker);
 
-    personarrow.pose.position.x = measurementx;
-    personarrow.pose.position.y = measurementy;
-    personarrow.pose.orientation=tf::createQuaternionMsgFromYaw(math_util::degToRad(theta));
-
-    // Set the scale of the marker -- 1x1x1 here means 1m on a side
-    personarrow.scale.x = 0.3;
-    personarrow.scale.y = 0.1;
-    personarrow.scale.z = 0.1;
-    // Set the color -- be sure to set alpha to something non-zero!
-    personarrow.color.r = 1.0f;
-    personarrow.color.g = 0.0f;
-    personarrow.color.b = 0.0f;
-    personarrow.color.a = 1.0f;
-
-    personarrow.lifetime = ros::Duration();
-    person_arrow_pub.publish(personarrow);
-
-    visualization_msgs::Marker personmarker;
-
-    personmarker.header.stamp = ros::Time::now();
-    personmarker.header.frame_id = fixed_frame;
-    personmarker.pose.position.x = measurementx;
-    personmarker.pose.position.y = measurementy;
-    personmarker.lifetime = ros::Duration();
-    personmarker.scale.x = 0.2;
-    personmarker.scale.y = 0.2;
-    personmarker.scale.z = 0.01;
-    personmarker.type = personmarker.CUBE;
-    personmarker.color.a = 0.75;
-    personmarker.color.g =  1.0;
-    person_marker_pub.publish(personmarker);
-
-    visualization_msgs::Marker originmarker;
-
-    originmarker.header.stamp = ros::Time::now();
-    originmarker.header.frame_id = fixed_frame;
-    originmarker.pose.position.x = 0.0;
-    originmarker.pose.position.y = 0.0;
-    originmarker.lifetime = ros::Duration();
-    originmarker.scale.x = 0.1;
-    originmarker.scale.y = 0.1;
-    originmarker.scale.z = 0.1;
-    originmarker.color.a = 1.0f;
-    originmarker.color.r = 1.0;
-    originmarker.color.g = 1.0;
-    originmarker.color.b = 1.0;
-
-    originmarker.type = originmarker.SPHERE;
-    origin_marker_pub.publish(originmarker);
+    visualization_msgs::Marker origin_marker;
+    origin_marker.header.stamp = ros::Time::now();
+    origin_marker.header.frame_id = FIXED_FRAME;
+    origin_marker.pose.position.x = 0.0;
+    origin_marker.pose.position.y = 0.0;
+    origin_marker.lifetime = ros::Duration();
+    origin_marker.scale.x = 0.1;
+    origin_marker.scale.y = 0.1;
+    origin_marker.scale.z = 0.1;
+    origin_marker.color.a = 1.0f;
+    origin_marker.color.r = 1.0;
+    origin_marker.color.g = 1.0;
+    origin_marker.color.b = 1.0;
+    origin_marker.type = visualization_msgs::Marker::SPHERE;
+    origin_marker_pub.publish(origin_marker);
 }
 
-void CombiDarknetOpenface::publishObjectMarker(double measurementx, double measurementy)
+void CombiDarknetOpenface::publishObjectMarker(double measurement_x, double measurement_y) const
 {
-    visualization_msgs::Marker objectmarker;
-
-    objectmarker.header.stamp = ros::Time::now();
-    objectmarker.header.frame_id = fixed_frame;
-    objectmarker.pose.position.x = measurementx;
-    objectmarker.pose.position.y = measurementy;
-    objectmarker.lifetime = ros::Duration(1);
-    objectmarker.scale.x = 0.2;
-    objectmarker.scale.y = 0.2;
-    objectmarker.scale.z = 0.01;
-    objectmarker.type = objectmarker.CUBE;
-    objectmarker.color.a = 0.75;
-    objectmarker.color.b =  1.0;
-    object_marker_pub.publish(objectmarker);
+    visualization_msgs::Marker object_marker;
+    object_marker.header.stamp = ros::Time::now();
+    object_marker.header.frame_id = FIXED_FRAME;
+    object_marker.pose.position.x = measurement_x;
+    object_marker.pose.position.y = measurement_y;
+    object_marker.lifetime = ros::Duration(1);
+    object_marker.scale.x = 0.2;
+    object_marker.scale.y = 0.2;
+    object_marker.scale.z = 0.01;
+    object_marker.type = visualization_msgs::Marker::CUBE;
+    object_marker.color.a = 0.75;
+    object_marker.color.b =  1.0;
+    object_marker_pub.publish(object_marker);
 }
 
 // 購読者ノードのメイン関数

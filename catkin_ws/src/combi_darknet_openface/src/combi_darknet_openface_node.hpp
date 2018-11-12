@@ -108,7 +108,6 @@ int frame_num = 0;
 int modify_yaw_cnt = 0;
 int modify_distance_cnt = 0;
 
-int kf_failed_cnt = 0;
 int face_cnt = 0;
 int darknet_cnt = 0;
 int rgb_cnt = 0;
@@ -187,14 +186,15 @@ public:
     void onDepthImageUpdated(const sensor_msgs::ImageConstPtr& msg);
     void onPersonPositionEstimated(const geometry_msgs::PoseStamped::ConstPtr& msg);
     void onRobotPoseUpdated(const geometry_msgs::PoseStamped::ConstPtr& msg);
-    void publishPersonMeasurement(double measurementx, double measurementy);//input for KF
-    void publishPersonMarker(double theta, double measurementx, double measurementy);//input for KF
-    void publishObjectMarker(double measurementx, double measurementy);
-    void publishHeadPoseArrow();
+    void publishPersonMeasurement(double measurement_x, double measurement_y, const std::vector<double>& estimated_position) const;
+    void publishPersonMarker(double theta, double measurement_x, double measurement_y) const;
+    void publishObjectMarker(double measurement_x, double measurement_y) const;
+    void publishHeadPoseArrow(double position_x, double position_y, double head_arrow_angle_deg) const;
     void changeViewPoint(double currenttimesec);
         
 
 private:
+    const std::string FIXED_FRAME = "map";
     ros::Subscriber ros_object_sub;
     ros::Subscriber cmd_vel_sub;
     
