@@ -1,4 +1,5 @@
 #include "combi_darknet_openface_node.hpp"
+#include "math_util.h"
 
 CombiDarknetOpenface::CombiDarknetOpenface(ros::NodeHandle nh):
 nh1(nh)
@@ -619,15 +620,6 @@ void CombiDarknetOpenface::Linear_Line(double x1,double y1,double x2,double y2,d
     *b = y1-a2*x1;
 }
 
-double CombiDarknetOpenface::Round( double dSrc, int iLen )
-{
-	double	dRet;
-
-	dRet = dSrc * pow(10.0, iLen);
-	dRet = (double)(int)(dRet + 0.5);
-
-	return dRet * pow(10.0, -iLen);
-}
 void CombiDarknetOpenface::ChangeViewPoint(double currenttimesec)
 {
     static geometry_msgs::Twist twist;
@@ -1053,9 +1045,9 @@ void CombiDarknetOpenface::ChangeViewPoint(double currenttimesec)
             signallinearx = 0;
         }
 
-        angularsig = Round(twist.angular.z,3);
-        linearxsig = Round(twist.linear.x,3);
-        linearysig = Round(twist.linear.y,3);
+        angularsig = math_util::round(twist.angular.z,3);
+        linearxsig = math_util::round(twist.linear.x,3);
+        linearysig = math_util::round(twist.linear.y,3);
 
         std::cout<<"robotmovig:"<<robot_moving<<","<<"moving_cnt:"<<moving_cnt<<std::endl;
         std::cout<<"current pose:"<<robotpose.at(0)<<","<<robotpose.at(1)<<","<<robotyaw<<std::endl;

@@ -183,7 +183,6 @@ public:
     void ModifyObjectDistance(double* distance);
     void Calculate_TimeUse(double currenttimesec);
     void Linear_Line(double x1,double x2,double y1,double y2,double* a,double* b );
-    double Round( double dSrc, int iLen );
     void Calculate_TimeUseOutofView(double currenttimesec);
     void msgCallback_ObjectRecognition(const darknet_ros_msgs::BoundingBoxes::ConstPtr& msg );
     void rgbObjectImageCallback(const sensor_msgs::ImageConstPtr& msg);
