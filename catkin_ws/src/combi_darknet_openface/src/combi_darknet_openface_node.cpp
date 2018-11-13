@@ -1579,7 +1579,7 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
             double thetanoseend2y = nose_end_point2D_draw2->y-nose_tip_position_ptr->y;
             double thetanoseend2 = math_util::radToDeg(atan2(thetanoseend2y,thetanoseend2x));
             double thetanoseendx = nose_end_point2D_draw->x-nose_tip_position_ptr->x;
-            double thetanoseendy = nose_end_point2D_draw->y-nose_tip_position_ptr->y;
+            double thetanoseendy = nose_end_point2D_draw->y-nose_tip_position_ptrtext->y;
             double thetanoseend = math_util::radToDeg(atan2(thetanoseendy,thetanoseendx));
 
             if((((nose_end_point2D_draw3->x>0)&&(nose_end_point2D_draw3->x<640))&&((nose_end_point2D_draw3->y>0)&&(nose_end_point2D_draw3->y<480)))&&(abs(thetanoseendtmp-thetanoseend3)<10))
@@ -1624,7 +1624,7 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
                         if(!((boxcenterx[maxindexface]==0)&&(boxcentery[maxindexface]==0)))
                         {
                             //box
-                            cv::rectangle(cv_ptr->image, cv::Point(boxxmin2.at(maxindexface), boxymin2.at(maxindexface)), cv::Point(boxxmax2.at(maxindexface), boxymax2.at(maxindexface)), cv::Scalar(255, 0, 0), 3, 4);
+                            cv::rectangle(cv_ptr->image, cv::Point(boxxmin2.at(matexttexttextxindexface), boxymin2.at(maxindexface)), cv::Point(boxxmax2.at(maxindexface), boxymax2.at(maxindexface)), cv::Scalar(255, 0, 0), 3, 4);
                             cv::circle(cv_ptr->image, cv::Point(boxcenterx[maxindexface], boxcentery[maxindexface]), 5, cv::Scalar(255,0,0), 3);
                             cv::line(cv_ptr->image,cv::Point(320,240),cv::Point(boxcenterx[maxindexface],boxcentery[maxindexface]), cv::Scalar(255,0,0), 2);
                         }
@@ -1837,9 +1837,6 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
                     Iimage[j] = Dimage[j];
                     Ivimage[j] = (char)(255*(Dimage[j]/5.5));
                 }
-                else
-                {
-                }
 
                 if(i > y1 && i < y2)
                 {
@@ -1931,7 +1928,7 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
             objectdist = objectdepthpoint;
             noseobjectmindist = objectdist;
             objectangle = AngleofView/2-((double)objectxc/640)*AngleofView;
-            objectdisttmp = objectdist;
+            objectdisttmp = objectdist;text
             CombiDarknetOpenface::modifyObjectDistance(&objectdist);
             noseobjectmindist = objectdist;
             std::cout<<"objectdist,angle:"<<objectdist<<","<<objectangle<<std::endl;
@@ -1982,10 +1979,8 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
     std::cout<<"persondepthdist:"<<persondepthdist<<std::endl;
     std::cout<<"noseobjectmindist:"<<noseobjectmindist<<std::endl;
 
-
     cv::resize(img, img, cv::Size(), ResizeSize, ResizeSize);
-    cv::imshow("Depth_Image", img);
-
+//    cv::imshow("Depth_Image", img);
 
     if(display_num==2)
     {

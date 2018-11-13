@@ -223,6 +223,7 @@ private:
 
     std::vector<std::string>classnames;
     std::vector<std::string>classname;
+    //
     std::vector<int>boxxmin;
     std::vector<int>boxymin;
     std::vector<int>boxxmax;
@@ -235,7 +236,14 @@ private:
     std::vector<int>boxcentery;
     std::vector<int>lastboxcenterx;
     std::vector<int>lastboxcentery;
-    
+
+    std::unique_ptr<cv::Point2i> box_min_position_ptr;    
+    std::unique_ptr<cv::Point2i> box_max_position_ptr;
+    std::unique_ptr<cv::Point2i> box2_min_position_ptr;    
+    std::unique_ptr<cv::Point2i> box2_max_position_ptr;
+    std::unique_ptr<cv::Point2i> box_center_position_ptr;
+    std::unique_ptr<cv::Point2i> last_box_center_position_ptr;
+
     int maxmoveindex;
     int noseendminindex;
     int mindistanceindex;
@@ -286,8 +294,6 @@ private:
 
     std::vector<double>lastrotation_value;   
     std::vector<double>lasttranslation_value;   
-
-    std_msgs::String speechtxt;
 
     void updateExtrinsicParameters(const cv::Point2i& nose_tip_position, const cv::Point2i& chin_position, const cv::Point2i& left_eye_position, const cv::Point2i& right_eye_position, const cv::Point2i& left_mouth_position, const cv::Point2i& right_mouth_position);
     void updateExtrinsicParameters(const std::vector<cv::Point3f>& model_points, const std::vector<cv::Point2f>& image_points);
