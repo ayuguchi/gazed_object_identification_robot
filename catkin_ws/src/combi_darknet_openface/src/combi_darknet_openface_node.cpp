@@ -2050,15 +2050,15 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
 
     cv::waitKey(10);
 
-    depthdata<<darknet_cnt<<","
-        <<currenttimesec<<", "
-        << persondisttmp<<", "
-        << persondist<<", "
-        << xc<<", "
-        << yc<<", "
-        <<modify_distance_cnt<<","
-        <<person_move_cnt<<","
-        << person_move<<std::endl;
+    // depthdata<<darknet_cnt<<","
+    //     <<currenttimesec<<", "
+    //     << persondisttmp<<", "
+    //     << persondist<<", "
+    //     << xc<<", "
+    //     << yc<<", "
+    //     <<modify_distance_cnt<<","
+    //     <<person_move_cnt<<","
+    //     << person_move<<std::endl;
 
     std::cout<<""<<std::endl;
 }
@@ -2179,14 +2179,14 @@ void CombiDarknetOpenface::onPersonPositionEstimated(const geometry_msgs::PoseSt
     std::cout<<"person_move:"<<person_move<<std::endl;
     std::cout<<"estimateposition:"<<estimateposition[0]<<","<<estimateposition[1]<<std::endl;
 
-    personvelocitydata<<darknet_cnt<<","
-    <<currenttimesec<<", "
-    << estimateposition.at(0)<<", "
-    << estimateposition.at(1)<<", "
-    << personvelocity.at(0)<<", "
-    << personvelocity.at(1)<<", "
-    << person_move_cnt<<", "
-    <<person_move<<std::endl;
+    // personvelocitydata<<darknet_cnt<<","
+    // <<currenttimesec<<", "
+    // << estimateposition.at(0)<<", "
+    // << estimateposition.at(1)<<", "
+    // << personvelocity.at(0)<<", "
+    // << personvelocity.at(1)<<", "
+    // << person_move_cnt<<", "
+    // <<person_move<<std::endl;
 
     visualization_msgs::Marker estimatepersonmarker;
 
@@ -2335,14 +2335,14 @@ void CombiDarknetOpenface::onRobotPoseUpdated(const geometry_msgs::PoseStamped::
         robotposearrow.lifetime = ros::Duration();
         robotpose_arrow_pub.publish(robotposearrow);
 
-        robotvelocitydata<<darknet_cnt<<","
-        <<currenttimesec<<", "
-        << robotpose.at(0)<<", "
-        << robotpose.at(1)<<", "
-        << robotvelocity.at(0)<<", "
-        << robotvelocity.at(1)<<", "
-        << robot_move_cnt<<", "
-        <<robot_move<<std::endl;
+        // robotvelocitydata<<darknet_cnt<<","
+        // <<currenttimesec<<", "
+        // << robotpose.at(0)<<", "
+        // << robotpose.at(1)<<", "
+        // << robotvelocity.at(0)<<", "
+        // << robotvelocity.at(1)<<", "
+        // << robot_move_cnt<<", "
+        // <<robot_move<<std::endl;
 
         std::cout<<""<<std::endl;
 
