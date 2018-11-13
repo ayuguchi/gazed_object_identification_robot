@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
 
 <launch>
+    <node name="republish" type="republish" pkg="image_transport"	args="raw in:=/camera/color/image_raw raw out:=/camera/rgb/image_raw" />
+    <node name="republish_rect" type="republish" pkg="image_transport"	args="raw in:=/camera/color/image_rect_color raw out:=/camera/rgb/image_rect_color" />
+    <node name="republish_depth" type="republish" pkg="image_transport" args="raw in:=/camera/depth/image_rect_raw raw out:=/camera/depth_registered/image_raw" />
+    <include file="$(find realsense_ros_camera)/launch/rs_rgbd.launch" />
+    <node pkg="openface_ros" type="openface_ros" name="openface_ros" output="screen" 
+        args="_image_topic:=/camera/color/image_rect_color"/>
+    <include file="$(find darknet_ros)/launch/darknet_ros.launch">
+    </include>
     <node pkg="combi_darknet_openface" type="combi_darknet_openface_node" name="combi_darknet_openface_node"  output="screen"/>
     <node pkg="person_tracking_kalman" type="person_tracking_kalman_node" name="person_tracking_kalman_node"  output="screen"/>
 </launch>
