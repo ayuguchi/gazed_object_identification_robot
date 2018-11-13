@@ -32,7 +32,6 @@ nh1(nh)
 
     velocity_pub=nh1.advertise<geometry_msgs::Twist>("cmd_vel",1);
     capture_cnt_pub = nh1.advertise<std_msgs::Int16>("/image_capture_cnt", 1);
-    pepper_speech_pub = nh1.advertise<std_msgs::String>("/speech", 1);
 }
 
 CombiDarknetOpenface::~CombiDarknetOpenface()
@@ -276,11 +275,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     darknet_cnt += 1;
     std::cout<<"darknet_callback:"<<darknet_cnt<<std::endl;
 
-    if(darknet_cnt==1)
-    {
-        speechtxt.data = "start";
-        pepper_speech_pub.publish(speechtxt);
-    }
+    if(darknet_cnt==1) ROS_INFO("start");
 
     if(classnames.empty())
     {
@@ -768,8 +763,7 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
         std::cout<<"move_mode===RobotPoseReset"<<std::endl;
         if((robot_moving==0)&&(pose_reset_cnt==PoseResetCount))
         {
-            speechtxt.data = "start to reset the pose";
-            pepper_speech_pub.publish(speechtxt);
+            ROS_INFO("start to reset the pose");
 
             targetrobotpose.at(0) = beforerobotpose.at(0);
             targetrobotpose.at(1) = beforerobotpose.at(1);
@@ -1050,8 +1044,7 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
 
         if(moving_cnt>RobotStopCount)
         {
-            speechtxt.data = "robot stop and exit";
-            pepper_speech_pub.publish(speechtxt);
+            ROS_INFO("robot stop and exit");
             exitflag = 1;
         }
 
@@ -1062,9 +1055,7 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
         }
         if((!signallineary)&&(!signallinearx)&&(!signalangle))
         {
-            std::cout<<"finish movement"<<std::endl;
-            speechtxt.data = "finish movement";
-            pepper_speech_pub.publish(speechtxt);
+            ROS_INFO("finish movement");
             notmeasurement_cnt = 0;
             moving_cnt = 0;
             robot_moving = 0;
@@ -1078,8 +1069,7 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
             {
                 pose_reset = 0;
                 pose_reset_cnt = 0;
-                speechtxt.data = "finished pose reset and exit";
-                pepper_speech_pub.publish(speechtxt);
+                ROS_INFO("finished pose reset and exit");
                 exitflag = 1;
             }
             twist.linear.x = 0;

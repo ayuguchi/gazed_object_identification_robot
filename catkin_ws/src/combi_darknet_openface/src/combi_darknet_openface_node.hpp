@@ -217,7 +217,6 @@ private:
     ros::Publisher target_robotpose_pub;
 
     ros::Publisher velocity_pub;
-    ros::Publisher pepper_speech_pub;
     ros::Publisher capture_cnt_pub;
 
     ros::NodeHandle nh1;
