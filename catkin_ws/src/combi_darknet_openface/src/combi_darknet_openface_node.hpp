@@ -4,6 +4,7 @@
 #include <math.h>
 #include <strings.h>
 #include <iostream>
+#include <memory>
 
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
@@ -107,7 +108,6 @@ int frame_num = 0;
 int modify_yaw_cnt = 0;
 int modify_distance_cnt = 0;
 
-int face_cnt = 0;
 int darknet_cnt = 0;
 int rgb_cnt = 0;
 int depth_cnt = 0;
@@ -166,10 +166,10 @@ std::ofstream noseobjecttheta("noseobjecttheta.csv", std::ios::trunc);
 class CombiDarknetOpenface
 {
 public:
+    typedef std::vector<double> EulerAngles;
     CombiDarknetOpenface(ros::NodeHandle nh);
     ~CombiDarknetOpenface();
     void onRecognizedFace(const combi_darknet_openface::Faces::ConstPtr& msg );
-    void modifyHeadOrientation();
     void modifyPersonDistance(double* distance);
     void modifyObjectDistance(double* distance);
     void calculateTimeUse(double currenttimesec);
@@ -189,6 +189,8 @@ public:
 
 private:
     const std::string FIXED_FRAME = "map";
+    const cv::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
+    const cv::Mat dist_coeffs = (cv::Mat_<double>(4,1) << 0.06569569924719, -0.25862424608946, 0.00010394071172, -0.00024019257963);
     ros::Subscriber ros_object_sub;
     ros::Subscriber cmd_vel_sub;
     
@@ -259,32 +261,38 @@ private:
 
     std::vector<int>personbox; 
     std::vector<int>detectedobjectbox; 
-    
-    std::vector<double>headorientation;    
-    std::vector<int>nose_tip;
-    std::vector<int>chin;
-    std::vector<int>left_eye;
-    std::vector<int>right_eye;
-    std::vector<int>left_mouth;
-    std::vector<int>right_mouth;
-    double headarrowtheta;
+
+    std::unique_ptr<cv::Point2i> nose_tip_position_ptr;
+    std::unique_ptr<cv::Point2i> chin_position_ptr;
+    std::unique_ptr<cv::Point2i> left_eye_position_ptr;
+    std::unique_ptr<cv::Point2i> right_eye_position_ptr;
+    std::unique_ptr<cv::Point2i> left_mouth_position_ptr;
+    std::unique_ptr<cv::Point2i> right_mouth_position_ptr;
+    double head_arrow_theta;
 
     double headarrowangleraw;
-    double headarrowangle;
+    double head_arrow_angle;
     
     double headrobottheta;
 
-    std::vector<int>nose_end_point2D_drawtmp;
-    std::vector<int>nose_end_point2D_draw;
-    std::vector<int>nose_end_point2D_draw2;
-    std::vector<int>nose_end_point2D_draw3;
-    std::vector<int>nose_end_point2D_draw4;
+    std::unique_ptr<cv::Point2i> nose_end_point2D_drawtmp;
+    std::unique_ptr<cv::Point2i> nose_end_point2D_draw;
+    std::unique_ptr<cv::Point2i> nose_end_point2D_draw2;
+    std::unique_ptr<cv::Point2i> nose_end_point2D_draw3;
     std::vector<int>nose_end_point2D_drawmin;    
 
-    cv::Mat rotation_vector; // Rotation in axis-angle form
+    // Extrinsic Parameters
+    cv::Mat rotation_vector;
     cv::Mat translation_vector;
+
     std::vector<double>lastrotation_value;   
     std::vector<double>lasttranslation_value;   
 
     std_msgs::String speechtxt;
+
+    void updateExtrinsicParameters(const cv::Point2i& nose_tip_position, const cv::Point2i& chin_position, const cv::Point2i& left_eye_position, const cv::Point2i& right_eye_position, const cv::Point2i& left_mouth_position, const cv::Point2i& right_mouth_position);
+    void updateExtrinsicParameters(const std::vector<cv::Point3f>& model_points, const std::vector<cv::Point2f>& image_points);
+    void modifyHeadOrientation(EulerAngles& head_orientation);
+    cv::Point2i getProjectedPoint(const cv::Point3f& point_3d) const;
+    double calcHeadArrowAngle(const EulerAngles& head_orientation) const;
 };
