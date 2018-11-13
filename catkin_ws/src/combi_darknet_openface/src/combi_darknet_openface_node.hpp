@@ -255,16 +255,26 @@ private:
     double noseobjectmindist;
     double persondepthdist;
     
+    //
     std::vector<double>estimateposition;
     std::vector<double>lastestimateposition;
     std::vector<double>personvelocity;
 
+    std::unique_ptr<cv::Point2f> estimate_position_ptr;    
+    std::unique_ptr<cv::Point2f> last_estimate_position_ptr;
+    std::unique_ptr<cv::Point2f> person_velocity_ptr;
+
+    //
     std::vector<double>robotpose;
     double robotyaw;
     double robotyawraw;
     geometry_msgs::PoseStamped robotoriginpose;
     std::vector<double>lastrobotpose;
     std::vector<double>robotvelocity;
+
+	std::unique_ptr<cv::Point2f> robot_position_ptr;    
+    std::unique_ptr<cv::Point2f> last_robot_position_ptr;
+    std::unique_ptr<cv::Point2f> robot_velocity_ptr;
 
     std::vector<int>personbox; 
     std::vector<int>detectedobjectbox; 
