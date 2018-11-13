@@ -85,7 +85,7 @@ rosrun combi_darknet_openface combi_darknet_openface_node | tee -a log.txt \\最
 
 # Tips
 
-OpenFace requires OpenCV 3.2.0? & dlib 19.6?
+OpenFace requires OpenCV 3.2 & dlib 19.6
 
 ## Authors
 Tomoaki Inoue/ Akishige Yuguchi / Takumi Nakamura
