@@ -4,15 +4,27 @@ This program is about Mr. Inoue's master's thesis "Gazed object Estimation for O
 
 ## Installation
 
-1. install nvidia-docker2
+1. install nvidia-docker2 and docker-compose
 
 ## Run application
 
+1. enter docker environment
+
+    ```
+    $ docker-compose run gazed_object_estimation bash
+    ```
+
+1. make catkin_ws
+
+    ```
+    $ catkin_make -DCMAKE_CXX_FLAGS="-DOPENCV_TRAITS_ENABLE_DEPRECATED"
+    ```
+
 1. 以下のコマンドを実行
 
-```
-$ roslaunch combi_darknet_openface combi_darknet_openface.launch
-```
+    ```
+    $ roslaunch combi_darknet_openface combi_darknet_openface.launch
+    ```
 
 # How to use (old version)
 
@@ -71,13 +83,7 @@ cd catkin_ws/py_ws/timeuse_test/datatimeuse/
 rosrun combi_darknet_openface combi_darknet_openface_node | tee -a log.txt \\最終的なプログラム
 ```
 
-#Tips
-
-初回コンパイル時には以下のコマンドがいるかも...
-
-```
-$ catkin_make -DCMAKE_CXX_FLAGS="-DOPENCV_TRAITS_ENABLE_DEPRECATED"
-```
+# Tips
 
 OpenFace requires OpenCV 3.2.0? & dlib 19.6?
 
