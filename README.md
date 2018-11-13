@@ -1,6 +1,20 @@
 This program is about Mr. Inoue's master's thesis "Gazed object Estimation for Obtaining Detailed Time-usage Data Using a Mobile Robot".
 
-## How to use
+# How to use (current version)
+
+## Installation
+
+1. install nvidia-docker2
+
+## Run application
+
+1. 以下のコマンドを実行
+
+```
+$ roslaunch combi_darknet_openface combi_darknet_openface.launch
+```
+
+# How to use (old version)
 
 ### Set up
 
