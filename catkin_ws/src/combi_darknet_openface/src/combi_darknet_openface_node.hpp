@@ -103,10 +103,8 @@ int frame_num = 0;
 int modify_yaw_cnt = 0;
 int modify_distance_cnt = 0;
 
-int darknet_cnt = 0;
 int rgb_cnt = 0;
 int depth_cnt = 0;
-int kf_cnt = 0;
 int robotpose_cnt = 0;
 
 int after_flag = 0;
@@ -122,7 +120,6 @@ double targetthetatmp;
 
 int robot_move = 0;//0:stoping,1:moving:
 int robot_move_cnt = 0;
-int person_move = 1;//0:stoping,1:moving
 int person_move_cnt = 0;
 
 int robot_moving = 0;
@@ -139,8 +136,6 @@ int notmeasurement_cnt=0;
 int object_far = 0; 
 int move_mode = 0;
 int lastmove_mode = 0;
-
-double lastcurrenttimevelocity  = 0;
 
 static std::string fixed_frame = "map";
 
@@ -162,6 +157,11 @@ class CombiDarknetOpenface
 {
 public:
     typedef std::vector<double> EulerAngles;
+    enum class PersonMovingState{
+        Stopping = 0,
+        Moving = 1,
+        Unrecognized = 2
+    };
     CombiDarknetOpenface(ros::NodeHandle nh);
     ~CombiDarknetOpenface();
     void onRecognizedFace(const openface_ros::Faces::ConstPtr& msg );
@@ -175,12 +175,12 @@ public:
     void onDepthImageUpdated(const sensor_msgs::ImageConstPtr& msg);
     void onPersonPositionEstimated(const geometry_msgs::PoseStamped::ConstPtr& msg);
     void onRobotPoseUpdated(const geometry_msgs::PoseStamped::ConstPtr& msg);
-    void publishPersonMeasurement(double measurement_x, double measurement_y, const std::vector<double>& estimated_position) const;
+    void publishPersonMeasurement(double measurement_x, double measurement_y, const std::unique_ptr<cv::Point2d>& estimated_position) const;
     void publishPersonMarker(double theta, double measurement_x, double measurement_y) const;
     void publishObjectMarker(double measurement_x, double measurement_y) const;
-    void publishHeadPoseArrow(double position_x, double position_y, double head_arrow_angle_deg) const;
+    void publishHeadPoseArrow(const cv::Point2d& position, double head_arrow_angle_deg) const;
+    void publishEstimatedPersonPositionMarker(const cv::Point2d& position, int num_tracking_frame) const;
     void changeViewPoint(double currenttimesec);
-        
 
 private:
     const std::string FIXED_FRAME = "map";
@@ -250,13 +250,8 @@ private:
     double persondepthdist;
     
     //
-    std::vector<double>estimateposition;
-    std::vector<double>lastestimateposition;
-    std::vector<double>personvelocity;
-
-    std::unique_ptr<cv::Point2f> estimate_position_ptr;    
-    std::unique_ptr<cv::Point2f> last_estimate_position_ptr;
-    std::unique_ptr<cv::Point2f> person_velocity_ptr;
+    std::unique_ptr<cv::Point2d> estimate_position_ptr;
+    std::unique_ptr<cv::Vec2d> person_velocity_ptr;
 
     //
     std::vector<double>robotpose;
@@ -270,7 +265,7 @@ private:
     std::unique_ptr<cv::Point2f> last_robot_position_ptr;
     std::unique_ptr<cv::Point2f> robot_velocity_ptr;
 
-    std::vector<int>personbox; 
+    std::unique_ptr<cv::Rect> person_box;
     std::vector<int>detectedobjectbox; 
 
     std::unique_ptr<cv::Point2i> nose_tip_position_ptr;
@@ -291,6 +286,9 @@ private:
     std::unique_ptr<cv::Point2i> nose_end_point2D_draw2;
     std::unique_ptr<cv::Point2i> nose_end_point2D_draw3;
     std::vector<int>nose_end_point2D_drawmin;    
+
+    int darknet_cnt = 0;
+    PersonMovingState person_moving_state = PersonMovingState::Moving;//0:stoping,1:moving
 
     // Extrinsic Parameters
     cv::Mat rotation_vector;

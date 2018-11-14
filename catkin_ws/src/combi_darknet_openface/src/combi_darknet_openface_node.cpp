@@ -102,10 +102,10 @@ void CombiDarknetOpenface::onRecognizedFace(const openface_ros::Faces::ConstPtr&
         nose_end_point2D_draw2.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, SecondDistance))));
         nose_end_point2D_draw3.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, ThirdDistance))));
 
-        if((!estimateposition.empty())&&(!head_orientation.empty()))
+        if(this->estimate_position_ptr && (!head_orientation.empty()))
         {
             this->head_arrow_theta = calcHeadArrowAngle(head_orientation);
-            this->publishHeadPoseArrow(estimateposition[0], estimateposition[1], this->head_arrow_theta);
+            this->publishHeadPoseArrow(*this->estimate_position_ptr, this->head_arrow_theta);
             this->head_arrow_angle = head_orientation[2];
         }
 
@@ -266,7 +266,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     maxmoveindex = 0;
     noseendminindex = 0;
 
-    personbox.clear();
+    this->person_box.reset();
 
     int objectcnt = 0;
     int personindex = 0;
@@ -322,15 +322,9 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
 
     if(personindex)
     {
-        personbox.push_back(boxxmin.at(personindex));
-        personbox.push_back(boxymin.at(personindex));
-        personbox.push_back(boxxmax.at(personindex));
-        personbox.push_back(boxymax.at(personindex));
+        this->person_box.reset(new cv::Rect(cv::Point(boxxmin.at(personindex), boxymin.at(personindex)), cv::Point(boxxmax.at(personindex), boxymax.at(personindex))));
 
-        std::cout<<"person:";
-        for(int i=0;i<personbox.size();i++)
-            std::cout << personbox.at(i) << " ";
-        std::cout <<""<< std::endl;
+        std::cout<<"person:" << this->person_box->tl() << this->person_box->br() << std::endl;
     }
     else
     {
@@ -424,7 +418,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     }
 
     std::cout<<"robot_move:"<<robot_move<<std::endl;
-    std::cout<<"person_move:"<<person_move<<std::endl;
+    std::cout<<"person_move:"<<static_cast<int>(this->person_moving_state)<<std::endl;
     std::cout<<"notmeasurement_cnt:"<<notmeasurement_cnt<<std::endl;
     std::cout<<"robot_moving:"<<robot_moving<<std::endl;
     std::cout<<"pose_reset:"<<pose_reset<<std::endl;
@@ -440,7 +434,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     headrobottheta = robotyaw-head_arrow_thetatmp;
     std::cout<<"headrobottheta:"<<headrobottheta<<std::endl;
 
-    if(((!personbox.empty())&&(!robot_move)&&(!person_move))&&(notmeasurement_cnt<RobotMoveCount)&&(!robot_moving)&&(!pose_reset))
+    if(this->person_box && (!robot_move) && this->person_moving_state == PersonMovingState::Stopping &&(notmeasurement_cnt<RobotMoveCount)&&(!robot_moving)&&(!pose_reset))
     {
         std::cout << "###########measure timeuse ############"<< std::endl;
         CombiDarknetOpenface::calculateTimeUse(currenttimesec);
@@ -476,11 +470,11 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
             CombiDarknetOpenface::calculateTimeUseOutofView(currenttimesec);
         }
     }
-    else if(person_move)
+    else if(this->person_moving_state != PersonMovingState::Stopping)
     {
         std::cout << "###########person_moving############"<< std::endl;
     }
-    else if(personbox.empty())
+    else if(!this->person_box)
     {
         std::cout << "###########person_detecting############"<< std::endl;
     }
@@ -552,15 +546,15 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
         scoreobjectlabel<<std::endl;
         timerecordfacedata<<std::endl;
 
-        if(kf_cnt>1)
-        {
-            timeusedata<<darknet_cnt<<","
-                <<currenttimesec<<","
-                << personvelocity.at(0)<<","
-                << personvelocity.at(1)<<","
-                << estimateposition.at(0)<<","
-                << estimateposition.at(1)<<std::endl;
-        }
+        // if(kf_cnt>1)
+        // {
+        //     timeusedata<<darknet_cnt<<","
+        //         <<currenttimesec<<","
+        //         << personvelocity.at(0)<<","
+        //         << personvelocity.at(1)<<","
+        //         << estimateposition.at(0)<<","
+        //         << estimateposition.at(1)<<std::endl;
+        // }
     }
 
     alltimerecord<<darknet_cnt<<","
@@ -568,7 +562,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
         <<robot_move_cnt<<","
         <<robot_move<<","
         <<person_move_cnt<<","
-        <<person_move<<","
+        <<static_cast<int>(person_moving_state)<<","
         <<notmeasurement_cnt<<","
         <<pose_reset_cnt<<","
         <<pose_reset<<","
@@ -651,18 +645,18 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
                     targetrobotpose.at(2)-=360;
                 }
 
-                double r = std::sqrt(std::pow(robotpose.at(0)-estimateposition.at(0), 2) + std::pow(robotpose.at(1)-estimateposition.at(1), 2));
+                double r = std::sqrt(std::pow(robotpose.at(0)-this->estimate_position_ptr->x, 2) + std::pow(robotpose.at(1)-this->estimate_position_ptr->y, 2));
 
-                targetrobotpose.at(0) = r*cos(math_util::degToRad(head_arrow_theta))+estimateposition.at(0);
-                targetrobotpose.at(1) = r*sin(math_util::degToRad(head_arrow_theta))+estimateposition.at(1);
+                targetrobotpose.at(0) = r*cos(math_util::degToRad(head_arrow_theta))+this->estimate_position_ptr->x;
+                targetrobotpose.at(1) = r*sin(math_util::degToRad(head_arrow_theta))+this->estimate_position_ptr->y;
 
-                double r2 = std::sqrt(std::pow(targetrobotpose.at(0)-estimateposition.at(0), 2) + std::pow(targetrobotpose.at(1)-estimateposition.at(1), 2));
+                double r2 = std::sqrt(std::pow(targetrobotpose.at(0)-this->estimate_position_ptr->x, 2) + std::pow(targetrobotpose.at(1)-this->estimate_position_ptr->y, 2));
 
                 robot_moving = 1;
                 std::cout<<"r:"<<r<<std::endl;
                 std::cout<<"r2:"<<r2<<std::endl;
                 std::cout<<"robot pose:"<<robotpose.at(0)<<","<<robotpose.at(1)<<std::endl;
-                std::cout<<"person pose:"<<estimateposition.at(0)<<","<<estimateposition.at(1)<<std::endl;
+                std::cout<<"person pose:"<<this->estimate_position_ptr->x<<","<<this->estimate_position_ptr->y<<std::endl;
                 std::cout<<"head_arrow_theta:"<<head_arrow_theta<<std::endl;
             }
         }
@@ -1098,7 +1092,7 @@ void CombiDarknetOpenface::calculateTimeUse(double currenttimesec)
     noseendminindex = 0;
     nose_end_point2D_drawmin.clear();
     detectedobjectbox.clear();
-    if(nose_end_point2D_draw &&(!personbox.empty()))
+    if(nose_end_point2D_draw && this->person_box)
     {
         //11/18
         cv::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
@@ -1311,7 +1305,7 @@ void CombiDarknetOpenface::calculateTimeUse(double currenttimesec)
 
     }
     //object movement
-    if((!classnames.empty())&&(!personbox.empty()))
+    if((!classnames.empty())&& this->person_box)
     {
         std::cout<<"########basic object movement#############" << std::endl;
         std::vector<float> objectmovement;
@@ -1513,7 +1507,7 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
     if(!after_flag)
     {
         //facescore
-        if((!nose_end_point2D_drawmin.empty())&&(!personbox.empty())&&(!activityscoreface.empty()))
+        if((!nose_end_point2D_drawmin.empty())&&(this->person_box)&&(!activityscoreface.empty()))
         {
             int zerocntface = std::count(activityscoreface.begin(), activityscoreface.end(), 0);
             int maxindexface = 0;
@@ -1621,7 +1615,7 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
     }
 
     cv::putText(dataimage, std::to_string(darknet_cnt), cv::Point(550,25), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,0,255), 2,CV_AA);
-    if(!personbox.empty())
+    if(this->person_box)
     {
         cv::putText(dataimage, "person found", cv::Point(20,25), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,0,255), 2,CV_AA);
     }
@@ -1754,14 +1748,14 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
     depth_cnt += 1;
     std::cout<<"depth_callback:"<<depth_cnt<<std::endl;
 
-    if((!personbox.empty())||(!detectedobjectbox.empty()))
+    if(this->person_box ||(!detectedobjectbox.empty()))
     {
-        if(!personbox.empty())
+        if(this->person_box)
         {
-            x1ori = personbox.at(0);
-            y1ori = personbox.at(1);
-            x2ori = personbox.at(2);
-            y2ori = personbox.at(3);
+            x1ori = this->person_box->tl().x;
+            y1ori = this->person_box->tl().y;
+            x2ori = this->person_box->br().x;
+            y2ori = this->person_box->br().y;
 
             xc = (x1ori+x2ori)/2;
             yc = (y1ori+y2ori)/2;
@@ -1854,7 +1848,7 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
         }
         noseobjectmindist = 0;
         persondepthdist = 0;
-        if(!personbox.empty())
+        if(this->person_box)
         {
             persondist = persondepthpoint;
             personangle = AngleofView/2-((double)xc/640)*AngleofView;
@@ -1883,14 +1877,14 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
 
                 std::cout<<"personmeasurement:"<<personmeasurementx<<","<<personmeasurementy<<std::endl;
 
-                this->publishPersonMeasurement(personmeasurementx, personmeasurementy, estimateposition);
+                this->publishPersonMeasurement(personmeasurementx, personmeasurementy, this->estimate_position_ptr);
                 this->publishPersonMarker(personangle,personmeasurementx,personmeasurementy);
             }
             else if(fixed_frame =="base_link")
             {
                 double personmeasurementx = persondist * cos(math_util::degToRad(personangle));
                 double personmeasurementy = persondist * sin(math_util::degToRad(personangle));
-                this->publishPersonMeasurement(personmeasurementx, personmeasurementy, estimateposition);
+                this->publishPersonMeasurement(personmeasurementx, personmeasurementy, this->estimate_position_ptr);
                 this->publishPersonMarker(personangle,personmeasurementx,personmeasurementy);
             }
 
@@ -2036,118 +2030,65 @@ void CombiDarknetOpenface::modifyObjectDistance(double *distance)
 
 void CombiDarknetOpenface::onPersonPositionEstimated(const geometry_msgs::PoseStamped::ConstPtr& msg)
 {
-    static ros::Time firsttime = ros::Time::now();
-    ros::Time nowtime = ros::Time::now();
-
-    double firsttimesec,nowtimesec,currenttimesec;
-    firsttimesec = firsttime.toSec();
-    nowtimesec = nowtime.toSec();
-    currenttimesec = nowtimesec-firsttimesec;
-
-    kf_cnt += 1;
-    std::cout<<"KF_callback:"<<kf_cnt<<std::endl;
-    lastestimateposition.clear();
-    if(kf_cnt>1)
+    static std::unique_ptr<cv::Point2d> last_estimate_position_ptr(new cv::Point2d(msg->pose.position.x, msg->pose.position.y));
+    last_estimate_position_ptr.reset(new cv::Point2d(*this->estimate_position_ptr));
+    this->estimate_position_ptr.reset(new cv::Point2d(msg->pose.position.x, msg->pose.position.y));
+    this->person_velocity_ptr.reset(new cv::Vec2d((*this->estimate_position_ptr) - (*last_estimate_position_ptr)));
+    if(this->person_box)
     {
-        lastestimateposition.push_back(estimateposition[0]);
-        lastestimateposition.push_back(estimateposition[1]);
+        this->person_moving_state = PersonMovingState::Unrecognized;
     }
-    else
-    {
-        lastestimateposition.push_back(msg->pose.position.x);
-        lastestimateposition.push_back(msg->pose.position.y);
-    }
-    estimateposition.clear();
-    estimateposition.push_back(msg->pose.position.x);
-    estimateposition.push_back(msg->pose.position.y);
-
-    personvelocity.clear();
-    if(kf_cnt>1)
-    {
-        personvelocity.push_back(estimateposition.at(0) - lastestimateposition.at(0));
-        personvelocity.push_back(estimateposition.at(1) - lastestimateposition.at(1));
-    }
-    else
-    {
-        personvelocity.push_back(0.0);
-        personvelocity.push_back(0.0);
-    }
-
-    if(personbox.empty())
-    {
-        person_move = 2;
-    }
-    else if((abs(personvelocity.at(0))>0.04)&&(abs(personvelocity.at(1))>0.04))
-    {
-        person_move_cnt += 1;
-    }
-    else if ((abs(personvelocity.at(0))>0.06)||(abs(personvelocity.at(1))>0.06))
+    else if((abs((*this->person_velocity_ptr)[0]) > 0.04 && abs((*this->person_velocity_ptr)[1]) > 0.04) ||
+            (abs((*this->person_velocity_ptr)[0]) > 0.06 || abs((*this->person_velocity_ptr)[1]) > 0.06))
     {
         person_move_cnt += 1;
     }
     else
     {
-        //person is stopping
-        person_move = 0;
+        this->person_moving_state = PersonMovingState::Stopping;
         person_move_cnt = 0;
     }
-
     if(person_move_cnt>4)
     {
-        //person is moving
-        person_move=1;
+        this->person_moving_state = PersonMovingState::Moving;
     }
 
-    lastcurrenttimevelocity  = currenttimesec;
+    this->publishEstimatedPersonPositionMarker(*this->estimate_position_ptr, this->darknet_cnt);
+}
 
-    std::cout<<"person_move_cnt:"<<person_move_cnt<<std::endl;
-    std::cout<<"person_move:"<<person_move<<std::endl;
-    std::cout<<"estimateposition:"<<estimateposition[0]<<","<<estimateposition[1]<<std::endl;
-
-    // personvelocitydata<<darknet_cnt<<","
-    // <<currenttimesec<<", "
-    // << estimateposition.at(0)<<", "
-    // << estimateposition.at(1)<<", "
-    // << personvelocity.at(0)<<", "
-    // << personvelocity.at(1)<<", "
-    // << person_move_cnt<<", "
-    // <<person_move<<std::endl;
-
-    visualization_msgs::Marker estimatepersonmarker;
-
-    estimatepersonmarker.header.stamp = ros::Time::now();
-    estimatepersonmarker.header.frame_id = fixed_frame;
-    estimatepersonmarker.pose.position.x = estimateposition.at(0);
-    estimatepersonmarker.pose.position.y = estimateposition.at(1);
-    estimatepersonmarker.lifetime = ros::Duration(0);
-    estimatepersonmarker.scale.x = 0.2;
-    estimatepersonmarker.scale.y = 0.2;
-    estimatepersonmarker.scale.z = 0.01;
-    estimatepersonmarker.type = estimatepersonmarker.SPHERE;
-    estimatepersonmarker.color.a = 0.75;
-    estimatepersonmarker.color.r = 1.0;
-    estimatepersonmarker.color.g = 0;
-    estimatepersonmarker.color.b = 1.0;
-    estimate_marker_pub.publish(estimatepersonmarker);
+void CombiDarknetOpenface::publishEstimatedPersonPositionMarker(const cv::Point2d& position, int num_tracking_frame) const
+{
+    visualization_msgs::Marker estimate_person_marker;
+    estimate_person_marker.header.stamp = ros::Time::now();
+    estimate_person_marker.header.frame_id = fixed_frame;
+    estimate_person_marker.pose.position.x = position.x;
+    estimate_person_marker.pose.position.y = position.y;
+    estimate_person_marker.lifetime = ros::Duration(0);
+    estimate_person_marker.scale.x = 0.2;
+    estimate_person_marker.scale.y = 0.2;
+    estimate_person_marker.scale.z = 0.01;
+    estimate_person_marker.type = visualization_msgs::Marker::SPHERE;
+    estimate_person_marker.color.a = 0.75;
+    estimate_person_marker.color.r = 1.0;
+    estimate_person_marker.color.g = 0;
+    estimate_person_marker.color.b = 1.0;
+    this->estimate_marker_pub.publish(estimate_person_marker);
 
     visualization_msgs::Marker m2;
     m2.header.stamp = ros::Time::now();
     m2.header.frame_id = fixed_frame;
     m2.ns = "Person";
-    m2.type = m2.TEXT_VIEW_FACING;
-    m2.pose.position.x = estimateposition.at(0)-0.25;
-    m2.pose.position.y = estimateposition.at(1);
-    m2.text =  std::to_string(darknet_cnt);
+    m2.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
+    m2.pose.position.x = position.x - 0.25;
+    m2.pose.position.y = position.y;
+    m2.text =  std::to_string(num_tracking_frame);
     m2.scale.x = .1;
     m2.scale.y = .1;
     m2.scale.z = 0.2;
     m2.color.a = 1;
     m2.lifetime = ros::Duration();
     m2.color.r = 1.0;
-    cnt_text_pub.publish(m2);
-
-    std::cout<<""<<std::endl;
-
+    this->cnt_text_pub.publish(m2);
 }
 
 void CombiDarknetOpenface::onRobotPoseUpdated(const geometry_msgs::PoseStamped::ConstPtr& msg)
@@ -2223,8 +2164,6 @@ void CombiDarknetOpenface::onRobotPoseUpdated(const geometry_msgs::PoseStamped::
             robot_move=1;
         }
 
-        lastcurrenttimevelocity  = currenttimesec;
-
         std::cout<<"robot_cnt:"<<robot_move_cnt<<std::endl;
         std::cout<<"robot_move:"<<robot_move<<std::endl;
         std::cout<<"robotpose:"<<robotpose.at(0)<<","<<robotpose.at(1)<<std::endl;
@@ -2274,20 +2213,20 @@ void CombiDarknetOpenface::onRobotPoseUpdated(const geometry_msgs::PoseStamped::
 }
 
 
-void CombiDarknetOpenface::publishPersonMeasurement(double measurement_x, double measurement_y, const std::vector<double>& estimated_position) const
+void CombiDarknetOpenface::publishPersonMeasurement(double measurement_x, double measurement_y, const std::unique_ptr<cv::Point2d>& estimated_position) const
 {
     static int kf_failed_cnt = 0;
     geometry_msgs::PoseStamped input_pose;
     input_pose.pose.position.x = measurement_x;
     input_pose.pose.position.y = measurement_y;
-    if(estimated_position.empty())
+    if(!estimated_position)
     {
         input_pose.pose.position.z = 1;
         measurement_pub.publish(input_pose);
     }
     else
     {
-        double dist_error = std::sqrt(std::pow(measurement_x - estimated_position[0], 2) + std::pow(measurement_y - estimated_position[1], 2));
+        double dist_error = std::sqrt(std::pow(measurement_x - estimated_position->x, 2) + std::pow(measurement_y - estimated_position->y, 2));
         if(dist_error<1.2)
         {
             kf_failed_cnt = 0;
@@ -2310,7 +2249,7 @@ void CombiDarknetOpenface::publishPersonMeasurement(double measurement_x, double
     }
 }
 
-void CombiDarknetOpenface::publishHeadPoseArrow(double position_x, double position_y, double head_arrow_angle_deg) const
+void CombiDarknetOpenface::publishHeadPoseArrow(const cv::Point2d& position, double head_arrow_angle_deg) const
 {
     visualization_msgs::Marker head_pose_arrow;
     head_pose_arrow.header.frame_id = FIXED_FRAME;
@@ -2318,8 +2257,8 @@ void CombiDarknetOpenface::publishHeadPoseArrow(double position_x, double positi
     head_pose_arrow.ns = "basic_shapes";
     head_pose_arrow.type = visualization_msgs::Marker::ARROW;
     head_pose_arrow.action = visualization_msgs::Marker::ADD;
-    head_pose_arrow.pose.position.x = position_x;
-    head_pose_arrow.pose.position.y = position_y;
+    head_pose_arrow.pose.position.x = position.x;
+    head_pose_arrow.pose.position.y = position.y;
     head_pose_arrow.pose.orientation = tf::createQuaternionMsgFromYaw(math_util::degToRad(head_arrow_angle_deg));
     head_pose_arrow.scale.x = 0.3;
     head_pose_arrow.scale.y = 0.1;
