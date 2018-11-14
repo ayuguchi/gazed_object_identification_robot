@@ -100,7 +100,7 @@
 #define RobotMoveCount 10000
 #define PoseResetCount 50
 #define RobotStopCount 300
-
+objectcnt
 int frame_num = 0;
 int modify_yaw_cnt = 0;
 int modify_distance_cnt = 0;
@@ -290,4 +290,5 @@ private:
     cv::Point2i getProjectedPoint(const cv::Point3f& point_3d) const;
     double calcHeadArrowAngle(const EulerAngles& head_orientation) const;
     bool isInImageArea(const cv::Point2i& point) const;
+    void recognizePerson(int person_index) const;
 };

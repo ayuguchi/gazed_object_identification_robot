@@ -108,7 +108,6 @@ void CombiDarknetOpenface::onRecognizedFace(const openface_ros::Faces::ConstPtr&
             this->publishHeadPoseArrow(*this->estimate_position_ptr, this->head_arrow_theta);
             this->head_arrow_angle = head_orientation[2];
         }
-
         // headposedata << time_from_run_sec << ", "
         //     << detected_face.head_pose.position.x << ", "
         //     << detected_face.head_pose.position.y << ", "
@@ -254,12 +253,15 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     this->person_box.reset();
 
     int objectcnt = 0;
-    int personindex = 0;
+    int person_index = 0;
 
     darknet_cnt += 1;
     std::cout<<"darknet_callback:"<<darknet_cnt<<std::endl;
 
-    if(darknet_cnt==1) ROS_INFO("start");
+    if(darknet_cnt==1) 
+    {
+        ROS_INFO("start");
+    }
 
     if(classnames.empty())
     {
@@ -277,9 +279,8 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
         classname.push_back((*itr).Class);
         if((*itr).Class=="person")
         {
-            // personindex = objectcnt+1;
-            personindex = objectcnt+1;
-            std::cout<<"personindex:"<<personindex<<std::endl;
+            person_index = objectcnt+1;
+            recognizePerson(person_index);
         }
 
         boxxmin.push_back((*itr).xmin);
@@ -303,18 +304,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
 
         objectcnt += 1;
     }
-    std::cout<<"objectcnt:"<<objectcnt<<std::endl;
-
-    if(personindex)
-    {
-        this->person_box.reset(new cv::Rect(cv::Point(boxxmin.at(personindex), boxymin.at(personindex)), cv::Point(boxxmax.at(personindex), boxymax.at(personindex))));
-
-        std::cout<<"person:" << this->person_box->tl() << this->person_box->br() << std::endl;
-    }
-    else
-    {
-        std::cout<<"person is not found"<<std::endl;
-    }
+    ROS_INFO("objectcnt: %d", objectcnt);
 
     std::cout<<"classnames :";
     for(int i=0;i<classnames.size();i++)
@@ -391,11 +381,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
             boxcenterx.at(i) = 0;
             boxcentery.at(i) = 0;
         }
-    }
-
-    for(int i=0;i<classnames.size();i++)
-    {
-        if(classnames.at(i)=="bottle")
+        else if(classnames.at(i)=="bottle")
         {
             double xcerror =  boxcenterx.at(i)-320;
             std::cout << "xcerror:"<< xcerror << std::endl;
@@ -419,7 +405,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     headrobottheta = robotyaw-head_arrow_thetatmp;
     std::cout<<"headrobottheta:"<<headrobottheta<<std::endl;
 
-    if(this->person_box && (!robot_move) && this->person_moving_state == PersonMovingState::Stopping &&(notmeasurement_cnt<RobotMoveCount)&&(!robot_moving)&&(!pose_reset))
+    if(this->person_box && this->person_moving_state == PersonMovingState::Stopping &&(notmeasurement_cnt<RobotMoveCount)&&(!robot_moving)&&(!pose_reset))
     {
         std::cout << "###########measure timeuse ############"<< std::endl;
         CombiDarknetOpenface::calculateTimeUse(currenttimesec);
@@ -442,13 +428,13 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
         if(pose_reset_cnt==PoseResetCount)
         {
             std::cout << "###########pose move############"<< std::endl;
-            move_mode = RobotPoseReset;
+            //move_mode = RobotPoseReset;
             after_flag = 1;
 //            CombiDarknetOpenface::changeViewPoint(currenttimesec);
         }
         else
         {
-            pose_reset_cnt += 1;
+            //pose_reset_cnt += 1;
             after_flag = 1;
 
             std::cout << "###########measure timeuse out of view############"<< std::endl;
@@ -457,15 +443,15 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     }
     else if(this->person_moving_state != PersonMovingState::Stopping)
     {
-        std::cout << "###########person_moving############"<< std::endl;
+        ROS_INFO("moving_person");
     }
     else if(!this->person_box)
     {
-        std::cout << "###########person_detecting############"<< std::endl;
+        ROS_INFO("detecting_person");
     }
     else
     {
-        std::cout << "###########else############"<< std::endl;
+        ROS_INFO("other person condition");
     }
 
     static double lastcurrenttimesec;
@@ -555,10 +541,24 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
         <<robot_moving<<","
         <<moving_cnt<<std::endl;
 
-    std::cout <<"darknet_callback end"<< std::endl;
-    std::cout <<""<< std::endl;
-
+    ROS_INFO("darknet_callback end");
     frame_num += 1;
+}
+
+void CombiDarknetOpenface::recognizePerson(int person_index) const
+{
+    ROS_INFO("personindex: %d", person_index);
+    if(person_index)
+    {
+        this->person_box.reset(new cv::Rect(cv::Point(boxxmin.at(person_index), boxymin.at(person_index)), cv::Point(boxxmax.at(person_index), boxymax.at(person_index))));
+
+        ROS_INFO("person: %d, %d",this->person_box->tl(), this->person_box->br());
+    }
+    else
+    {
+        ROS_INFO("person is not found");
+    }
+
 }
 
 void CombiDarknetOpenface::linearLine(double x1,double y1,double x2,double y2,double* a,double* b )
@@ -745,13 +745,6 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
             pose_reset = 2;
         }
     }
-    else
-    {
-        std::cout<<"mode none"<<std::endl;
-        std::cout<<"move_mode:"<<move_mode<<std::endl;
-        std::cout<<"pose_reset:"<<pose_reset<<std::endl;
-        std::cout<<"pose_reset_cnt:"<<pose_reset_cnt<<std::endl;
-    }
 
     if(robot_moving)
     {
@@ -782,7 +775,6 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
         {
             std::cout<<"angleerror<=0"<<std::endl;
             twist.angular.z= -0.1;
-
             signalangle = 1;
         }
         else if((angleerror>=0)&&(abs(angleerror)>5)&&(!signallinearx)&&(!signallineary))
@@ -1050,26 +1042,6 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
             twist.angular.z = 0;
             after_flag = 1;
         }
-
-        visualization_msgs::Marker targetrobotposearrow;
-        targetrobotposearrow.header.frame_id = fixed_frame;
-        targetrobotposearrow.header.stamp = ros::Time::now();
-        targetrobotposearrow.ns = "basic_shapes";
-        targetrobotposearrow.type = visualization_msgs::Marker::ARROW;
-        targetrobotposearrow.action = visualization_msgs::Marker::ADD;
-        targetrobotposearrow.pose.position.x = targetrobotpose.at(0);
-        targetrobotposearrow.pose.position.y = targetrobotpose.at(1);
-        targetrobotposearrow.pose.position.z = 0;
-        targetrobotposearrow.pose.orientation=tf::createQuaternionMsgFromYaw(math_util::degToRad(targetrobotpose.at(2)));
-        targetrobotposearrow.lifetime = ros::Duration();
-        targetrobotposearrow.scale.x = 0.3;
-        targetrobotposearrow.scale.y = 0.1;
-        targetrobotposearrow.scale.z = 0.1;
-        targetrobotposearrow.color.r = 1.0f;
-        targetrobotposearrow.color.g = 0.0f;
-        targetrobotposearrow.color.b = 0.0f;
-        targetrobotposearrow.color.a = 1.0f;
-        target_robotpose_pub.publish(targetrobotposearrow);
     }
 }
 */
