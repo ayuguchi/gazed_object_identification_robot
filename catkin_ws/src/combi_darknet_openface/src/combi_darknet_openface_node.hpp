@@ -56,6 +56,8 @@
 #include <boost/foreach.hpp>
 #include <algorithm>
 
+#include "CachedValue.h"
+
 #define FaceYawLimMin -110
 #define FaceYawLimMax -70
 #define FaceYawOffset 0
@@ -165,8 +167,6 @@ public:
     CombiDarknetOpenface(ros::NodeHandle nh);
     ~CombiDarknetOpenface();
     void onRecognizedFace(const openface_ros::Faces::ConstPtr& msg );
-    void modifyPersonDistance(double* distance);
-    void modifyObjectDistance(double* distance);
     void calculateTimeUse(double currenttimesec);
     void linearLine(double x1,double x2,double y1,double y2,double* a,double* b );
     void calculateTimeUseOutofView(double currenttimesec);
@@ -296,6 +296,9 @@ private:
 
     std::vector<double>lastrotation_value;   
     std::vector<double>lasttranslation_value;   
+
+    CachedValue<double> person_distance_cache = CachedValue<double>(0.0);
+    CachedValue<double> object_distance_cache = CachedValue<double>(0.0);
 
     void updateExtrinsicParameters(const cv::Point2i& nose_tip_position, const cv::Point2i& chin_position, const cv::Point2i& left_eye_position, const cv::Point2i& right_eye_position, const cv::Point2i& left_mouth_position, const cv::Point2i& right_mouth_position);
     void updateExtrinsicParameters(const std::vector<cv::Point3f>& model_points, const std::vector<cv::Point2f>& image_points);
