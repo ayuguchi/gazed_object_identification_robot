@@ -100,7 +100,7 @@
 #define RobotMoveCount 10000
 #define PoseResetCount 50
 #define RobotStopCount 300
-objectcnt
+
 int frame_num = 0;
 int modify_yaw_cnt = 0;
 int modify_distance_cnt = 0;
