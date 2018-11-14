@@ -174,7 +174,7 @@ void CombiDarknetOpenface::applyCacheIf(EulerAngles& head_orientation, cv::Mat& 
 
     if(!initialized)
     {
-        previous_head_orientation[2] =  head_orientation[2];
+        previous_head_orientation =  head_orientation;
         previous_rotation_vector = rotation_vector.clone();
         previous_translation_vector = translation_vector.clone();
         initialized = true;
