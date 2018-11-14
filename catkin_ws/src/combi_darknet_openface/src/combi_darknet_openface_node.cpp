@@ -37,7 +37,7 @@ CombiDarknetOpenface::~CombiDarknetOpenface()
 {
 }
 
-void CombiDarknetOpenface::onRecognizedFace(const combi_darknet_openface::Faces::ConstPtr& msg)
+void CombiDarknetOpenface::onRecognizedFace(const openface_ros::Faces::ConstPtr& msg)
 {
     this->nose_tip_position_ptr.reset();
     this->chin_position_ptr.reset();

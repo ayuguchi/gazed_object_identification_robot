@@ -32,8 +32,6 @@
 #include <opencv2/highgui/highgui.hpp>
 
 #include "combi_darknet_openface/ActionUnit.h"
-#include "combi_darknet_openface/Face.h"
-#include "combi_darknet_openface/Faces.h"
 
 #include <sensor_msgs/Image.h>
 #include <sensor_msgs/image_encodings.h>
@@ -52,6 +50,8 @@
 #include <geometry_msgs/TransformStamped.h>
 #include <std_msgs/Int16.h>
 #include <std_msgs/String.h>
+#include <openface_ros/Face.h>
+#include <openface_ros/Faces.h>
 
 #include <boost/foreach.hpp>
 #include <algorithm>
@@ -164,7 +164,7 @@ public:
     typedef std::vector<double> EulerAngles;
     CombiDarknetOpenface(ros::NodeHandle nh);
     ~CombiDarknetOpenface();
-    void onRecognizedFace(const combi_darknet_openface::Faces::ConstPtr& msg );
+    void onRecognizedFace(const openface_ros::Faces::ConstPtr& msg );
     void modifyPersonDistance(double* distance);
     void modifyObjectDistance(double* distance);
     void calculateTimeUse(double currenttimesec);
