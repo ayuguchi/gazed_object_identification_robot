@@ -2060,7 +2060,7 @@ void CombiDarknetOpenface::publishEstimatedPersonPositionMarker(const cv::Point2
 {
     visualization_msgs::Marker estimate_person_marker;
     estimate_person_marker.header.stamp = ros::Time::now();
-    estimate_person_marker.header.frame_id = fixed_frame;
+    estimate_person_marker.header.frame_id = this->FIXED_FRAME;
     estimate_person_marker.pose.position.x = position.x;
     estimate_person_marker.pose.position.y = position.y;
     estimate_person_marker.lifetime = ros::Duration(0);
@@ -2076,7 +2076,7 @@ void CombiDarknetOpenface::publishEstimatedPersonPositionMarker(const cv::Point2
 
     visualization_msgs::Marker m2;
     m2.header.stamp = ros::Time::now();
-    m2.header.frame_id = fixed_frame;
+    m2.header.frame_id = this->FIXED_FRAME;
     m2.ns = "Person";
     m2.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
     m2.pose.position.x = position.x - 0.25;
