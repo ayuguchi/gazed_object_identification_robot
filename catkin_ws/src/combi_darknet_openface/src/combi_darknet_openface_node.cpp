@@ -79,16 +79,16 @@ void CombiDarknetOpenface::onRecognizedFace(const openface_ros::Faces::ConstPtr&
             rotation_matrix.at<double>(1, 0), rotation_matrix.at<double>(1, 1), rotation_matrix.at<double>(1, 2), 0,
             rotation_matrix.at<double>(2, 0), rotation_matrix.at<double>(2, 1), rotation_matrix.at<double>(2, 2), 0
         );
-        cv::Mat rot_matrix_x, rot_matrix_y, rot_matrix_z;
+        cv::Mat head_translation_vector = this->translation_vector.clone();
         cv::Vec3d euler_angles;
         cv::decomposeProjectionMatrix(
             proj_matrix,
             this->camera_matrix,
             rotation_matrix,
-            this->translation_vector,
-            rot_matrix_x,
-            rot_matrix_y,
-            rot_matrix_z,
+            head_translation_vector,
+            cv::noArray(),
+            cv::noArray(),
+            cv::noArray(),
             euler_angles
         );
         EulerAngles head_orientation = {
