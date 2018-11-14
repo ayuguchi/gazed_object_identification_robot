@@ -246,17 +246,10 @@ private:
     std::unique_ptr<cv::Point2d> estimate_position_ptr;
     std::unique_ptr<cv::Vec2d> person_velocity_ptr;
 
-    //
     std::vector<double>robotpose;
     double robotyaw;
     double robotyawraw;
     geometry_msgs::PoseStamped robotoriginpose;
-    std::vector<double>lastrobotpose;
-    std::vector<double>robotvelocity;
-
-	std::unique_ptr<cv::Point2d> robot_position_ptr;    
-    std::unique_ptr<cv::Point2d> last_robot_position_ptr;
-    std::unique_ptr<cv::Vec2d> robot_velocity_ptr;
 
     std::unique_ptr<cv::Rect> person_box;
     std::vector<int>detectedobjectbox; 

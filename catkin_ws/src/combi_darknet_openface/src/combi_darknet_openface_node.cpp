@@ -409,7 +409,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     std::cout<<"pose_reset:"<<pose_reset<<std::endl;
     std::cout<<"pose_reset_cnt:"<<pose_reset_cnt<<std::endl;
     std::cout<<"head_arrow_theta:"<<head_arrow_theta<<std::endl;
-    std::cout<<"robotyaw:"<<robotyaw<<std::endl;
+//    std::cout<<"robotyaw:"<<robotyaw<<std::endl;
 
     double head_arrow_thetatmp = head_arrow_theta+180;
     if(head_arrow_thetatmp>360)
