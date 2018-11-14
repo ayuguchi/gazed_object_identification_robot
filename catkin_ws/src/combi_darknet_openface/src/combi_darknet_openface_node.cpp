@@ -1853,7 +1853,7 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
             persondist = persondepthpoint;
             personangle = AngleofView/2-((double)xc/640)*AngleofView;
             persondisttmp = persondist;
-            CombiDarknetOpenface::modifyPersonDistance(&persondist);
+            persondist = this->person_distance_cache.update(persondist);
             persondepthdist = persondist;
             std::cout<<"persondist,angle:"<<persondist<<","<<personangle<<std::endl;
             if((fixed_frame =="map")&&(robotpose_cnt>0))
@@ -1904,7 +1904,7 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
             noseobjectmindist = objectdist;
             objectangle = AngleofView/2-((double)objectxc/640)*AngleofView;
             objectdisttmp = objectdist;
-            CombiDarknetOpenface::modifyObjectDistance(&objectdist);
+            objectdist = this->object_distance_cache.update(objectdist);
             noseobjectmindist = objectdist;
             std::cout<<"objectdist,angle:"<<objectdist<<","<<objectangle<<std::endl;
             if((fixed_frame =="map")&&(robotpose_cnt>0))
@@ -1982,51 +1982,6 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
     std::cout<<""<<std::endl;
 }
 
-void CombiDarknetOpenface::modifyPersonDistance(double *distance)
-{
-    static double lastdistance;
-    static int init = 0;
-
-    if(!init)
-    {
-        lastdistance =  *distance;
-        init = 1;
-    }
-
-    if (*distance == 0)
-    {
-        modify_distance_cnt += 1;
-        std::cout<<"modify_distance_cnt:"<<modify_distance_cnt<<std::endl;
-        *distance = lastdistance;
-    }
-    else
-    {
-        lastdistance = *distance;
-    }
-}
-
-void CombiDarknetOpenface::modifyObjectDistance(double *distance)
-{
-    static double lastdistance;
-    static int init = 0;
-
-    if(!init)
-    {
-        lastdistance =  *distance;
-        init = 1;
-    }
-
-    if (*distance == 0)
-    {
-        modify_distance_cnt += 1;
-        std::cout<<"modify_distance_cnt:"<<modify_distance_cnt<<std::endl;
-        *distance = lastdistance;
-    }
-    else
-    {
-        lastdistance = *distance;
-    }
-}
 
 void CombiDarknetOpenface::onPersonPositionEstimated(const geometry_msgs::PoseStamped::ConstPtr& msg)
 {
