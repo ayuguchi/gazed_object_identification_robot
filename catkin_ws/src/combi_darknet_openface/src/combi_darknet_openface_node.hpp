@@ -99,11 +99,6 @@
 #define PoseResetCount 50
 #define RobotStopCount 300
 
-template <typename T> std::string tostr(const T& t)
-{
-    std::ostringstream os; os<<t; return os.str();
-}
-
 int frame_num = 0;
 int modify_yaw_cnt = 0;
 int modify_distance_cnt = 0;
