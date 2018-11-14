@@ -174,13 +174,13 @@ public:
     void onRgbImageUpdated(const sensor_msgs::ImageConstPtr& msg);//face_feature
     void onDepthImageUpdated(const sensor_msgs::ImageConstPtr& msg);
     void onPersonPositionEstimated(const geometry_msgs::PoseStamped::ConstPtr& msg);
-    void onRobotPoseUpdated(const geometry_msgs::PoseStamped::ConstPtr& msg);
+    //void onRobotPoseUpdated(const geometry_msgs::PoseStamped::ConstPtr& msg);
     void publishPersonMeasurement(double measurement_x, double measurement_y, const std::unique_ptr<cv::Point2d>& estimated_position) const;
     void publishPersonMarker(double theta, double measurement_x, double measurement_y) const;
     void publishObjectMarker(double measurement_x, double measurement_y) const;
     void publishHeadPoseArrow(const cv::Point2d& position, double head_arrow_angle_deg) const;
     void publishEstimatedPersonPositionMarker(const cv::Point2d& position, int num_tracking_frame) const;
-    void changeViewPoint(double currenttimesec);
+    //void changeViewPoint(double currenttimesec);
 
 private:
     const std::string FIXED_FRAME = "map";
@@ -196,7 +196,7 @@ private:
     ros::Subscriber ros_filtered_sub;
     ros::Publisher measurement_pub;
     
-    ros::Subscriber ros_robotpose_sub;
+    //ros::Subscriber ros_robotpose_sub;
     
     ros::Publisher headpose_arrow_pub;
 
@@ -261,9 +261,9 @@ private:
     std::vector<double>lastrobotpose;
     std::vector<double>robotvelocity;
 
-	std::unique_ptr<cv::Point2f> robot_position_ptr;    
-    std::unique_ptr<cv::Point2f> last_robot_position_ptr;
-    std::unique_ptr<cv::Point2f> robot_velocity_ptr;
+	std::unique_ptr<cv::Point2d> robot_position_ptr;    
+    std::unique_ptr<cv::Point2d> last_robot_position_ptr;
+    std::unique_ptr<cv::Vec2d> robot_velocity_ptr;
 
     std::unique_ptr<cv::Rect> person_box;
     std::vector<int>detectedobjectbox; 

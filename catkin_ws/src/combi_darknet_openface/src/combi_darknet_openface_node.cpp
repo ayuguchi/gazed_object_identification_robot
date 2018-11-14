@@ -12,7 +12,7 @@ nh1(nh)
 
     ros_filtered_sub= nh1.subscribe("estimate_pos",1, &CombiDarknetOpenface::onPersonPositionEstimated, this);
     measurement_pub = nh1.advertise<geometry_msgs::PoseStamped>("filter_measurement", 1);
-    ros_robotpose_sub = nh1.subscribe("/current_robot_pose",1, &CombiDarknetOpenface::onRobotPoseUpdated, this);
+    //ros_robotpose_sub = nh1.subscribe("/current_robot_pose",1, &CombiDarknetOpenface::onRobotPoseUpdated, this);
 
     headpose_arrow_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_headpose_arrow", 1);
 
@@ -449,7 +449,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     else if(notmeasurement_cnt==RobotMoveCount)
     {
         std::cout << "###########robot moving############"<< std::endl;
-        CombiDarknetOpenface::changeViewPoint(currenttimesec);
+//        CombiDarknetOpenface::changeViewPoint(currenttimesec);
     }
     else if(pose_reset)
     {
@@ -459,7 +459,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
             std::cout << "###########pose move############"<< std::endl;
             move_mode = RobotPoseReset;
             after_flag = 1;
-            CombiDarknetOpenface::changeViewPoint(currenttimesec);
+//            CombiDarknetOpenface::changeViewPoint(currenttimesec);
         }
         else
         {
@@ -583,6 +583,7 @@ void CombiDarknetOpenface::linearLine(double x1,double y1,double x2,double y2,do
     *b = y1-a2*x1;
 }
 
+/*
 void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
 {
     static geometry_msgs::Twist twist;
@@ -1086,6 +1087,7 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
         target_robotpose_pub.publish(targetrobotposearrow);
     }
 }
+*/
 
 void CombiDarknetOpenface::calculateTimeUse(double currenttimesec)
 {
@@ -2090,7 +2092,7 @@ void CombiDarknetOpenface::publishEstimatedPersonPositionMarker(const cv::Point2
     m2.color.r = 1.0;
     this->cnt_text_pub.publish(m2);
 }
-
+/*
 void CombiDarknetOpenface::onRobotPoseUpdated(const geometry_msgs::PoseStamped::ConstPtr& msg)
 {
         static ros::Time firsttime = ros::Time::now();
@@ -2211,7 +2213,7 @@ void CombiDarknetOpenface::onRobotPoseUpdated(const geometry_msgs::PoseStamped::
         std::cout<<""<<std::endl;
 
 }
-
+*/
 
 void CombiDarknetOpenface::publishPersonMeasurement(double measurement_x, double measurement_y, const std::unique_ptr<cv::Point2d>& estimated_position) const
 {
