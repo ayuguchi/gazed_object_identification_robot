@@ -293,16 +293,15 @@ private:
     // Extrinsic Parameters
     cv::Mat rotation_vector;
     cv::Mat translation_vector;
-
-    std::vector<double>lastrotation_value;   
-    std::vector<double>lasttranslation_value;   
+    cv::Size image_size = cv::Size(640, 480);
 
     CachedValue<double> person_distance_cache = CachedValue<double>(0.0);
     CachedValue<double> object_distance_cache = CachedValue<double>(0.0);
 
     void updateExtrinsicParameters(const cv::Point2i& nose_tip_position, const cv::Point2i& chin_position, const cv::Point2i& left_eye_position, const cv::Point2i& right_eye_position, const cv::Point2i& left_mouth_position, const cv::Point2i& right_mouth_position);
     void updateExtrinsicParameters(const std::vector<cv::Point3f>& model_points, const std::vector<cv::Point2f>& image_points);
-    void modifyHeadOrientation(EulerAngles& head_orientation);
+    void applyCacheIf(EulerAngles& head_orientation, cv::Mat& rotation_vector, cv::Mat& translation_vector, bool condition) const;
     cv::Point2i getProjectedPoint(const cv::Point3f& point_3d) const;
     double calcHeadArrowAngle(const EulerAngles& head_orientation) const;
+    bool isInImageArea(const cv::Point2i& point) const;
 };

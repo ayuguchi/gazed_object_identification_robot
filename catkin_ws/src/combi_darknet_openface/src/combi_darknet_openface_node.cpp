@@ -96,7 +96,12 @@ void CombiDarknetOpenface::onRecognizedFace(const openface_ros::Faces::ConstPtr&
             euler_angles[0],  // pitch
             euler_angles[1]  // yaw
         };
-        this->modifyHeadOrientation(head_orientation);
+        this->applyCacheIf(
+            head_orientation,
+            this->rotation_vector,
+            this->translation_vector,
+            !this->isInImageArea(*this->nose_end_point2D_drawtmp)
+        );
 
         nose_end_point2D_draw.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, FirstDistance))));
         nose_end_point2D_draw2.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, SecondDistance))));
@@ -117,6 +122,12 @@ void CombiDarknetOpenface::onRecognizedFace(const openface_ros::Faces::ConstPtr&
         //     << head_orientation[1] << ", "
         //     << head_orientation[2] << std::endl;
     }
+}
+
+
+bool CombiDarknetOpenface::isInImageArea(const cv::Point2i& point) const
+{
+    return (point.x > 0) && (point.x < this->image_size.width) && (point.y > 0) && (point.y < this->image_size.height);
 }
 
 
@@ -154,53 +165,32 @@ void CombiDarknetOpenface::updateExtrinsicParameters(const std::vector<cv::Point
 }
 
 
-void CombiDarknetOpenface::modifyHeadOrientation(EulerAngles& head_orientation)
+void CombiDarknetOpenface::applyCacheIf(EulerAngles& head_orientation, cv::Mat& rotation_vector, cv::Mat& translation_vector, bool condition) const
 {
-    static int init = 0;
+    static bool initialized = false;
+    static EulerAngles previous_head_orientation;
+    static cv::Mat previous_rotation_vector;
+    static cv::Mat previous_translation_vector;
 
-    static double lastheadori[3];
-    static double lastnose_end_point2D_drawtmptheta;
-    double nose_end_point2D_drawtmptheta;
-
-    if(!init)
+    if(!initialized)
     {
-        std::cout<<"init"<<std::endl;
-        lastheadori[2] =  head_orientation[2];
-        for(int i=0;i<3;i++)
-        {
-            lastrotation_value.push_back(rotation_vector.at<double>(0,i));
-            lasttranslation_value.push_back(translation_vector.at<double>(0,i));
-        }
-        init = 1;
-        lastnose_end_point2D_drawtmptheta = math_util::radToDeg(atan2(nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x,nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y));
+        previous_head_orientation[2] =  head_orientation[2];
+        previous_rotation_vector = rotation_vector.clone();
+        previous_translation_vector = translation_vector.clone();
+        initialized = true;
     }
 
-    nose_end_point2D_drawtmptheta = math_util::radToDeg(atan2(nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x,nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y));
-
-    std::cout<<"nose_end_point2D_drawtmptheta:"<<nose_end_point2D_drawtmptheta<<","<<lastnose_end_point2D_drawtmptheta<<","<<lastnose_end_point2D_drawtmptheta-nose_end_point2D_drawtmptheta<<std::endl;
-
-    if(!(((nose_end_point2D_drawtmp->x>0)&&(nose_end_point2D_drawtmp->x<640))&&((nose_end_point2D_drawtmp->y>0)&&(nose_end_point2D_drawtmp->y<480))))
+    if(condition)
     {
-        std::cout<<"modify drawpoint"<<std::endl;
-        for(int i=0;i<3;i++)
-        {
-            head_orientation[i] = lastheadori[i];
-            rotation_vector.at<double>(0,i) = lastrotation_value.at(i);
-            translation_vector.at<double>(0,i) = lasttranslation_value.at(i);
-        }
+        head_orientation = previous_head_orientation;
+        rotation_vector = previous_rotation_vector.clone();
+        translation_vector = previous_translation_vector.clone();
     }
     else
     {
-        lastrotation_value.clear();
-        lasttranslation_value.clear();
-        std::cout<<"save last data"<<std::endl;
-        for(int i=0;i<3;i++)
-        {
-            lastheadori[i] = head_orientation[i];
-            lastrotation_value.push_back(rotation_vector.at<double>(0,i));
-            lasttranslation_value.push_back(translation_vector.at<double>(0,i));
-        }
-        lastnose_end_point2D_drawtmptheta = math_util::radToDeg(atan2(nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x,nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y));
+        previous_head_orientation = head_orientation;
+        previous_rotation_vector = rotation_vector.clone();
+        previous_translation_vector = translation_vector.clone();
     }
 }
 
@@ -1485,6 +1475,9 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
     int height = HEIGHT;
     cv_bridge::CvImagePtr cv_ptr;
     static int lastdarknetcnt = 0;
+
+    this->image_size.width = msg->width;
+    this->image_size.height = msg->height;
 
     rgb_cnt += 1;
     std::cout<<"rgb_callback:"<<rgb_cnt<<std::endl;
