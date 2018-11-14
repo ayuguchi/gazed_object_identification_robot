@@ -1665,6 +1665,7 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
         cvMoveWindow("data", 1350,350);
     }
 
+    cv::namedWindow("RGB image", CV_WINDOW_AUTOSIZE);
     cv::imshow("RGB image", cv_ptr->image);
     if(display_num==2)
     {
@@ -1962,15 +1963,15 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
     cv::resize(img, img, cv::Size(), ResizeSize, ResizeSize);
 //    cv::imshow("Depth_Image", img);
 
-    if(display_num==2)
-    {
-        cvMoveWindow("Depth_Image", 3250,10);
-    }
-    else
-    {
-        //one display
-        cvMoveWindow("Depth_Image", 1350,0);
-    }
+    // if(display_num==2)
+    // {
+    //     cvMoveWindow("Depth_Image", 3250,10);
+    // }
+    // else
+    // {
+    //     //one display
+    //     cvMoveWindow("Depth_Image", 1350,0);
+    // }
 
     cv::waitKey(10);
 
