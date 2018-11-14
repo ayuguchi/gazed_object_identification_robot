@@ -12,7 +12,6 @@ nh1(nh)
 
     ros_filtered_sub= nh1.subscribe("estimate_pos",1, &CombiDarknetOpenface::onPersonPositionEstimated, this);
     measurement_pub = nh1.advertise<geometry_msgs::PoseStamped>("filter_measurement", 1);
-    //ros_robotpose_sub = nh1.subscribe("/current_robot_pose",1, &CombiDarknetOpenface::onRobotPoseUpdated, this);
 
     headpose_arrow_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_headpose_arrow", 1);
 
@@ -23,10 +22,6 @@ nh1(nh)
 
     estimate_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_estimateperson_marker", 1);
     cnt_text_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_cnt_txt", 1);
-
-    robotpose_arrow_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_robotpose_arrow", 1);
-
-    target_robotpose_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_target_robotpose_arrow", 1);
 
     destination_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_destination_marker", 1);
 
@@ -2047,128 +2042,6 @@ void CombiDarknetOpenface::publishEstimatedPersonPositionMarker(const cv::Point2
     m2.color.r = 1.0;
     this->cnt_text_pub.publish(m2);
 }
-/*
-void CombiDarknetOpenface::onRobotPoseUpdated(const geometry_msgs::PoseStamped::ConstPtr& msg)
-{
-        static ros::Time firsttime = ros::Time::now();
-        ros::Time nowtime = ros::Time::now();
-
-        double firsttimesec,nowtimesec,currenttimesec;
-        firsttimesec = firsttime.toSec();
-        nowtimesec = nowtime.toSec();
-        currenttimesec = nowtimesec-firsttimesec;
-
-        robotpose_cnt += 1;
-        std::cout<<"robotpose_callback:"<<robotpose_cnt<<std::endl;
-
-        if(robotpose_cnt>1)
-        {
-            lastrobotpose.push_back(robotpose[0]);
-            lastrobotpose.push_back(robotpose[1]);
-        }
-        else
-        {
-            lastrobotpose.push_back(msg->pose.position.x);
-            lastrobotpose.push_back(msg->pose.position.y);
-        }
-        robotpose.clear();
-        robotpose.push_back(msg->pose.position.x);
-        robotpose.push_back(msg->pose.position.y);
-        tf::Quaternion q(msg->pose.orientation.x,
-            msg->pose.orientation.y,
-            msg->pose.orientation.z,
-            msg->pose.orientation.w);
-        tf::Matrix3x3 m(q);
-        double roll, pitch, yaw;
-        m.getRPY(roll, pitch, yaw);
-        robotyawraw = math_util::radToDeg(yaw);//deg
-
-        if(robotyawraw<0)
-        {
-            robotyaw = 180+(180-(abs(robotyawraw)));
-        }
-        else
-        {
-            robotyaw = robotyawraw;
-        }
-        if(robotpose_cnt>1)
-        {
-            robotvelocity.push_back(robotpose.at(0) - lastrobotpose.at(0));
-            robotvelocity.push_back(robotpose.at(1) - lastrobotpose.at(1));
-        }
-        else
-        {
-            robotvelocity.push_back(0.0);
-            robotvelocity.push_back(0.0);
-        }
-
-        if((abs(robotvelocity.at(0))>0.01)&&(abs(robotvelocity.at(1))>0.01))
-        {
-            robot_move_cnt += 1;
-        }
-        else if ((abs(robotvelocity.at(0))>0.02)||(abs(robotvelocity.at(1))>0.02))
-        {
-            robot_move_cnt += 1;
-        }
-        else
-        {
-            robot_move = 0;
-            robot_move_cnt = 0;
-        }
-
-        if(robot_move_cnt>4)
-        {
-            robot_move=1;
-        }
-
-        std::cout<<"robot_cnt:"<<robot_move_cnt<<std::endl;
-        std::cout<<"robot_move:"<<robot_move<<std::endl;
-        std::cout<<"robotpose:"<<robotpose.at(0)<<","<<robotpose.at(1)<<std::endl;
-        std::cout<<"robotyawraw:"<<robotyawraw<<std::endl;
-        std::cout<<"robotyaw:"<<robotyaw<<std::endl;
-
-        visualization_msgs::Marker robotposearrow;
-
-        robotposearrow.header.frame_id = fixed_frame;
-        robotposearrow.header.stamp = ros::Time::now();
-        robotposearrow.ns = "basic_shapes";
-        robotposearrow.type = visualization_msgs::Marker::ARROW;
-        robotposearrow.action = visualization_msgs::Marker::ADD;
-
-        robotposearrow.pose.position.x = msg->pose.position.x;
-        robotposearrow.pose.position.y = msg->pose.position.y;
-        robotposearrow.pose.position.z = msg->pose.position.z;
-        robotposearrow.pose.orientation.x = msg->pose.orientation.x;
-        robotposearrow.pose.orientation.y = msg->pose.orientation.y;
-        robotposearrow.pose.orientation.z = msg->pose.orientation.z;
-        robotposearrow.pose.orientation.w = msg->pose.orientation.w;
-
-        // Set the scale of the marker -- 1x1x1 here means 1m on a side
-        robotposearrow.scale.x = 0.3;
-        robotposearrow.scale.y = 0.1;
-        robotposearrow.scale.z = 0.1;
-        // Set the color -- be sure to set alpha to something non-zero!
-        robotposearrow.color.r = 0.0f;
-        robotposearrow.color.g = 1.0f;
-        robotposearrow.color.b = 0.0f;
-        robotposearrow.color.a = 1.0f;
-
-        robotposearrow.lifetime = ros::Duration();
-        robotpose_arrow_pub.publish(robotposearrow);
-
-        // robotvelocitydata<<darknet_cnt<<","
-        // <<currenttimesec<<", "
-        // << robotpose.at(0)<<", "
-        // << robotpose.at(1)<<", "
-        // << robotvelocity.at(0)<<", "
-        // << robotvelocity.at(1)<<", "
-        // << robot_move_cnt<<", "
-        // <<robot_move<<std::endl;
-
-        std::cout<<""<<std::endl;
-
-}
-*/
 
 void CombiDarknetOpenface::publishPersonMeasurement(double measurement_x, double measurement_y, const std::unique_ptr<cv::Point2d>& estimated_position) const
 {

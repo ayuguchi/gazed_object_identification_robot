@@ -174,7 +174,6 @@ public:
     void onRgbImageUpdated(const sensor_msgs::ImageConstPtr& msg);//face_feature
     void onDepthImageUpdated(const sensor_msgs::ImageConstPtr& msg);
     void onPersonPositionEstimated(const geometry_msgs::PoseStamped::ConstPtr& msg);
-    //void onRobotPoseUpdated(const geometry_msgs::PoseStamped::ConstPtr& msg);
     void publishPersonMeasurement(double measurement_x, double measurement_y, const std::unique_ptr<cv::Point2d>& estimated_position) const;
     void publishPersonMarker(double theta, double measurement_x, double measurement_y) const;
     void publishObjectMarker(double measurement_x, double measurement_y) const;
@@ -187,7 +186,6 @@ private:
     const cv::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
     const cv::Mat dist_coeffs = (cv::Mat_<double>(4,1) << 0.06569569924719, -0.25862424608946, 0.00010394071172, -0.00024019257963);
     ros::Subscriber ros_object_sub;
-    ros::Subscriber cmd_vel_sub;
     
     ros::Subscriber ros_face_sub;
     ros::Subscriber rgb_img_sub;
@@ -195,8 +193,6 @@ private:
 
     ros::Subscriber ros_filtered_sub;
     ros::Publisher measurement_pub;
-    
-    //ros::Subscriber ros_robotpose_sub;
     
     ros::Publisher headpose_arrow_pub;
 
@@ -207,9 +203,6 @@ private:
     ros::Publisher estimate_marker_pub;
     ros::Publisher cnt_text_pub;
     ros::Publisher destination_marker_pub;
-
-    ros::Publisher robotpose_arrow_pub;
-    ros::Publisher target_robotpose_pub;
 
     ros::Publisher capture_cnt_pub;
 
