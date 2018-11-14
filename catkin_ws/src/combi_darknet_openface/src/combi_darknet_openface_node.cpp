@@ -30,7 +30,6 @@ nh1(nh)
 
     destination_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_destination_marker", 1);
 
-    velocity_pub=nh1.advertise<geometry_msgs::Twist>("cmd_vel",1);
     capture_cnt_pub = nh1.advertise<std_msgs::Int16>("/image_capture_cnt", 1);
 }
 
@@ -484,12 +483,6 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     else if(personbox.empty())
     {
         std::cout << "###########person_detecting############"<< std::endl;
-        geometry_msgs::Twist twist;
-
-        twist.linear.x = 0.0;
-        twist.linear.y = 0.0;
-        twist.angular.z = 0.0;
-        velocity_pub.publish(twist);
     }
     else
     {
@@ -1097,19 +1090,6 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
         targetrobotposearrow.color.b = 0.0f;
         targetrobotposearrow.color.a = 1.0f;
         target_robotpose_pub.publish(targetrobotposearrow);
-
-        if(exitflag)
-        {
-            twist.linear.x = 0;
-            twist.linear.y = 0;
-            twist.angular.z = 0;
-            velocity_pub.publish(twist);
-            exit(1);
-        }
-        else
-        {
-            velocity_pub.publish(twist);
-        }
     }
 }
 
