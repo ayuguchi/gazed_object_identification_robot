@@ -905,36 +905,8 @@ void CombiDarknetOpenface::calculateTimeUse()
     detectedobjectbox.clear();
     if(nose_end_point2D_draw && this->person_box)
     {
-        //11/18
-        cv::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
-        cv::Mat dist_coeffs = (cv::Mat_<double>(4,1) << 0.06569569924719, -0.25862424608946, 0.00010394071172, -0.00024019257963);
-        std::vector<cv::Point3f> nose_end_point3D;
-        std::vector<cv::Point2f> nose_end_point2D;
+        double nose_end_angle_tmp = math_util::radToDeg(math_util::atan2(*this->nose_end_point2D_drawtmp - *this->nose_tip_position_ptr));
 
-        std::cout<<"#######face orientation variable distance########" << std::endl;
-        std::vector<int> distancestep;
-        int i=0;
-        for(int j=0;j<DistanceRange/DistanceStep;j++)
-        {
-            i += DistanceStep;
-            distancestep.push_back(i);
-        }
-        double thetanoseendtmpx = nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x;
-        double thetanoseendtmpy = nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y;
-        double thetanoseendtmp = math_util::radToDeg(atan2(thetanoseendtmpy,thetanoseendtmpx));
-
-        double thetanoseend3x = nose_end_point2D_draw3->x-nose_tip_position_ptr->x;
-        double thetanoseend3y = nose_end_point2D_draw3->y-nose_tip_position_ptr->y;
-        double thetanoseend3 = math_util::radToDeg(atan2(thetanoseend3y,thetanoseend3x));
-        double thetanoseend2x = nose_end_point2D_draw2->x-nose_tip_position_ptr->x;
-        double thetanoseend2y = nose_end_point2D_draw2->y-nose_tip_position_ptr->y;
-        double thetanoseend2 = math_util::radToDeg(atan2(thetanoseend2y,thetanoseend2x));
-        double thetanoseendx = nose_end_point2D_draw->x-nose_tip_position_ptr->x;
-        double thetanoseendy = nose_end_point2D_draw->y-nose_tip_position_ptr->y;
-        double thetanoseend = math_util::radToDeg(atan2(thetanoseendy,thetanoseendx));
-
-        std::vector<float> noseenddistance;
-        std::vector<float> noseenddistancetmp;
         std::vector<int> eachminindex;
         std::vector<float> eachminnoseenddistancetmp;
         std::vector<float> eachnoseend;
@@ -943,27 +915,22 @@ void CombiDarknetOpenface::calculateTimeUse()
         float minnoseenddistancetmp = 100000;
         int mindistancestep = 0;
 
-        nose_end_point2D.clear();
-        nose_end_point3D.clear();
-        nose_end_point3D.push_back(cv::Point3d(0,0,TmpDistance));
-        projectPoints(nose_end_point3D, rotation_vector, translation_vector, camera_matrix, dist_coeffs, nose_end_point2D);
-
         //variable face orintation
-        for(int i=0;i<distancestep.size();i++)
+        for(int distance = DistanceStep; distance <= DistanceRange; distance += DistanceStep)
         {
-            nose_end_point2D.clear();
-            nose_end_point3D.clear();
-            nose_end_point3D.push_back(cv::Point3d(0,0,distancestep.at(i)));
+            std::vector<cv::Point2f> nose_end_point2D;
+            std::vector<cv::Point3f> nose_end_point3D;
+            nose_end_point3D.push_back(cv::Point3d(0,0,distance));
             projectPoints(nose_end_point3D, rotation_vector, translation_vector, camera_matrix, dist_coeffs, nose_end_point2D);
 
             double thetanoseendmintmpx = nose_end_point2D[0].x-nose_tip_position_ptr->x;
             double thetanoseendmintmpy = nose_end_point2D[0].y-nose_tip_position_ptr->y;
             double thetanoseendmintmp = math_util::radToDeg(atan2(thetanoseendmintmpy,thetanoseendmintmpx));
 
-            if(abs(thetanoseendtmp-thetanoseendmintmp)<10)
+            if(abs(nose_end_angle_tmp-thetanoseendmintmp)<10)
             {
-                noseenddistance.clear();
-                noseenddistancetmp.clear();
+                std::vector<float> noseenddistance;
+                std::vector<float> noseenddistancetmp;
                 for(int j=0;j<this->class_names.size();j++)
                 {
                     noseenddistance.push_back(std::sqrt(std::pow(this->object_centers.at(j).x-nose_end_point2D[0].x, 2) + std::pow(this->object_centers.at(j).y-nose_end_point2D[0].y, 2)));
@@ -1000,7 +967,7 @@ void CombiDarknetOpenface::calculateTimeUse()
                     nose_end_point2D_drawmin.clear();
                     nose_end_point2D_drawmin.push_back(std::round(nose_end_point2D[0].x));
                     nose_end_point2D_drawmin.push_back(std::round(nose_end_point2D[0].y));
-                    mindistancestep = distancestep.at(i);
+                    mindistancestep = distance;
                 }
                 eachminnoseenddistancetmp.push_back(minnoseenddistancetmp);
                 eachnoseend.push_back(minnoseend);
@@ -1116,101 +1083,91 @@ void CombiDarknetOpenface::calculateTimeUse()
 
     }
     //object movement
-    if((!this->class_names.empty())&& this->person_box)
+    if(this->class_names.empty() ||  !this->person_box)
     {
-        std::cout<<"########basic object movement#############" << std::endl;
-        std::vector<float> objectmovement;
-        std::vector<float> objectmovementtmp;
+        return;
+    }
+    std::vector<float> objectmovement;
+    std::vector<float> objectmovementtmp;
 
-        if(this->last_object_centers.empty())
+    if(this->last_object_centers.empty())
+    {
+        for(int i=0;i<this->class_names.size();i++)
         {
-            std::cout << "object movement init" << std::endl;
+            this->last_object_centers.push_back(this->object_centers.at(i));
+        }
+    }
+    else
+    {
+        if(this->last_object_centers.size() == this->object_centers.size())
+        {
             for(int i=0;i<this->class_names.size();i++)
             {
-                this->last_object_centers.push_back(this->object_centers.at(i));
+                objectmovement.push_back(std::sqrt(std::pow(this->object_centers.at(i).x-this->last_object_centers.at(i).x, 2) + std::pow(this->object_centers.at(i).y-this->last_object_centers.at(i).y, 2)));
+                if(this->class_names.at(i)=="person")
+                {
+                    objectmovement.at(i) = 0;
+                }
+                if(this->class_names.at(i)=="dining table")
+                {
+                    objectmovement.at(i) = 0;
+                }
+                if(this->class_names.at(i)=="bench")
+                {
+                    objectmovement.at(i) = 0;
+                }
+                if(this->class_names.at(i)=="oven")
+                {
+                    objectmovement.at(i) = 0;
+                }
+                if(this->class_names.at(i)=="refrigerator")
+                {
+                    objectmovement.at(i) = 0;
+                }
+                if((this->object_centers.at(i).x ==0)&&(this->object_centers.at(i).y ==0))
+                {
+                    objectmovement.at(i) = 0;
+                }
+
+                if(objectmovement.at(i)>0)
+                {
+                    objectmovementtmp.push_back(objectmovement.at(i));
+                }
             }
-        }
-        else
-        {
-            if(this->last_object_centers.size() == this->object_centers.size())
+            if(objectmovementtmp.empty())
             {
-                for(int i=0;i<this->class_names.size();i++)
-                {
-                    objectmovement.push_back(std::sqrt(std::pow(this->object_centers.at(i).x-this->last_object_centers.at(i).x, 2) + std::pow(this->object_centers.at(i).y-this->last_object_centers.at(i).y, 2)));
-                    if(this->class_names.at(i)=="person")
-                    {
-                        objectmovement.at(i) = 0;
-                    }
-                    if(this->class_names.at(i)=="dining table")
-                    {
-                        objectmovement.at(i) = 0;
-                    }
-                    if(this->class_names.at(i)=="bench")
-                    {
-                        objectmovement.at(i) = 0;
-                    }
-                    if(this->class_names.at(i)=="oven")
-                    {
-                        objectmovement.at(i) = 0;
-                    }
-                    if(this->class_names.at(i)=="refrigerator")
-                    {
-                        objectmovement.at(i) = 0;
-                    }
-                    if((this->object_centers.at(i).x ==0)&&(this->object_centers.at(i).y ==0))
-                    {
-                        objectmovement.at(i) = 0;
-                    }
-
-                    if(objectmovement.at(i)>0)
-                    {
-                        objectmovementtmp.push_back(objectmovement.at(i));
-                    }
-                }
-                if(objectmovementtmp.empty())
-                {
-                    std::cout << "all movements are zero" << std::endl;
-                    maxmoveindex = 0;
-                }
-                else
-                {
-                    auto maxobjectmovement = std::max_element(std::begin(objectmovementtmp), std::end(objectmovementtmp));
-                    float maxobjectmovementtmp = *maxobjectmovement;
-                    std::vector<float>::iterator citerobmove =std::find(objectmovement.begin(), objectmovement.end(), maxobjectmovementtmp);
-                    if (citerobmove != objectmovement.end())
-                    {
-                        maxmoveindex = std::distance(objectmovement.begin(), citerobmove);
-                    }
-                    if(objectmovement.at(maxmoveindex)>10)
-                    {
-                        std::cout << "object moving" << std::endl;
-                    }
-                    else
-                    {
-                        std::cout << "object stopping" << std::endl;
-                        maxmoveindex = 0;
-                    }
-
-                    for(int i=0;i<this->class_names.size();i++)
-                    {
-                        this->last_object_centers[i] = this->object_centers[i];
-                    }
-                }
-                activityscoreobject.at(maxmoveindex) += 1;
+                maxmoveindex = 0;
             }
             else
             {
-                std::cout << "add new object movement " << std::endl;
-                this->last_object_centers.clear();
-                this->last_object_centers.resize(this->object_centers.size());
+                auto maxobjectmovement = std::max_element(std::begin(objectmovementtmp), std::end(objectmovementtmp));
+                float maxobjectmovementtmp = *maxobjectmovement;
+                std::vector<float>::iterator citerobmove =std::find(objectmovement.begin(), objectmovement.end(), maxobjectmovementtmp);
+                if (citerobmove != objectmovement.end())
+                {
+                    maxmoveindex = std::distance(objectmovement.begin(), citerobmove);
+                }
+                if(objectmovement.at(maxmoveindex) <= 10)
+                {
+                    maxmoveindex = 0;
+                }
                 for(int i=0;i<this->class_names.size();i++)
                 {
                     this->last_object_centers[i] = this->object_centers[i];
                 }
             }
+            activityscoreobject.at(maxmoveindex) += 1;
+        }
+        else
+        {
+            this->last_object_centers.clear();
+            this->last_object_centers.resize(this->object_centers.size());
+            for(int i=0;i<this->class_names.size();i++)
+            {
+                this->last_object_centers[i] = this->object_centers[i];
+            }
         }
     }
-    std::cout <<"calculate time-use end"<< std::endl;
 }
 
 void CombiDarknetOpenface::calculateTimeUseOutofView()
@@ -1352,28 +1309,28 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
 
             cv::circle(cv_ptr->image, *nose_end_point2D_draw3, 5, cv::Scalar(255,255,255), 3);
 
-            double thetanoseendtmpx = nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x;
-            double thetanoseendtmpy = nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y;
-            double thetanoseendtmp = math_util::radToDeg(atan2(thetanoseendtmpy,thetanoseendtmpx));
-            double thetanoseend3x = nose_end_point2D_draw3->x-nose_tip_position_ptr->x;
-            double thetanoseend3y = nose_end_point2D_draw3->y-nose_tip_position_ptr->y;
-            double thetanoseend3 = math_util::radToDeg(atan2(thetanoseend3y,thetanoseend3x));
-            double thetanoseend2x = nose_end_point2D_draw2->x-nose_tip_position_ptr->x;
-            double thetanoseend2y = nose_end_point2D_draw2->y-nose_tip_position_ptr->y;
-            double thetanoseend2 = math_util::radToDeg(atan2(thetanoseend2y,thetanoseend2x));
+            double nose_end_angle_tmpx = nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x;
+            double nose_end_angle_tmpy = nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y;
+            double nose_end_angle_tmp = math_util::radToDeg(atan2(nose_end_angle_tmpy,nose_end_angle_tmpx));
+            double nose_end_angle_3x = nose_end_point2D_draw3->x-nose_tip_position_ptr->x;
+            double nose_end_angle_3y = nose_end_point2D_draw3->y-nose_tip_position_ptr->y;
+            double nose_end_angle_3 = math_util::radToDeg(atan2(nose_end_angle_3y,nose_end_angle_3x));
+            double nose_end_angle_2x = nose_end_point2D_draw2->x-nose_tip_position_ptr->x;
+            double nose_end_angle_2y = nose_end_point2D_draw2->y-nose_tip_position_ptr->y;
+            double nose_end_angle_2 = math_util::radToDeg(atan2(nose_end_angle_2y,nose_end_angle_2x));
             double thetanoseendx = nose_end_point2D_draw->x-nose_tip_position_ptr->x;
             double thetanoseendy = nose_end_point2D_draw->y-nose_tip_position_ptr->y;
             double thetanoseend = math_util::radToDeg(atan2(thetanoseendy,thetanoseendx));
 
-            if((((nose_end_point2D_draw3->x>0)&&(nose_end_point2D_draw3->x<640))&&((nose_end_point2D_draw3->y>0)&&(nose_end_point2D_draw3->y<480)))&&(abs(thetanoseendtmp-thetanoseend3)<10))
+            if((((nose_end_point2D_draw3->x>0)&&(nose_end_point2D_draw3->x<640))&&((nose_end_point2D_draw3->y>0)&&(nose_end_point2D_draw3->y<480)))&&(abs(nose_end_angle_tmp-nose_end_angle_3)<10))
             {
                 cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw3, cv::Scalar(0,255,0), 2);
             }
-            else if((((nose_end_point2D_draw2->x>0)&&(nose_end_point2D_draw2->x<640))&&((nose_end_point2D_draw2->y>0)&&(nose_end_point2D_draw2->y<480)))&&(abs(thetanoseendtmp-thetanoseend2)<10))
+            else if((((nose_end_point2D_draw2->x>0)&&(nose_end_point2D_draw2->x<640))&&((nose_end_point2D_draw2->y>0)&&(nose_end_point2D_draw2->y<480)))&&(abs(nose_end_angle_tmp-nose_end_angle_2)<10))
             {
                 cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw2, cv::Scalar(0,255,0), 2);
             }
-            else if((((nose_end_point2D_draw->x>0)&&(nose_end_point2D_draw->x<640))&&((nose_end_point2D_draw->y>0)&&(nose_end_point2D_draw->y<480)))&&(abs(thetanoseendtmp-thetanoseend)<10))
+            else if((((nose_end_point2D_draw->x>0)&&(nose_end_point2D_draw->x<640))&&((nose_end_point2D_draw->y>0)&&(nose_end_point2D_draw->y<480)))&&(abs(nose_end_angle_tmp-thetanoseend)<10))
             {
                 cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw, cv::Scalar(0,255,0), 2);
 
