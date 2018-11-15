@@ -902,7 +902,6 @@ void CombiDarknetOpenface::calculateTimeUse()
 {
     this->nearest_object_index = 0;
     this->nearest_gaze_position_ptr.reset();
-    detectedobjectbox.clear();
     if(nose_end_point2D_draw && this->person_box)
     {
         double nearest_object_distance;
@@ -972,13 +971,6 @@ void CombiDarknetOpenface::calculateTimeUse()
         // std::cout << "boxcenter  :"<<this->object_centers[this->nearest_object_index]<< std::endl;
 
         activityscoreface.at(this->nearest_object_index) += 1;
-        if(this->nearest_object_index != 0)
-        {
-            detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).tl().x);
-            detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).tl().y);
-            detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).br().x);
-            detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).br().y);
-        }
 
         // if(darknet_cnt==1)
         // {
@@ -1132,7 +1124,6 @@ std::tuple<std::size_t, double, cv::Point2i> CombiDarknetOpenface::getNearestObj
 
 void CombiDarknetOpenface::calculateTimeUseOutofView()
 {
-    detectedobjectbox.empty();
     std::cout<<"calculateTimeUseOutofView"<<std::endl;
     //const face orientation
     std::cout<<"########const face orientation#############" << std::endl;
@@ -1188,13 +1179,6 @@ void CombiDarknetOpenface::calculateTimeUseOutofView()
         std::cout << "xcerror:"<< xcerror << std::endl;
     }
     activityscoreface.at(this->nearest_object_index) += 1;
-    if(this->nearest_object_index)
-    {
-        detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).tl().x);
-        detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).tl().y);
-        detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).br().x);
-        detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).br().y);
-    }
 }
 
 //RGB
@@ -1474,7 +1458,7 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
     depth_cnt += 1;
     std::cout<<"depth_callback:"<<depth_cnt<<std::endl;
 
-    if(this->person_box ||(!detectedobjectbox.empty()))
+    if(this->person_box || this->hasFocusedObject())
     {
         if(this->person_box)
         {
@@ -1510,12 +1494,12 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
         }
         std::vector<double>boxdepthivalue;
 
-        if(!detectedobjectbox.empty())
+        if(this->hasFocusedObject())
         {
-            objectx1ori = detectedobjectbox.at(0);
-            objecty1ori = detectedobjectbox.at(1);
-            objectx2ori = detectedobjectbox.at(2);
-            objecty2ori = detectedobjectbox.at(3);
+            objectx1ori = this->getFocusedObjectBox().tl().x;
+            objecty1ori = this->getFocusedObjectBox().tl().y;
+            objectx2ori = this->getFocusedObjectBox().br().x;
+            objecty2ori = this->getFocusedObjectBox().br().y;
 
             objectxc = (objectx1ori+objectx2ori)/2;
             objectyc = (objecty1ori+objecty2ori)/2;
@@ -1624,7 +1608,7 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
                 cv::circle(img, cv::Point(xc, yc), 8, cv::Scalar(0, 0, 0), 3);
             }
         }
-        if(!detectedobjectbox.empty())
+        if(this->hasFocusedObject())
         {
             objectdist = objectdepthpoint;
             noseobjectmindist = objectdist;
@@ -1653,7 +1637,7 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
                 double objectmeasurementy = To(1,2);
 
                 std::cout<<"objectmeasurement:"<<objectmeasurementx<<","<<objectmeasurementy<<std::endl;
-                cv::rectangle(img, cv::Point(detectedobjectbox.at(0), detectedobjectbox.at(1)), cv::Point(detectedobjectbox.at(2), detectedobjectbox.at(3)), cv::Scalar(0, 0, 255), 5, 4);
+                cv::rectangle(img, this->getFocusedObjectBox(), cv::Scalar(0, 0, 255), 5, 4);
 
                 this->publishObjectMarker(objectmeasurementx,objectmeasurementy);
             }
@@ -1908,6 +1892,17 @@ cv::Point2i CombiDarknetOpenface::invalidPoint()const
 bool CombiDarknetOpenface::isInvalidPoint(const cv::Point2i& p)const
 {
     return p.x == std::numeric_limits<int>::max() && p.y == std::numeric_limits<int>::max();
+}
+
+bool CombiDarknetOpenface::hasFocusedObject() const
+{
+    return this->nearest_object_index != 0;
+}
+
+
+cv::Rect CombiDarknetOpenface::getFocusedObjectBox() const
+{
+    return this->object_boxes.at(this->nearest_object_index);
 }
 
 // 購読者ノードのメイン関数

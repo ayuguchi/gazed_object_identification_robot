@@ -201,7 +201,6 @@ private:
     geometry_msgs::PoseStamped robotoriginpose;
 
     std::unique_ptr<cv::Rect> person_box;
-    std::vector<int>detectedobjectbox; 
 
     std::unique_ptr<cv::Point2i> nose_tip_position_ptr;
     std::unique_ptr<cv::Point2i> chin_position_ptr;
@@ -244,4 +243,6 @@ private:
     std::tuple<std::size_t, double, cv::Point2i> getNearestObject(const cv::Point2i& nose_tip_point, const cv::Point2i& nose_end_point, const std::vector<cv::Point2i>& object_centers, float angle_distance_thresh=10.0f) const;
     cv::Point2i invalidPoint()const;
     bool isInvalidPoint(const cv::Point2i& p)const;
+    bool hasFocusedObject() const;
+    cv::Rect getFocusedObjectBox() const;
 };
