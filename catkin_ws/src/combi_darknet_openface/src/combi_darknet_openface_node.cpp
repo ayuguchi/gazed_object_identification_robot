@@ -296,7 +296,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
 
     if(this->person_box && this->person_moving_state == PersonMovingState::Stopping &&(notmeasurement_cnt<RobotMoveCount)&&(!robot_moving)&&(!pose_reset))
     {
-        this->calculateTimeUse(current_time_sec);
+        this->calculateTimeUse();
         if(!robotpose.empty())
         {
             robotoriginpose.pose.position.x = robotpose.at(0);
@@ -322,7 +322,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
         {
             //pose_reset_cnt += 1;
             after_flag = 1;
-            this->calculateTimeUseOutofView(current_time_sec);
+            this->calculateTimeUseOutofView();
         }
     }
 
@@ -898,7 +898,7 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
 }
 */
 
-void CombiDarknetOpenface::calculateTimeUse(double currenttimesec)
+void CombiDarknetOpenface::calculateTimeUse()
 {
     noseendminindex = 0;
     nose_end_point2D_drawmin.clear();
@@ -1213,7 +1213,7 @@ void CombiDarknetOpenface::calculateTimeUse(double currenttimesec)
     std::cout <<"calculate time-use end"<< std::endl;
 }
 
-void CombiDarknetOpenface::calculateTimeUseOutofView(double currenttimesec)
+void CombiDarknetOpenface::calculateTimeUseOutofView()
 {
     detectedobjectbox.empty();
     std::cout<<"calculateTimeUseOutofView"<<std::endl;

@@ -131,9 +131,9 @@ public:
     CombiDarknetOpenface(ros::NodeHandle nh);
     ~CombiDarknetOpenface();
     void onRecognizedFace(const openface_ros::Faces::ConstPtr& msg );
-    void calculateTimeUse(double currenttimesec);
+    void calculateTimeUse();
     void linearLine(double x1,double x2,double y1,double y2,double* a,double* b );
-    void calculateTimeUseOutofView(double currenttimesec);
+    void calculateTimeUseOutofView();
     void onRecognizedObject(const darknet_ros_msgs::BoundingBoxes::ConstPtr& msg );
     void onRgbImageUpdated(const sensor_msgs::ImageConstPtr& msg);//face_feature
     void onDepthImageUpdated(const sensor_msgs::ImageConstPtr& msg);
