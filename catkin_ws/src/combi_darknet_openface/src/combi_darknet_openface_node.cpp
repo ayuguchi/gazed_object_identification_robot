@@ -247,7 +247,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
 
     activityscoreface.clear();
     activityscoreobject.clear();
-    maxmoveindex = 0;
+    this->most_active_object_index = 0;
     this->nearest_object_index = 0;
     this->person_box.reset();
     darknet_cnt += 1;
@@ -352,7 +352,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
 
         // activityscoreobjectdata<<darknet_cnt<<","
         //     <<currenttimesec<<", "
-        //     <<maxmoveindex<<std::endl;
+        //     <<this->most_active_object_index<<std::endl;
         // scoreobjectdata<<darknet_cnt<<","<<currenttimesec<<",";
         // scoreobjectlabel<<darknet_cnt<<","<<currenttimesec<<",";
         // this->object_viewing_timesdata<<darknet_cnt<<","<<currenttimesec<<",";
@@ -995,91 +995,35 @@ void CombiDarknetOpenface::calculateTimeUse()
 
     }
     //object movement
-    if(this->class_names.empty() ||  !this->person_box)
-    {
-        return;
-    }
-    std::vector<float> objectmovement;
-    std::vector<float> objectmovementtmp;
+    // if(this->class_names.empty() ||  !this->person_box)
+    // {
+    //     return;
+    // }
 
-    if(this->last_object_centers.empty())
-    {
-        for(int i=0;i<this->class_names.size();i++)
-        {
-            this->last_object_centers.push_back(this->object_centers.at(i));
-        }
-    }
-    else
-    {
-        if(this->last_object_centers.size() == this->object_centers.size())
-        {
-            for(int i=0;i<this->class_names.size();i++)
-            {
-                objectmovement.push_back(std::sqrt(std::pow(this->object_centers.at(i).x-this->last_object_centers.at(i).x, 2) + std::pow(this->object_centers.at(i).y-this->last_object_centers.at(i).y, 2)));
-                if(this->class_names.at(i)=="person")
-                {
-                    objectmovement.at(i) = 0;
-                }
-                if(this->class_names.at(i)=="dining table")
-                {
-                    objectmovement.at(i) = 0;
-                }
-                if(this->class_names.at(i)=="bench")
-                {
-                    objectmovement.at(i) = 0;
-                }
-                if(this->class_names.at(i)=="oven")
-                {
-                    objectmovement.at(i) = 0;
-                }
-                if(this->class_names.at(i)=="refrigerator")
-                {
-                    objectmovement.at(i) = 0;
-                }
-                if((this->object_centers.at(i).x ==0)&&(this->object_centers.at(i).y ==0))
-                {
-                    objectmovement.at(i) = 0;
-                }
-
-                if(objectmovement.at(i)>0)
-                {
-                    objectmovementtmp.push_back(objectmovement.at(i));
-                }
-            }
-            if(objectmovementtmp.empty())
-            {
-                maxmoveindex = 0;
-            }
-            else
-            {
-                auto maxobjectmovement = std::max_element(std::begin(objectmovementtmp), std::end(objectmovementtmp));
-                float maxobjectmovementtmp = *maxobjectmovement;
-                std::vector<float>::iterator citerobmove =std::find(objectmovement.begin(), objectmovement.end(), maxobjectmovementtmp);
-                if (citerobmove != objectmovement.end())
-                {
-                    maxmoveindex = std::distance(objectmovement.begin(), citerobmove);
-                }
-                if(objectmovement.at(maxmoveindex) <= 10)
-                {
-                    maxmoveindex = 0;
-                }
-                for(int i=0;i<this->class_names.size();i++)
-                {
-                    this->last_object_centers[i] = this->object_centers[i];
-                }
-            }
-            activityscoreobject.at(maxmoveindex) += 1;
-        }
-        else
-        {
-            this->last_object_centers.clear();
-            this->last_object_centers.resize(this->object_centers.size());
-            for(int i=0;i<this->class_names.size();i++)
-            {
-                this->last_object_centers[i] = this->object_centers[i];
-            }
-        }
-    }
+    // if(this->last_object_centers.empty())
+    // {
+    //     this->last_object_centers = this->object_centers;
+    // }
+    // else
+    // {
+    //     if(this->last_object_centers.size() == this->object_centers.size())
+    //     {
+    //         std::vector<float> object_movement_list;
+    //         // std::vector<float> objectmovementtmp;
+    //         for(std::size_t i = 0; i < this->class_names.size(); i++)
+    //         {
+    //             object_movement_list.push_back(this->isIgnoredObjectClass(this->class_names.at(i)) ? 0.0 : cv::norm(this->object_centers.at(i) - this->last_object_centers.at(i)));
+    //         }
+    //         auto max_move_object_iter = std::max_element(object_movement_list.begin(), object_movement_list.end());
+    //         this->most_active_object_index = std::distance(objectmovement.begin(), citerobmove);
+    //         if(*max_move_object_iter <= 10)
+    //         {
+    //             this->most_active_object_index = 0;
+    //         }
+    //         activityscoreobject.at(this->most_active_object_index) += 1;
+    //     }
+    //     this->last_object_centers = this->object_centers;
+    // }
 }
 
 std::tuple<std::size_t, double, cv::Point2i> CombiDarknetOpenface::getNearestObject(const cv::Point2i& nose_tip_point, const cv::Point2i& nose_end_point, const std::vector<cv::Point2i>& object_centers, float angle_distance_thresh) const

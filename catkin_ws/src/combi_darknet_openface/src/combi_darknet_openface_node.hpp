@@ -180,7 +180,7 @@ private:
     std::vector<cv::Point2i> object_centers;
     std::vector<cv::Point2i> last_object_centers;
 
-    int maxmoveindex;
+    std::size_t most_active_object_index;
     std::size_t nearest_object_index;
     int mindistanceindex;
     std::vector<int>activityscoreface;
