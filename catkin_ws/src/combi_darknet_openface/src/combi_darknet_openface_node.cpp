@@ -1,5 +1,13 @@
 #include "combi_darknet_openface_node.hpp"
+
+#include <iostream>
 #include <limits>
+
+#include <Eigen/Dense>
+#include <Eigen/Geometry>
+#include <tf/transform_datatypes.h>
+#include <std_msgs/Int16.h>
+
 #include "math_util.h"
 
 CombiDarknetOpenface::CombiDarknetOpenface(ros::NodeHandle nh)
@@ -900,8 +908,8 @@ void CombiDarknetOpenface::calculateTimeUse(double currenttimesec)
         //11/18
         cv::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
         cv::Mat dist_coeffs = (cv::Mat_<double>(4,1) << 0.06569569924719, -0.25862424608946, 0.00010394071172, -0.00024019257963);
-        vector<cv::Point3f> nose_end_point3D;
-        vector<cv::Point2f> nose_end_point2D;
+        std::vector<cv::Point3f> nose_end_point3D;
+        std::vector<cv::Point2f> nose_end_point2D;
 
         std::cout<<"#######face orientation variable distance########" << std::endl;
         std::vector<int> distancestep;
@@ -1054,9 +1062,9 @@ void CombiDarknetOpenface::calculateTimeUse(double currenttimesec)
                 std::cout << "######indicator########"<< std::endl;
                 std::cout << "nose:" << nose_tip_position_ptr->x << "," << nose_tip_position_ptr->y<< std::endl;
                 std::cout << "noseendminindextmp2:"<< noseendminindextmp2 << std::endl;
-                std::cout << "boxcenter.at(noseendminindextmp2)  :"<<this->object_centers.at(noseendminindextmp2)<< endl;
+                std::cout << "boxcenter.at(noseendminindextmp2)  :"<<this->object_centers.at(noseendminindextmp2)<< std::endl;
                 std::cout << "thetagazeobject:"<< thetagazeobject << std::endl;
-                std::cout << "nose_end_point2D_drawmin  :"<<nose_end_point2D_drawmin[0]<<","<<nose_end_point2D_drawmin[1]<< endl;
+                std::cout << "nose_end_point2D_drawmin  :"<<nose_end_point2D_drawmin[0]<<","<<nose_end_point2D_drawmin[1]<< std::endl;
                 std::cout << "thetanoseendmin:"<< thetanoseendmin << std::endl;
             }
         }
@@ -1072,7 +1080,7 @@ void CombiDarknetOpenface::calculateTimeUse(double currenttimesec)
         std::cout << "persondepthdist:"<< noseobjectmindist << std::endl;
         std::cout << "minnoseend:"<< minnoseend << std::endl;
         std::cout << "noseendminindex:"<< noseendminindex << std::endl;
-        cout << "boxcenter  :"<<this->object_centers[noseendminindex]<< endl;
+        std::cout << "boxcenter  :"<<this->object_centers[noseendminindex]<< std::endl;
 
         std::cout << "mindistancestep:"<< mindistancestep << std::endl;
 

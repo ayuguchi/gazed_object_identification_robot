@@ -1,60 +1,24 @@
-#define OPENCV_TRAITS_ENABLE_DEPRECATED
 #include <ros/ros.h>
 #include <fstream>
-#include <math.h>
-#include <strings.h>
-#include <iostream>
+#include <cmath>
+#include <string>
 #include <memory>
+#include <algorithm>
+#include <vector>
 
-#include <image_transport/image_transport.h>
-#include <cv_bridge/cv_bridge.h>
+#ifndef OPENCV_TRAITS_ENABLE_DEPRECATED
+    #define OPENCV_TRAITS_ENABLE_DEPRECATED
+#endif
 #include <opencv2/opencv.hpp>
-#include <opencv2//core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/objdetect/objdetect.hpp>
+#include <cv_bridge/cv_bridge.h>
+
 #include <darknet_ros_msgs/BoundingBoxes.h>
 #include <darknet_ros_msgs/BoundingBox.h>
-#include <darknet_ros_msgs/CheckForObjectsAction.h>
-
-//#include <naoqi_bridge_msgs/JointAnglesWithSpeedActionGoal.h>
 #include <geometry_msgs/PoseStamped.h>
-#include <geometry_msgs/Twist.h>
-
-#include <tbb/tbb.h>
-
-#include <Eigen/Dense>
-#include <Eigen/Geometry>
-
-#include <opencv2/videoio/videoio.hpp>
-#include <opencv2/videoio/videoio_c.h>
-#include <opencv2/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-
-#include "combi_darknet_openface/ActionUnit.h"
-
 #include <sensor_msgs/Image.h>
-#include <sensor_msgs/image_encodings.h>
-
-#include <openface/LandmarkCoreIncludes.h>
-#include <openface/Face_utils.h>
-#include <openface/FaceAnalyser.h>
-#include <openface/GazeEstimation.h>
-
 #include <visualization_msgs/Marker.h>
-
-#include <tf/transform_datatypes.h>
-#include <tf/transform_listener.h>
-#include <tf2/LinearMath/Quaternion.h>
-#include <tf2_ros/transform_broadcaster.h>
-#include <geometry_msgs/TransformStamped.h>
-#include <std_msgs/Int16.h>
-#include <std_msgs/String.h>
 #include <openface_ros/Face.h>
 #include <openface_ros/Faces.h>
-
-#include <boost/foreach.hpp>
-#include <algorithm>
 
 #include "CachedValue.h"
 
