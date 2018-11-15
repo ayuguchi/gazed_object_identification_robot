@@ -286,13 +286,6 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
         }
     }
 
-    double head_arrow_thetatmp = head_arrow_theta+180;
-    if(head_arrow_thetatmp>360)
-    {
-        head_arrow_thetatmp -= 360;
-    }
-    headrobottheta = robotyaw-head_arrow_thetatmp;
-
     if(this->person_box && this->person_moving_state == PersonMovingState::Stopping &&(notmeasurement_cnt<RobotMoveCount)&&(!robot_moving)&&(!pose_reset))
     {
         CombiDarknetOpenface::calculateTimeUse(current_time_sec);
