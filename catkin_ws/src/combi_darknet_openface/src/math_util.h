@@ -1,6 +1,7 @@
 #ifndef COMBI_DARKNET_OPENFACE_MATH_UTIL_H
 #define COMBI_DARKNET_OPENFACE_MATH_UTIL_H
 #include <cmath>
+#include <opencv2/core/core.hpp>
 
 namespace math_util{
     const double PI = 3.14159265358979323846;
@@ -23,6 +24,11 @@ namespace math_util{
     template<typename T>
     inline T degToRad(T value){
         return value * PI / 180;
+    }
+
+    inline double atan2(const cv::Point& p)
+    {
+        return std::atan2(p.y, p.x);
     }
 };
 #endif
