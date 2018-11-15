@@ -248,7 +248,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     activityscoreface.clear();
     activityscoreobject.clear();
     maxmoveindex = 0;
-    noseendminindex = 0;
+    this->nearest_object_index = 0;
     this->person_box.reset();
     darknet_cnt += 1;
 
@@ -335,13 +335,13 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     {
         if(darknet_cnt>1)
         {
-            this->object_viewing_times.at(noseendminindex) += current_time_sec - previous_time_sec;
+            this->object_viewing_times.at(this->nearest_object_index) += current_time_sec - previous_time_sec;
         }
 
-        // std::cout << "noseendminindex:"<< noseendminindex << std::endl;
+        // std::cout << "this->nearest_object_index:"<< this->nearest_object_index << std::endl;
         // activityscorefacedata<<darknet_cnt<<","
         //     <<currenttimesec<<", "
-        //     <<noseendminindex<<std::endl;
+        //     <<this->nearest_object_index<<std::endl;
         // scorefacedata<<darknet_cnt<<","<<currenttimesec<<",";
         // scorefacelabel<<darknet_cnt<<","<<currenttimesec<<",";
         // activityscorefacedata2<<darknet_cnt<<","
@@ -900,63 +900,23 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
 
 void CombiDarknetOpenface::calculateTimeUse()
 {
-    noseendminindex = 0;
-    nose_end_point2D_drawmin.clear();
+    this->nearest_object_index = 0;
+    this->nearest_gaze_position_ptr.reset();
     detectedobjectbox.clear();
     if(nose_end_point2D_draw && this->person_box)
     {
-        double nose_end_angle_tmp = math_util::radToDeg(math_util::atan2(*this->nose_end_point2D_drawtmp - *this->nose_tip_position_ptr));
-        int minnoseend = 10000;
-        float minnose_end_distances_tmp = 100000;
-        int mindistancestep = 0;
-        for(int distance = DistanceStep; distance <= DistanceRange; distance += DistanceStep)
+        double nearest_object_distance;
+        this->nearest_gaze_position_ptr.reset(new cv::Point2i(this->invalidPoint()));
+        std::tie(this->nearest_object_index, nearest_object_distance, *this->nearest_gaze_position_ptr) = this->getNearestObject(*this->nose_tip_position_ptr, *this->nose_end_point2D_drawtmp, this->object_centers);
+        if(this->nearest_gaze_position_ptr && !this->isInvalidPoint(*this->nearest_gaze_position_ptr))
         {
-            cv::Point2i nose_end_point2D = this->getProjectedPoint(cv::Point3d(0,0,distance));
-            double min_nose_end_angle_tmp = math_util::radToDeg(math_util::atan2(nose_end_point2D - *this->nose_tip_position_ptr));
-            if(abs(nose_end_angle_tmp-min_nose_end_angle_tmp)<10)
+            if(nearest_object_distance > this->gaze_assigned_thresh)
             {
-                std::vector<float> nose_end_distances;
-                for(const auto& center_position : this->object_centers)
-                {
-                    if(center_position.x == 0 && center_position.y == 0)
-                    {
-                        nose_end_distances.push_back(std::numeric_limits<float>::infinity());
-                        continue;
-                    }
-                    nose_end_distances.push_back(cv::norm(center_position - nose_end_point2D));
-                }
-                int min_nose_end_index_tmp = 0;
-                if(std::count(nose_end_distances.begin(), nose_end_distances.end(), std::numeric_limits<float>::infinity()) != nose_end_distances.size())
-                {
-                    auto min_element_iter = std::min_element(std::begin(nose_end_distances), std::end(nose_end_distances));
-                    minnose_end_distances_tmp = *min_element_iter;
-                    min_nose_end_index_tmp = std::distance(nose_end_distances.begin(), min_element_iter);
-                }
-                if(minnose_end_distances_tmp<minnoseend)
-                {
-                    minnoseend = minnose_end_distances_tmp;
-                    noseendminindex = min_nose_end_index_tmp;
-                    nose_end_point2D_drawmin.clear();
-                    nose_end_point2D_drawmin.push_back(std::round(nose_end_point2D.x));
-                    nose_end_point2D_drawmin.push_back(std::round(nose_end_point2D.y));
-                    mindistancestep = distance;
-                }
+                this->nearest_object_index = 0;
             }
-        }
-
-        if(!nose_end_point2D_drawmin.empty())
-        {
-            int min_nose_end_index_tmp2 = noseendminindex;
-            if(minnoseend>65)
+            if(noseobjectmindist > persondepthdist)
             {
-                std::cout << "gaze is not Assigned" << std::endl;
-                noseendminindex = 0;
-            }
-
-            if(noseobjectmindist>persondepthdist)
-            {
-                std::cout << "object is far" << std::endl;
-                noseendminindex = 0;
+                this->nearest_object_index = 0;
                 object_far = 1;
             }
             else
@@ -964,92 +924,82 @@ void CombiDarknetOpenface::calculateTimeUse()
                 object_far = 0;
             }
 
+            // if(this->nearest_object_index != 0)
+            // {
+            //     int gazeobjectx = this->object_centers.at(this->nearest_object_index).x-nose_tip_position_ptr->x;
+            //     int gazeobjecty = this->object_centers.at(this->nearest_object_index).y-nose_tip_position_ptr->y;
+            //     double thetagazeobject = math_util::radToDeg(atan2(gazeobjecty,gazeobjectx));
 
-            if(!noseendminindex)
-            {
-                double nosetoendmin = std::sqrt(std::pow(nose_end_point2D_drawmin[0]-nose_tip_position_ptr->x, 2) + std::pow(nose_end_point2D_drawmin[1]-nose_tip_position_ptr->y, 2));
+            //     double thetanoseendminx = nearest_gaze_position_ptr->x-nose_tip_position_ptr->x;
+            //     double thetanoseendminy = nearest_gaze_position_ptr->y-nose_tip_position_ptr->y;
+            //     double thetanoseendmin = math_util::radToDeg(atan2(thetanoseendminy,thetanoseendminx));
 
-                double nosetoendconst3 = std::sqrt(std::pow(nose_end_point2D_draw3->x-nose_tip_position_ptr->x, 2) + std::pow(nose_end_point2D_draw3->y-nose_tip_position_ptr->y, 2));
-                double nosetoendconst2 = std::sqrt(std::pow(nose_end_point2D_draw2->x-nose_tip_position_ptr->x, 2) + std::pow(nose_end_point2D_draw2->y-nose_tip_position_ptr->y, 2));
-                double nosetoendconsttmp = std::sqrt(std::pow(nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x, 2) + std::pow(nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y, 2));
+            //     if(abs(thetagazeobject-thetanoseendmin)<30)
+            //     {
+            //         move_mode = OrientationInView;
+            //         if(object_far)
+            //         {
+            //             move_mode = ObjectFar;
+            //         }
+            //     }
+            //     else
+            //     {
+            //         move_mode = OrientationOutView;
+            //     }
 
-                int gazeobjectx = this->object_centers.at(min_nose_end_index_tmp2).x-nose_tip_position_ptr->x;
-                int gazeobjecty = this->object_centers.at(min_nose_end_index_tmp2).y-nose_tip_position_ptr->y;
-                double thetagazeobject = math_util::radToDeg(atan2(gazeobjecty,gazeobjectx));
+            //     double nosetoend = std::sqrt(std::pow(nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x, 2) + std::pow(nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y, 2));
 
-                double thetanoseendminx = nose_end_point2D_drawmin[0]-nose_tip_position_ptr->x;
-                double thetanoseendminy = nose_end_point2D_drawmin[1]-nose_tip_position_ptr->y;
-                double thetanoseendmin = math_util::radToDeg(atan2(thetanoseendminy,thetanoseendminx));
-
-                if(abs(thetagazeobject-thetanoseendmin)<30)
-                {
-                    move_mode = OrientationInView;
-                    if(object_far)
-                    {
-                        move_mode = ObjectFar;
-                    }
-                }
-                else
-                {
-                    move_mode = OrientationOutView;
-                }
-
-                double nosetoend = std::sqrt(std::pow(nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x, 2) + std::pow(nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y, 2));
-
-                std::cout << "######indicator########"<< std::endl;
-                std::cout << "nose:" << nose_tip_position_ptr->x << "," << nose_tip_position_ptr->y<< std::endl;
-                std::cout << "min_nose_end_index_tmp2:"<< min_nose_end_index_tmp2 << std::endl;
-                std::cout << "boxcenter.at(min_nose_end_index_tmp2)  :"<<this->object_centers.at(min_nose_end_index_tmp2)<< std::endl;
-                std::cout << "thetagazeobject:"<< thetagazeobject << std::endl;
-                std::cout << "nose_end_point2D_drawmin  :"<<nose_end_point2D_drawmin[0]<<","<<nose_end_point2D_drawmin[1]<< std::endl;
-                std::cout << "thetanoseendmin:"<< thetanoseendmin << std::endl;
-            }
+            //     std::cout << "######indicator########"<< std::endl;
+            //     std::cout << "nose:" << nose_tip_position_ptr->x << "," << nose_tip_position_ptr->y<< std::endl;
+            //     std::cout << "min_nose_end_index_tmp2:"<< min_nose_end_index_tmp2 << std::endl;
+            //     std::cout << "boxcenter.at(min_nose_end_index_tmp2)  :"<<this->object_centers.at(this->nearest_object_index)<< std::endl;
+            //     std::cout << "thetagazeobject:"<< thetagazeobject << std::endl;
+            //     std::cout << "nearest_gaze_position_ptr  :"<<nearest_gaze_position_ptr->x<<","<<nearest_gaze_position_ptr->y<< std::endl;
+            //     std::cout << "thetanoseendmin:"<< thetanoseendmin << std::endl;
+            // }
         }
-        else
-        {
-            std::cout << "nose_end_point2D_drawmin.empty()" << std::endl;
-            noseendminindex = 0;
-            move_mode=FaceOrinentationError;
-        }
+        // else
+        // {
+        //     this->nearest_object_index = 0;
+        //     move_mode=FaceOrinentationError;
+        // }
 
         //commentout(11/21)
-        std::cout << "noseobjectmindist:"<< noseobjectmindist << std::endl;
-        std::cout << "persondepthdist:"<< noseobjectmindist << std::endl;
-        std::cout << "minnoseend:"<< minnoseend << std::endl;
-        std::cout << "noseendminindex:"<< noseendminindex << std::endl;
-        std::cout << "boxcenter  :"<<this->object_centers[noseendminindex]<< std::endl;
+        // std::cout << "noseobjectmindist:"<< noseobjectmindist << std::endl;
+        // std::cout << "persondepthdist:"<< noseobjectmindist << std::endl;
+        // std::cout << "minnoseend:"<< minnoseend << std::endl;
+        // std::cout << "this->nearest_object_index:"<< this->nearest_object_index << std::endl;
+        // std::cout << "boxcenter  :"<<this->object_centers[this->nearest_object_index]<< std::endl;
 
-        std::cout << "mindistancestep:"<< mindistancestep << std::endl;
-
-        activityscoreface.at(noseendminindex) += 1;
-        if(noseendminindex)
+        activityscoreface.at(this->nearest_object_index) += 1;
+        if(this->nearest_object_index != 0)
         {
-            detectedobjectbox.push_back(this->object_boxes.at(noseendminindex).tl().x);
-            detectedobjectbox.push_back(this->object_boxes.at(noseendminindex).tl().y);
-            detectedobjectbox.push_back(this->object_boxes.at(noseendminindex).br().x);
-            detectedobjectbox.push_back(this->object_boxes.at(noseendminindex).br().y);
+            detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).tl().x);
+            detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).tl().y);
+            detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).br().x);
+            detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).br().y);
         }
 
-        if(darknet_cnt==1)
-        {
-            lastmove_mode = move_mode;
-        }
-        if(noseendminindex)
-        {
-            notmeasurement_cnt = 0;
-            move_mode = 0;
-        }
-        else if(lastmove_mode == move_mode)
-        {
-            notmeasurement_cnt += 1;
-        }
-        else
-        {
-            notmeasurement_cnt = 0;
-        }
-        lastmove_mode = move_mode;
-        std::cout << "move_mode:"<< move_mode << std::endl;
-        std::cout << "notmeasurement_cnt:"<< notmeasurement_cnt << std::endl;
+        // if(darknet_cnt==1)
+        // {
+        //     lastmove_mode = move_mode;
+        // }
+        // if(this->nearest_object_index)
+        // {
+        //     notmeasurement_cnt = 0;
+        //     move_mode = 0;
+        // }
+        // else if(lastmove_mode == move_mode)
+        // {
+        //     notmeasurement_cnt += 1;
+        // }
+        // else
+        // {
+        //     notmeasurement_cnt = 0;
+        // }
+        // lastmove_mode = move_mode;
+        // std::cout << "move_mode:"<< move_mode << std::endl;
+        // std::cout << "notmeasurement_cnt:"<< notmeasurement_cnt << std::endl;
 
     }
     //object movement
@@ -1140,6 +1090,46 @@ void CombiDarknetOpenface::calculateTimeUse()
     }
 }
 
+std::tuple<std::size_t, double, cv::Point2i> CombiDarknetOpenface::getNearestObject(const cv::Point2i& nose_tip_point, const cv::Point2i& nose_end_point, const std::vector<cv::Point2i>& object_centers, float angle_distance_thresh) const
+{
+    double nose_angle = math_util::radToDeg(math_util::atan2(nose_end_point - nose_tip_point));
+    std::size_t min_object_index = 0;
+    float min_object_distance = std::numeric_limits<float>::infinity();
+    cv::Point2i min_gaze_position = this->invalidPoint();
+    for(int distance = this->search_distance_step; distance <= this->search_distance_range; distance += this->search_distance_step)
+    {
+        cv::Point2i target_point = this->getProjectedPoint(cv::Point3d(0,0,distance));
+        double target_point_angle = math_util::radToDeg(math_util::atan2(target_point - nose_tip_point));
+        if(abs(target_point_angle - nose_angle) > angle_distance_thresh)
+        {
+            continue;
+        }
+        std::vector<float> nose_end_distances;
+        for(const auto& center_position : object_centers)
+        {
+            if(center_position.x == 0 && center_position.y == 0)
+            {
+                nose_end_distances.push_back(std::numeric_limits<float>::infinity());
+                continue;
+            }
+            nose_end_distances.push_back(cv::norm(center_position - target_point));
+        }
+        if(std::count(nose_end_distances.begin(), nose_end_distances.end(), std::numeric_limits<float>::infinity()) == nose_end_distances.size())
+        {
+            continue;
+        }
+        auto min_element_iter = std::min_element(std::begin(nose_end_distances), std::end(nose_end_distances));
+        if(*min_element_iter < min_object_distance)
+        {
+            min_object_index = std::distance(nose_end_distances.begin(), min_element_iter);
+            min_object_distance = *min_element_iter;
+            min_gaze_position = target_point;
+
+        }
+    }
+    return std::forward_as_tuple(min_object_index, min_object_distance, min_gaze_position);
+}
+
 void CombiDarknetOpenface::calculateTimeUseOutofView()
 {
     detectedobjectbox.empty();
@@ -1175,7 +1165,7 @@ void CombiDarknetOpenface::calculateTimeUseOutofView()
     if(objectdistancetmp.empty())
     {
         std::cout << "no detected objects " << std::endl;
-        noseendminindex = 0;
+        this->nearest_object_index = 0;
     }
     else
     {
@@ -1185,25 +1175,25 @@ void CombiDarknetOpenface::calculateTimeUseOutofView()
         std::vector<float>::iterator citerobdist =std::find(objectdistance.begin(), objectdistance.end(), minobjectdistancetmp);
         if(citerobdist != objectdistance.end())
         {
-            noseendminindex = std::distance(objectdistance.begin(), citerobdist);
+            this->nearest_object_index = std::distance(objectdistance.begin(), citerobdist);
         }
 
-        double xcerror =  this->object_centers.at(noseendminindex).x-320;
+        double xcerror =  this->object_centers.at(this->nearest_object_index).x-320;
         //std::cout << "detectedobjectxc:"<< detectedobjectxc << std::endl;
         if(abs(xcerror)>200)
         {
             std::cout << "gaze is not Assigned" << std::endl;
-            noseendminindex = 0;
+            this->nearest_object_index = 0;
         }
         std::cout << "xcerror:"<< xcerror << std::endl;
     }
-    activityscoreface.at(noseendminindex) += 1;
-    if(noseendminindex)
+    activityscoreface.at(this->nearest_object_index) += 1;
+    if(this->nearest_object_index)
     {
-        detectedobjectbox.push_back(this->object_boxes.at(noseendminindex).tl().x);
-        detectedobjectbox.push_back(this->object_boxes.at(noseendminindex).tl().y);
-        detectedobjectbox.push_back(this->object_boxes.at(noseendminindex).br().x);
-        detectedobjectbox.push_back(this->object_boxes.at(noseendminindex).br().y);
+        detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).tl().x);
+        detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).tl().y);
+        detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).br().x);
+        detectedobjectbox.push_back(this->object_boxes.at(this->nearest_object_index).br().y);
     }
 }
 
@@ -1243,7 +1233,7 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
     if(!after_flag)
     {
         //facescore
-        if((!nose_end_point2D_drawmin.empty())&&(this->person_box)&&(!activityscoreface.empty()))
+        if((nearest_gaze_position_ptr)&&(this->person_box)&&(!activityscoreface.empty()))
         {
             int zerocntface = std::count(activityscoreface.begin(), activityscoreface.end(), 0);
             int maxindexface = 0;
@@ -1268,7 +1258,7 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
                 maxindexface = 0;
             }
 
-            if(!nose_end_point2D_drawmin.empty())
+            if(nearest_gaze_position_ptr)
             {
                 cv::putText(cv_ptr->image, this->class_names.at(maxindexface), cv::Point(20,60), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,0,255), 2,CV_AA);
             }
@@ -1306,8 +1296,8 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
 
             }
 
-            //nose_end_point2D_drawmin
-            cv::circle(cv_ptr->image, cv::Point(nose_end_point2D_drawmin[0], nose_end_point2D_drawmin[1]), 7, cv::Scalar(0,0,255), 5);
+            //nearest_gaze_position_ptr
+            cv::circle(cv_ptr->image, *nearest_gaze_position_ptr, 7, cv::Scalar(0,0,255), 5);
         }
 
         if(pose_reset)
@@ -1907,6 +1897,17 @@ void CombiDarknetOpenface::publishObjectMarker(double measurement_x, double meas
     object_marker.color.a = 0.75;
     object_marker.color.b =  1.0;
     object_marker_pub.publish(object_marker);
+}
+
+cv::Point2i CombiDarknetOpenface::invalidPoint()const
+{
+    return cv::Point2i(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
+}
+
+
+bool CombiDarknetOpenface::isInvalidPoint(const cv::Point2i& p)const
+{
+    return p.x == std::numeric_limits<int>::max() && p.y == std::numeric_limits<int>::max();
 }
 
 // 購読者ノードのメイン関数

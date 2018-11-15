@@ -5,6 +5,7 @@
 #include <memory>
 #include <algorithm>
 #include <vector>
+#include <tuple>
 
 #ifndef OPENCV_TRAITS_ENABLE_DEPRECATED
     #define OPENCV_TRAITS_ENABLE_DEPRECATED
@@ -38,8 +39,6 @@
 #define FirstDistance 350.0
 #define SecondDistance 500.0
 #define ThirdDistance 650.0
-#define DistanceStep 10
-#define DistanceRange 650
 
 /*
 #define TmpDistance 250.0
@@ -150,6 +149,9 @@ private:
     const cv::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
     const cv::Mat dist_coeffs = (cv::Mat_<double>(4,1) << 0.06569569924719, -0.25862424608946, 0.00010394071172, -0.00024019257963);
     const std::vector<std::string> ignore_object_list = {"person", "dining table", "bench", "oven", "refrigerator"};
+    const int search_distance_step = 10;
+    const int search_distance_range = 650;
+    const double gaze_assigned_thresh = 65.0;
     ros::Subscriber ros_object_sub;
     
     ros::Subscriber ros_face_sub;
@@ -179,7 +181,7 @@ private:
     std::vector<cv::Point2i> last_object_centers;
 
     int maxmoveindex;
-    int noseendminindex;
+    std::size_t nearest_object_index;
     int mindistanceindex;
     std::vector<int>activityscoreface;
     std::vector<int>activityscoreobject;
@@ -218,7 +220,7 @@ private:
     std::unique_ptr<cv::Point2i> nose_end_point2D_draw;
     std::unique_ptr<cv::Point2i> nose_end_point2D_draw2;
     std::unique_ptr<cv::Point2i> nose_end_point2D_draw3;
-    std::vector<int>nose_end_point2D_drawmin;    
+    std::unique_ptr<cv::Point2i> nearest_gaze_position_ptr;
 
     int darknet_cnt = 0;
     PersonMovingState person_moving_state = PersonMovingState::Moving;//0:stoping,1:moving
@@ -238,4 +240,8 @@ private:
     double calcHeadArrowAngle(const EulerAngles& head_orientation) const;
     bool isInImageArea(const cv::Point2i& point) const;
     bool isIgnoredObjectClass(const std::string& class_name) const;
+    /// \return index, distance, gaze_position
+    std::tuple<std::size_t, double, cv::Point2i> getNearestObject(const cv::Point2i& nose_tip_point, const cv::Point2i& nose_end_point, const std::vector<cv::Point2i>& object_centers, float angle_distance_thresh=10.0f) const;
+    cv::Point2i invalidPoint()const;
+    bool isInvalidPoint(const cv::Point2i& p)const;
 };
