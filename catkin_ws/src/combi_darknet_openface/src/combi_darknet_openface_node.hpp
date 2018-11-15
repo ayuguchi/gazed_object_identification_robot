@@ -185,6 +185,7 @@ private:
     const std::string FIXED_FRAME = "map";
     const cv::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
     const cv::Mat dist_coeffs = (cv::Mat_<double>(4,1) << 0.06569569924719, -0.25862424608946, 0.00010394071172, -0.00024019257963);
+    const std::vector<std::string> ignore_object_list = {"person", "dining table", "bench", "oven", "refrigerator"};
     ros::Subscriber ros_object_sub;
     
     ros::Subscriber ros_face_sub;
@@ -208,35 +209,17 @@ private:
 
     ros::NodeHandle nh1;
 
-    std::vector<std::string>classnames;
-    std::vector<std::string>classname;
-    //
-    std::vector<int>boxxmin;
-    std::vector<int>boxymin;
-    std::vector<int>boxxmax;
-    std::vector<int>boxymax;
-    std::vector<int>boxxmin2;
-    std::vector<int>boxymin2;
-    std::vector<int>boxxmax2;
-    std::vector<int>boxymax2;
-    std::vector<int>boxcenterx;
-    std::vector<int>boxcentery;
-    std::vector<int>lastboxcenterx;
-    std::vector<int>lastboxcentery;
-
-    std::unique_ptr<cv::Point2i> box_min_position_ptr;    
-    std::unique_ptr<cv::Point2i> box_max_position_ptr;
-    std::unique_ptr<cv::Point2i> box2_min_position_ptr;    
-    std::unique_ptr<cv::Point2i> box2_max_position_ptr;
-    std::unique_ptr<cv::Point2i> box_center_position_ptr;
-    std::unique_ptr<cv::Point2i> last_box_center_position_ptr;
+    std::vector<std::string> class_names;
+    std::vector<cv::Rect> object_boxes;
+    std::vector<cv::Point2i> object_centers;
+    std::vector<cv::Point2i> last_object_centers;
 
     int maxmoveindex;
     int noseendminindex;
     int mindistanceindex;
     std::vector<int>activityscoreface;
     std::vector<int>activityscoreobject;
-    std::vector<float>timerecordface;
+    std::vector<float> object_viewing_times;
 
     //depth
     double noseobjectmindist;
@@ -290,5 +273,5 @@ private:
     cv::Point2i getProjectedPoint(const cv::Point3f& point_3d) const;
     double calcHeadArrowAngle(const EulerAngles& head_orientation) const;
     bool isInImageArea(const cv::Point2i& point) const;
-    void recognizePerson(int person_index) const;
+    bool isIgnoredObjectClass(const std::string& class_name) const;
 };
