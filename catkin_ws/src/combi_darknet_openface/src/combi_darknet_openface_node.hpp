@@ -137,9 +137,9 @@ public:
     void onDepthImageUpdated(const sensor_msgs::ImageConstPtr& msg);
     void onPersonPositionEstimated(const geometry_msgs::PoseStamped::ConstPtr& msg);
     void onCameraInfoUpdated(const sensor_msgs::CameraInfo::ConstPtr& msg);
-    void publishPersonMeasurement(double measurement_x, double measurement_y, const std::unique_ptr<cv::Point2d>& estimated_position) const;
-    void publishPersonMarker(double theta, double measurement_x, double measurement_y) const;
-    void publishObjectMarker(double measurement_x, double measurement_y) const;
+    void publishPersonMeasurement(const cv::Point2d& position, const std::unique_ptr<cv::Point2d>& estimated_position) const;
+    void publishPersonMarker(double theta, const cv::Point2d& position) const;
+    void publishObjectMarker(const cv::Point2d& position) const;
     void publishHeadPoseArrow(const cv::Point2d& position, double head_arrow_angle_deg) const;
     void publishEstimatedPersonPositionMarker(const cv::Point2d& position, int num_tracking_frame) const;
     //void changeViewPoint(double currenttimesec);
@@ -190,10 +190,6 @@ private:
     std::vector<int>activityscoreface;
     std::vector<int>activityscoreobject;
     std::vector<float> object_viewing_times;
-
-    //depth
-    double noseobjectmindist;
-    double persondepthdist;
     
     //
     std::unique_ptr<cv::Point2d> estimate_position_ptr;
@@ -249,4 +245,6 @@ private:
     bool isInvalidPoint(const cv::Point2i& p)const;
     bool hasFocusedObject() const;
     cv::Rect getFocusedObjectBox() const;
+    double getDepthValue(const cv::Mat& depth_image, const cv::Rect& area)const;
+    cv::Point2d getPositionInGlobal(const cv::Point2d& robot_trans, double robot_yaw, double distance, double angle)const;
 };
