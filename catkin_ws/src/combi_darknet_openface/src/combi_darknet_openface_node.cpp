@@ -1127,24 +1127,10 @@ void CombiDarknetOpenface::calculateTimeUseOutofView()
 }
 
 //RGB
-void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& msg)
+void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& msg) const
 {
-    int i, j;
-    int x1, x2, y1, y2;
-    int width = WIDTH;
-    int height = HEIGHT;
     cv_bridge::CvImagePtr cv_ptr;
     static int lastdarknetcnt = 0;
-
-    rgb_cnt += 1;
-    std::cout<<"rgb_callback:"<<rgb_cnt<<std::endl;
-    if (darknet_cnt!=lastdarknetcnt)
-    {
-        std_msgs::Int16 capturecnt;
-        capturecnt.data = darknet_cnt;
-        capture_cnt_pub.publish(capturecnt);
-        lastdarknetcnt = darknet_cnt;
-    }
 
     try{
         cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
@@ -1168,7 +1154,7 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
             {
                 auto maxactivityscoreface = std::max_element(std::begin(activityscoreface), std::end(activityscoreface));
                 float maxactivityscorefacetmp = *maxactivityscoreface;
-                std::vector<int>::iterator citeracscoreface =std::find(activityscoreface.begin(), activityscoreface.end(), maxactivityscorefacetmp);
+                auto citeracscoreface =std::find(activityscoreface.begin(), activityscoreface.end(), maxactivityscorefacetmp);
                 if (citeracscoreface != activityscoreface.end())
                 {
                     maxindexface = std::distance(activityscoreface.begin(), citeracscoreface);
@@ -1221,8 +1207,6 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
                 cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw, cv::Scalar(0,255,0), 2);
 
             }
-
-            //nearest_gaze_position_ptr
             cv::circle(cv_ptr->image, *nearest_gaze_position_ptr, 7, cv::Scalar(0,0,255), 5);
         }
 
@@ -1242,7 +1226,7 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
                     {
                         auto maxactivityscoreface = std::max_element(std::begin(activityscoreface), std::end(activityscoreface));
                         float maxactivityscorefacetmp = *maxactivityscoreface;
-                        std::vector<int>::iterator citeracscoreface =std::find(activityscoreface.begin(), activityscoreface.end(), maxactivityscorefacetmp);
+                        auto citeracscoreface =std::find(activityscoreface.begin(), activityscoreface.end(), maxactivityscorefacetmp);
                         if (citeracscoreface != activityscoreface.end())
                         {
                             maxindexface = std::distance(activityscoreface.begin(), citeracscoreface);
@@ -1300,326 +1284,267 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
 
     cv::namedWindow("data", CV_WINDOW_AUTOSIZE);
     cv::imshow("data", dataimage);
-    if(display_num==2)
-    {
-        //two displays
-        cvMoveWindow("data",2910,350);
-    }
-    else
-    {
-        //one display
-        cvMoveWindow("data", 1350,350);
-    }
 
     cv::namedWindow("RGB image", CV_WINDOW_AUTOSIZE);
     cv::imshow("RGB image", cv_ptr->image);
-    if(display_num==2)
-    {
-        //two displays
-        cvMoveWindow("RGB image",2910,350);
-    }
-    else
-    {
-        //one display
-        cvMoveWindow("RGB image",1000,350);
-    }
-    cv::waitKey(10);
-
-    std::cout << "rgb image finished" << std::endl;
-    std::cout<<""<<std::endl;
 }
 
 void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr& msg)
 {
-    int x1ori = 0;
-    int x2ori = 0;
-    int y1ori = 0;
-    int y2ori = 0;
-    int x1 = 0;
-    int x2 = 0;
-    int y1 = 0;
-    int y2 = 0;
-    int xc = 0;
-    int yc = 0;
+    // int x1ori = 0;
+    // int x2ori = 0;
+    // int y1ori = 0;
+    // int y2ori = 0;
+    // int x1 = 0;
+    // int x2 = 0;
+    // int y1 = 0;
+    // int y2 = 0;
+    // int xc = 0;
+    // int yc = 0;
 
-    int pointx1 = 0;
-    int pointx2 = 0;
-    int pointy1 = 0;
-    int pointy2 = 0;
-    double persondepthpoint = 0.0;
-    double persondist = 0.0;
-    double personangle = 0.0;
-    double persondisttmp = 0.0;
+    // int pointx1 = 0;
+    // int pointx2 = 0;
+    // int pointy1 = 0;
+    // int pointy2 = 0;
+    // double persondepthpoint = 0.0;
+    // double persondist = 0.0;
+    // double personangle = 0.0;
+    // double persondisttmp = 0.0;
 
-    int objectx1ori = 0;
-    int objectx2ori = 0;
-    int objecty1ori = 0;
-    int objecty2ori = 0;
-    int objectx1 = 0;
-    int objectx2 = 0;
-    int objecty1 = 0;
-    int objecty2 = 0;
-    int objectxc = 0;
-    int objectyc = 0;
-    int objectpointx1 = 0;
-    int objectpointx2 = 0;
-    int objectpointy1 = 0;
-    int objectpointy2 = 0;
-    double objectdepthpoint = 0.0;
-    double objectdist = 0.0;
-    double objectangle = 0.0;
-    double objectdisttmp = 0.0;
+    // int objectx1ori = 0;
+    // int objectx2ori = 0;
+    // int objecty1ori = 0;
+    // int objecty2ori = 0;
+    // int objectx1 = 0;
+    // int objectx2 = 0;
+    // int objecty1 = 0;
+    // int objecty2 = 0;
+    // int objectxc = 0;
+    // int objectyc = 0;
+    // int objectpointx1 = 0;
+    // int objectpointx2 = 0;
+    // int objectpointy1 = 0;
+    // int objectpointy2 = 0;
+    // double objectdepthpoint = 0.0;
+    // double objectdist = 0.0;
+    // double objectangle = 0.0;
+    // double objectdisttmp = 0.0;
 
 
-    int i, j, k;
-    int width = WIDTH;
-    int height = HEIGHT;
-    double sum = 0.0;
-    cv_bridge::CvImagePtr cv_ptr;
+    // int i, j, k;
+    // cv_bridge::CvImagePtr cv_ptr;
 
-    static ros::Time firsttime = ros::Time::now();
-    ros::Time nowtime = ros::Time::now();
+    // try{
+    //     cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::TYPE_32FC1);
+    // }catch (cv_bridge::Exception& ex){
+    //     ROS_ERROR("error");
+    //     exit(-1);
+    // }
 
-    double firsttimesec,nowtimesec,currenttimesec;
-    firsttimesec = firsttime.toSec();
-    nowtimesec = nowtime.toSec();
-    currenttimesec = nowtimesec-firsttimesec;
+    // cv::Mat depth(cv_ptr->image.rows, cv_ptr->image.cols, CV_32FC1);
+    // cv::Mat img(cv_ptr->image.rows, cv_ptr->image.cols, CV_8UC1);
+    // cv::normalize(img, img, 1, 0, cv::NORM_MINMAX);
 
-    try{
-        cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::TYPE_32FC1);
-    }catch (cv_bridge::Exception& ex){
-        ROS_ERROR("error");
-        exit(-1);
-    }
-
-    cv::Mat depth(cv_ptr->image.rows, cv_ptr->image.cols, CV_32FC1);
-
-    cv::Mat img(cv_ptr->image.rows, cv_ptr->image.cols, CV_8UC1);
-    cv::normalize(img, img, 1, 0, cv::NORM_MINMAX);
-
-    depth_cnt += 1;
-    std::cout<<"depth_callback:"<<depth_cnt<<std::endl;
-
-    if(this->person_box || this->hasFocusedObject())
-    {
-        if(this->person_box)
-        {
-            x1ori = this->person_box->tl().x;
-            y1ori = this->person_box->tl().y;
-            x2ori = this->person_box->br().x;
-            y2ori = this->person_box->br().y;
-
-            xc = (x1ori+x2ori)/2;
-            yc = (y1ori+y2ori)/2;
-
-            x1 = x1ori;
-            y1 = y1ori;
-            x2 = x2ori;
-            y2 = y2ori;
-
-            if(nose_tip_position_ptr)
-            {
-                pointx1 = nose_tip_position_ptr->x-1;
-                pointy1 = nose_tip_position_ptr->y-1;
-                pointx2 = nose_tip_position_ptr->x+1;
-                pointy2 = nose_tip_position_ptr->y+1;
-                std::cout<<"point_nose:"<<nose_tip_position_ptr->x<<", "<<nose_tip_position_ptr->x<<std::endl;
-            }
-            else
-            {
-                pointx1 = xc-1;
-                pointy1 = yc-1;
-                pointx2 = xc+1;
-                pointy2 = yc+1;
-                std::cout<<"point_center:"<<xc<<", "<<yc<<std::endl;
-            }
-        }
-        std::vector<double>boxdepthivalue;
-
-        if(this->hasFocusedObject())
-        {
-            objectx1ori = this->getFocusedObjectBox().tl().x;
-            objecty1ori = this->getFocusedObjectBox().tl().y;
-            objectx2ori = this->getFocusedObjectBox().br().x;
-            objecty2ori = this->getFocusedObjectBox().br().y;
-
-            objectxc = (objectx1ori+objectx2ori)/2;
-            objectyc = (objecty1ori+objecty2ori)/2;
-            objectpointx1 = objectxc-1;
-            objectpointy1 = objectyc-1;
-            objectpointx2 = objectxc+1;
-            objectpointy2 = objectyc+1;
-        }
-
-        int depthsumcnt = 0;
-        for(int i = 0; i < cv_ptr->image.rows;i++)
-        {
-            float* Dimage = cv_ptr->image.ptr<float>(i);
-            float* Iimage = depth.ptr<float>(i);
-            char* Ivimage = img.ptr<char>(i);
-            for(int j = 0 ; j < cv_ptr->image.cols; j++)
-            {
-                if(Dimage[j] > 0.0)
-                {
-                    Iimage[j] = Dimage[j];
-                    Ivimage[j] = (char)(255*(Dimage[j]/5.5));
-                }
-
-                if(i > y1 && i < y2)
-                {
-                    if(j > x1 && j < x2)
-                    {
-                        if(Dimage[j] > 0.0)
-                        {
-                            boxdepthivalue.push_back(Dimage[j]);
-                            depthsumcnt +=1;
-                        }
-                    }
-                }
-                if(i > pointy1 && i < pointy2)
-                {
-                    if(j > pointx1 && j < pointx2)
-                    {
-                        if(Dimage[j] > 0.0)
-                        {
-                            persondepthpoint = Dimage[j];
-                        }
-                    }
-                }
-                if(i > objectpointy1 && i < objectpointy2)
-                {
-                    if(j > objectpointx1 && j < objectpointx2)
-                    {
-                        if(Dimage[j] > 0.0)
-                        {
-                            objectdepthpoint = Dimage[j];
-                        }
-                    }
-                }
-            }
-        }
-        noseobjectmindist = 0;
-        persondepthdist = 0;
-        if(this->person_box)
-        {
-            persondist = persondepthpoint;
-            personangle = AngleofView/2-((double)xc/640)*AngleofView;
-            persondisttmp = persondist;
-            persondist = this->person_distance_cache.update(persondist);
-            persondepthdist = persondist;
-            std::cout<<"persondist,angle:"<<persondist<<","<<personangle<<std::endl;
-            if((fixed_frame =="map")&&(robotpose_cnt>0))
-            {
-                Eigen::MatrixXd Ap = Eigen::MatrixXd(3,3);
-                Eigen::MatrixXd Bp = Eigen::MatrixXd(3,3);
-                Eigen::MatrixXd Tp = Eigen::MatrixXd(3,3);
-
-                Ap << cos(math_util::degToRad(robotyaw)), sin(math_util::degToRad(robotyaw)), robotpose.at(0),
-                    sin(math_util::degToRad(robotyaw)), cos(math_util::degToRad(robotyaw)), robotpose.at(1),
-                    0,  0,   1;
-
-                Bp << cos(math_util::degToRad(personangle)), sin(math_util::degToRad(personangle)), persondist*cos(math_util::degToRad(personangle)),
-                    sin(math_util::degToRad(personangle)), cos(math_util::degToRad(personangle)), persondist*sin(math_util::degToRad(personangle)),
-                    0,  0,   1;
-
-                Tp = Ap*Bp;
-
-                double personmeasurementx = Tp(0,2);
-                double personmeasurementy = Tp(1,2);
-
-                std::cout<<"personmeasurement:"<<personmeasurementx<<","<<personmeasurementy<<std::endl;
-
-                this->publishPersonMeasurement(personmeasurementx, personmeasurementy, this->estimate_position_ptr);
-                this->publishPersonMarker(personangle,personmeasurementx,personmeasurementy);
-            }
-            else if(fixed_frame =="base_link")
-            {
-                double personmeasurementx = persondist * cos(math_util::degToRad(personangle));
-                double personmeasurementy = persondist * sin(math_util::degToRad(personangle));
-                this->publishPersonMeasurement(personmeasurementx, personmeasurementy, this->estimate_position_ptr);
-                this->publishPersonMarker(personangle,personmeasurementx,personmeasurementy);
-            }
-
-            cv::rectangle(img, cv::Point(x1ori, y1ori), cv::Point(x2ori, y2ori), cv::Scalar(0, 0, 255), 5, 4);
-            if(nose_tip_position_ptr)
-            {
-                cv::circle(img, *nose_tip_position_ptr, 8, cv::Scalar(0, 0, 0), 3);
-            }
-            else
-            {
-                cv::circle(img, cv::Point(xc, yc), 8, cv::Scalar(0, 0, 0), 3);
-            }
-        }
-        if(this->hasFocusedObject())
-        {
-            objectdist = objectdepthpoint;
-            noseobjectmindist = objectdist;
-            objectangle = AngleofView/2-((double)objectxc/640)*AngleofView;
-            objectdisttmp = objectdist;
-            objectdist = this->object_distance_cache.update(objectdist);
-            noseobjectmindist = objectdist;
-            std::cout<<"objectdist,angle:"<<objectdist<<","<<objectangle<<std::endl;
-            if((fixed_frame =="map")&&(robotpose_cnt>0))
-            {
-                Eigen::MatrixXd Ao = Eigen::MatrixXd(3,3);
-                Eigen::MatrixXd Bo = Eigen::MatrixXd(3,3);
-                Eigen::MatrixXd To = Eigen::MatrixXd(3,3);
-
-                Ao << cos(math_util::degToRad(robotyaw)), sin(math_util::degToRad(robotyaw)), robotpose.at(0),
-                    sin(math_util::degToRad(robotyaw)), cos(math_util::degToRad(robotyaw)), robotpose.at(1),
-                    0,  0,   1;
-
-                Bo << cos(math_util::degToRad(objectangle)), sin(math_util::degToRad(objectangle)), objectdist*cos(math_util::degToRad(objectangle)),
-                    sin(math_util::degToRad(objectangle)), cos(math_util::degToRad(objectangle)), objectdist*sin(math_util::degToRad(objectangle)),
-                    0,  0,   1;
-
-                To = Ao*Bo;
-
-                double objectmeasurementx = To(0,2);
-                double objectmeasurementy = To(1,2);
-
-                std::cout<<"objectmeasurement:"<<objectmeasurementx<<","<<objectmeasurementy<<std::endl;
-                cv::rectangle(img, this->getFocusedObjectBox(), cv::Scalar(0, 0, 255), 5, 4);
-
-                this->publishObjectMarker(objectmeasurementx,objectmeasurementy);
-            }
-        }
-    }
-    else
-    {
-        for(int i = 0; i < cv_ptr->image.rows;i++)
-        {
-            float* Dimage = cv_ptr->image.ptr<float>(i);
-            float* Iimage = depth.ptr<float>(i);
-            char* Ivimage = img.ptr<char>(i);
-            for(int j = 0 ; j < cv_ptr->image.cols; j++)
-            {
-                if(Dimage[j] > 0.0)
-                {
-                    Iimage[j] = Dimage[j];
-                    Ivimage[j] = (char)(255*(Dimage[j]/5.5));
-                }
-            }
-        }
-    }
-
-    std::cout<<"persondepthdist:"<<persondepthdist<<std::endl;
-    std::cout<<"noseobjectmindist:"<<noseobjectmindist<<std::endl;
-
-    cv::resize(img, img, cv::Size(), ResizeSize, ResizeSize);
-//    cv::imshow("Depth_Image", img);
-
-    // if(display_num==2)
+    // if(this->person_box || this->hasFocusedObject())
     // {
-    //     cvMoveWindow("Depth_Image", 3250,10);
+    //     if(this->person_box)
+    //     {
+    //         x1ori = this->person_box->tl().x;
+    //         y1ori = this->person_box->tl().y;
+    //         x2ori = this->person_box->br().x;
+    //         y2ori = this->person_box->br().y;
+
+    //         xc = (x1ori+x2ori)/2;
+    //         yc = (y1ori+y2ori)/2;
+
+    //         x1 = x1ori;
+    //         y1 = y1ori;
+    //         x2 = x2ori;
+    //         y2 = y2ori;
+
+    //         if(nose_tip_position_ptr)
+    //         {
+    //             pointx1 = nose_tip_position_ptr->x-1;
+    //             pointy1 = nose_tip_position_ptr->y-1;
+    //             pointx2 = nose_tip_position_ptr->x+1;
+    //             pointy2 = nose_tip_position_ptr->y+1;
+    //         }
+    //         else
+    //         {
+    //             pointx1 = xc-1;
+    //             pointy1 = yc-1;
+    //             pointx2 = xc+1;
+    //             pointy2 = yc+1;
+    //         }
+    //     }
+    //     std::vector<double>boxdepthivalue;
+
+    //     if(this->hasFocusedObject())
+    //     {
+    //         objectx1ori = this->getFocusedObjectBox().tl().x;
+    //         objecty1ori = this->getFocusedObjectBox().tl().y;
+    //         objectx2ori = this->getFocusedObjectBox().br().x;
+    //         objecty2ori = this->getFocusedObjectBox().br().y;
+
+    //         objectxc = (objectx1ori+objectx2ori)/2;
+    //         objectyc = (objecty1ori+objecty2ori)/2;
+    //         objectpointx1 = objectxc-1;
+    //         objectpointy1 = objectyc-1;
+    //         objectpointx2 = objectxc+1;
+    //         objectpointy2 = objectyc+1;
+    //     }
+
+    //     int depthsumcnt = 0;
+    //     for(int i = 0; i < cv_ptr->image.rows;i++)
+    //     {
+    //         float* Dimage = cv_ptr->image.ptr<float>(i);
+    //         float* Iimage = depth.ptr<float>(i);
+    //         char* Ivimage = img.ptr<char>(i);
+    //         for(int j = 0 ; j < cv_ptr->image.cols; j++)
+    //         {
+    //             if(Dimage[j] > 0.0)
+    //             {
+    //                 Iimage[j] = Dimage[j];
+    //                 Ivimage[j] = (char)(255*(Dimage[j]/5.5));
+    //             }
+
+    //             if(i > y1 && i < y2)
+    //             {
+    //                 if(j > x1 && j < x2)
+    //                 {
+    //                     if(Dimage[j] > 0.0)
+    //                     {
+    //                         boxdepthivalue.push_back(Dimage[j]);
+    //                         depthsumcnt +=1;
+    //                     }
+    //                 }
+    //             }
+    //             if(i > pointy1 && i < pointy2)
+    //             {
+    //                 if(j > pointx1 && j < pointx2)
+    //                 {
+    //                     if(Dimage[j] > 0.0)
+    //                     {
+    //                         persondepthpoint = Dimage[j];
+    //                     }
+    //                 }
+    //             }
+    //             if(i > objectpointy1 && i < objectpointy2)
+    //             {
+    //                 if(j > objectpointx1 && j < objectpointx2)
+    //                 {
+    //                     if(Dimage[j] > 0.0)
+    //                     {
+    //                         objectdepthpoint = Dimage[j];
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     noseobjectmindist = 0;
+    //     persondepthdist = 0;
+    //     if(this->person_box)
+    //     {
+    //         persondist = persondepthpoint;
+    //         personangle = AngleofView/2-((double)xc/640)*AngleofView;
+    //         persondisttmp = persondist;
+    //         persondist = this->person_distance_cache.update(persondist);
+    //         persondepthdist = persondist;
+    //         std::cout<<"persondist,angle:"<<persondist<<","<<personangle<<std::endl;
+    //         if((fixed_frame =="map")&&(robotpose_cnt>0))
+    //         {
+    //             Eigen::MatrixXd Ap = Eigen::MatrixXd(3,3);
+    //             Eigen::MatrixXd Bp = Eigen::MatrixXd(3,3);
+    //             Eigen::MatrixXd Tp = Eigen::MatrixXd(3,3);
+
+    //             Ap << cos(math_util::degToRad(robotyaw)), sin(math_util::degToRad(robotyaw)), robotpose.at(0),
+    //                 sin(math_util::degToRad(robotyaw)), cos(math_util::degToRad(robotyaw)), robotpose.at(1),
+    //                 0,  0,   1;
+
+    //             Bp << cos(math_util::degToRad(personangle)), sin(math_util::degToRad(personangle)), persondist*cos(math_util::degToRad(personangle)),
+    //                 sin(math_util::degToRad(personangle)), cos(math_util::degToRad(personangle)), persondist*sin(math_util::degToRad(personangle)),
+    //                 0,  0,   1;
+
+    //             Tp = Ap*Bp;
+
+    //             double personmeasurementx = Tp(0,2);
+    //             double personmeasurementy = Tp(1,2);
+
+    //             std::cout<<"personmeasurement:"<<personmeasurementx<<","<<personmeasurementy<<std::endl;
+
+    //             this->publishPersonMeasurement(personmeasurementx, personmeasurementy, this->estimate_position_ptr);
+    //             this->publishPersonMarker(personangle,personmeasurementx,personmeasurementy);
+    //         }
+    //         else if(fixed_frame =="base_link")
+    //         {
+    //             double personmeasurementx = persondist * cos(math_util::degToRad(personangle));
+    //             double personmeasurementy = persondist * sin(math_util::degToRad(personangle));
+    //             this->publishPersonMeasurement(personmeasurementx, personmeasurementy, this->estimate_position_ptr);
+    //             this->publishPersonMarker(personangle,personmeasurementx,personmeasurementy);
+    //         }
+
+    //         // cv::rectangle(img, cv::Point(x1ori, y1ori), cv::Point(x2ori, y2ori), cv::Scalar(0, 0, 255), 5, 4);
+    //         if(nose_tip_position_ptr)
+    //         {
+    //             cv::circle(img, *nose_tip_position_ptr, 8, cv::Scalar(0, 0, 0), 3);
+    //         }
+    //         else
+    //         {
+    //             cv::circle(img, cv::Point(xc, yc), 8, cv::Scalar(0, 0, 0), 3);
+    //         }
+    //     }
+    //     if(this->hasFocusedObject())
+    //     {
+    //         objectdist = objectdepthpoint;
+    //         noseobjectmindist = objectdist;
+    //         objectangle = AngleofView/2-((double)objectxc/640)*AngleofView;
+    //         objectdisttmp = objectdist;
+    //         objectdist = this->object_distance_cache.update(objectdist);
+    //         noseobjectmindist = objectdist;
+    //         std::cout<<"objectdist,angle:"<<objectdist<<","<<objectangle<<std::endl;
+    //         if((fixed_frame =="map")&&(robotpose_cnt>0))
+    //         {
+    //             Eigen::MatrixXd Ao = Eigen::MatrixXd(3,3);
+    //             Eigen::MatrixXd Bo = Eigen::MatrixXd(3,3);
+    //             Eigen::MatrixXd To = Eigen::MatrixXd(3,3);
+
+    //             Ao << cos(math_util::degToRad(robotyaw)), sin(math_util::degToRad(robotyaw)), robotpose.at(0),
+    //                 sin(math_util::degToRad(robotyaw)), cos(math_util::degToRad(robotyaw)), robotpose.at(1),
+    //                 0,  0,   1;
+
+    //             Bo << cos(math_util::degToRad(objectangle)), sin(math_util::degToRad(objectangle)), objectdist*cos(math_util::degToRad(objectangle)),
+    //                 sin(math_util::degToRad(objectangle)), cos(math_util::degToRad(objectangle)), objectdist*sin(math_util::degToRad(objectangle)),
+    //                 0,  0,   1;
+
+    //             To = Ao*Bo;
+
+    //             double objectmeasurementx = To(0,2);
+    //             double objectmeasurementy = To(1,2);
+
+    //             std::cout<<"objectmeasurement:"<<objectmeasurementx<<","<<objectmeasurementy<<std::endl;
+    //             cv::rectangle(img, this->getFocusedObjectBox(), cv::Scalar(0, 0, 255), 5, 4);
+
+    //             this->publishObjectMarker(objectmeasurementx,objectmeasurementy);
+    //         }
+    //     }
     // }
     // else
     // {
-    //     //one display
-    //     cvMoveWindow("Depth_Image", 1350,0);
+    //     for(int i = 0; i < cv_ptr->image.rows;i++)
+    //     {
+    //         float* Dimage = cv_ptr->image.ptr<float>(i);
+    //         float* Iimage = depth.ptr<float>(i);
+    //         char* Ivimage = img.ptr<char>(i);
+    //         for(int j = 0 ; j < cv_ptr->image.cols; j++)
+    //         {
+    //             if(Dimage[j] > 0.0)
+    //             {
+    //                 Iimage[j] = Dimage[j];
+    //                 Ivimage[j] = (char)(255*(Dimage[j]/5.5));
+    //             }
+    //         }
+    //     }
     // }
-
-    cv::waitKey(10);
 
     // depthdata<<darknet_cnt<<","
     //     <<currenttimesec<<", "
@@ -1630,8 +1555,6 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
     //     <<modify_distance_cnt<<","
     //     <<person_move_cnt<<","
     //     << person_move<<std::endl;
-
-    std::cout<<""<<std::endl;
 }
 
 

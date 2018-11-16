@@ -69,8 +69,6 @@ int frame_num = 0;
 int modify_yaw_cnt = 0;
 int modify_distance_cnt = 0;
 
-int rgb_cnt = 0;
-int depth_cnt = 0;
 int robotpose_cnt = 0;
 
 int after_flag = 0;
@@ -135,7 +133,7 @@ public:
     void linearLine(double x1,double x2,double y1,double y2,double* a,double* b );
     void calculateTimeUseOutofView();
     void onRecognizedObject(const darknet_ros_msgs::BoundingBoxes::ConstPtr& msg );
-    void onRgbImageUpdated(const sensor_msgs::ImageConstPtr& msg);//face_feature
+    void onRgbImageUpdated(const sensor_msgs::ImageConstPtr& msg) const;//face_feature
     void onDepthImageUpdated(const sensor_msgs::ImageConstPtr& msg);
     void onPersonPositionEstimated(const geometry_msgs::PoseStamped::ConstPtr& msg);
     void onCameraInfoUpdated(const sensor_msgs::CameraInfo::ConstPtr& msg);
