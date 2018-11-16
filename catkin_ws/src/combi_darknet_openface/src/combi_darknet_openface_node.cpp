@@ -30,6 +30,7 @@ CombiDarknetOpenface::CombiDarknetOpenface(ros::NodeHandle nh)
     estimate_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_estimateperson_marker", 1);
     cnt_text_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_cnt_txt", 1);
     destination_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_destination_marker", 1);
+    cv::namedWindow("RGB image", CV_WINDOW_AUTOSIZE);
 }
 
 
@@ -1121,8 +1122,8 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
             }
         }
     }
-    cv::namedWindow("RGB image", CV_WINDOW_AUTOSIZE);
     cv::imshow("RGB image", cv_ptr->image);
+    cv::waitKey(10);
 }
 
 
