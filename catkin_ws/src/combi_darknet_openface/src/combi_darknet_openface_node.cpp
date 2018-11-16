@@ -1,42 +1,37 @@
 #include "combi_darknet_openface_node.hpp"
 
-#include <iostream>
 #include <limits>
+#include <string>
 
 #include <Eigen/Dense>
 #include <Eigen/Geometry>
+
 #include <tf/transform_datatypes.h>
 #include <std_msgs/Int16.h>
 
 #include "math_util.h"
 
+
 CombiDarknetOpenface::CombiDarknetOpenface(ros::NodeHandle nh)
     : nh1(nh), class_names({"none"})
 {
     ros_object_sub = nh1.subscribe("darknet_ros/bounding_boxes",1, &CombiDarknetOpenface::onRecognizedObject, this);
-
+    ros_filtered_sub= nh1.subscribe("estimate_pos",1, &CombiDarknetOpenface::onPersonPositionEstimated, this);
     ros_face_sub = nh1.subscribe("faces",1, &CombiDarknetOpenface::onRecognizedFace, this);
     rgb_img_sub = nh1.subscribe<sensor_msgs::Image>("/camera/rgb/image_rect_color", 1, &CombiDarknetOpenface::onRgbImageUpdated, this);
     depth_img_sub = nh1.subscribe<sensor_msgs::Image>("/camera/depth_registered/image_raw", 1, &CombiDarknetOpenface::onDepthImageUpdated, this);
     camera_info_sub = nh1.subscribe<sensor_msgs::CameraInfo>("/camera/color/camera_info", 1, &CombiDarknetOpenface::onCameraInfoUpdated, this);
-
-    ros_filtered_sub= nh1.subscribe("estimate_pos",1, &CombiDarknetOpenface::onPersonPositionEstimated, this);
     measurement_pub = nh1.advertise<geometry_msgs::PoseStamped>("filter_measurement", 1);
-
     headpose_arrow_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_headpose_arrow", 1);
-
     origin_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_origin_marker", 1);
     person_arrow_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_person_arrow", 1);
     person_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_person_marker", 1);
     object_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_object_marker", 1);
-
     estimate_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_estimateperson_marker", 1);
     cnt_text_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_cnt_txt", 1);
-
     destination_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_destination_marker", 1);
-
-    capture_cnt_pub = nh1.advertise<std_msgs::Int16>("/image_capture_cnt", 1);
 }
+
 
 CombiDarknetOpenface::~CombiDarknetOpenface()
 {
@@ -93,7 +88,7 @@ void CombiDarknetOpenface::onRecognizedFace(const openface_ros::Faces::ConstPtr&
             *this->right_mouth_position_ptr
         );
 
-        nose_end_point2D_drawtmp.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, TmpDistance))));
+        nose_end_point2D_drawtmp.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, this->TMP_DISTANCE))));
 
         cv::Mat rotation_matrix  = cv::Mat::zeros(3, 3, CV_64FC1); // Rotation in axis-angle form
         cv::Rodrigues(this->rotation_vector, rotation_matrix);
@@ -126,23 +121,15 @@ void CombiDarknetOpenface::onRecognizedFace(const openface_ros::Faces::ConstPtr&
             !this->isInImageArea(*this->nose_end_point2D_drawtmp)
         );
 
-        nose_end_point2D_draw.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, FirstDistance))));
-        nose_end_point2D_draw2.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, SecondDistance))));
-        nose_end_point2D_draw3.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, ThirdDistance))));
+        nose_end_point2D_draw.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, this->search_distances[0]))));
+        nose_end_point2D_draw2.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, this->search_distances[1]))));
+        nose_end_point2D_draw3.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, this->search_distances[2]))));
 
         if(this->estimate_position_ptr && (!head_orientation.empty()))
         {
-            this->head_arrow_theta = calcHeadArrowAngle(head_orientation);
-            this->publishHeadPoseArrow(*this->estimate_position_ptr, this->head_arrow_theta);
-            this->head_arrow_angle = head_orientation[2];
+            double head_arrow_theta = calcHeadArrowAngle(head_orientation);
+            this->publishHeadPoseArrow(*this->estimate_position_ptr, head_arrow_theta);
         }
-        // headposedata << time_from_run_sec << ", "
-        //     << detected_face.head_pose.position.x << ", "
-        //     << detected_face.head_pose.position.y << ", "
-        //     << detected_face.head_pose.position.z << ","
-        //     << head_orientation[0] << ", "
-        //     << head_orientation[1] << ", "
-        //     << head_orientation[2] << std::endl;
     }
 }
 
@@ -250,6 +237,7 @@ double CombiDarknetOpenface::calcHeadArrowAngle(const EulerAngles& head_orientat
     return ret_val;
 }
 
+
 void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBoxes::ConstPtr& msg )
 {
     static ros::Time firsttime = ros::Time::now();
@@ -266,7 +254,6 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
 
     activityscoreface.clear();
     activityscoreobject.clear();
-    this->most_active_object_index = 0;
     this->nearest_object_index = 0;
     this->person_box.reset();
     darknet_cnt += 1;
@@ -313,130 +300,32 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
         }
     }
 
-    if(this->person_box && this->person_moving_state == PersonMovingState::Stopping &&(notmeasurement_cnt<RobotMoveCount)&&(!robot_moving)&&(!pose_reset))
+    if(this->person_box && this->person_moving_state == PersonMovingState::Stopping &&(!this->robot_moving)&&(!pose_reset))
     {
         this->calculateTimeUse();
-        if(!robotpose.empty())
-        {
-            robotoriginpose.pose.position.x = robotpose.at(0);
-            robotoriginpose.pose.position.y = robotpose.at(1);
-            robotoriginpose.pose.position.z = 0.0;
-            robotoriginpose.pose.orientation=tf::createQuaternionMsgFromYaw(math_util::degToRad(robotyaw));
-        }
-    }
-    else if(notmeasurement_cnt==RobotMoveCount)
-    {
-//        CombiDarknetOpenface::changeViewPoint(currenttimesec);
     }
     else if(pose_reset)
     {
-        if(pose_reset_cnt==PoseResetCount)
+        if(pose_reset_cnt==this->pose_reset_count)
         {
-            std::cout << "###########pose move############"<< std::endl;
             //move_mode = RobotPoseReset;
-            after_flag = 1;
 //            CombiDarknetOpenface::changeViewPoint(currenttimesec);
         }
         else
         {
             //pose_reset_cnt += 1;
-            after_flag = 1;
+            
             this->calculateTimeUseOutofView();
         }
+        this->after_flag = true;
     }
-
-    if(this->object_viewing_times.size() < this->class_names.size())
-    {
-        this->object_viewing_times.resize(this->class_names.size(), 0);
-    }
-
-    if((!activityscoreface.empty()) && (!activityscoreobject.empty()))
-    {
-        if(darknet_cnt>1)
-        {
-            this->object_viewing_times.at(this->nearest_object_index) += current_time_sec - previous_time_sec;
-        }
-
-        // std::cout << "this->nearest_object_index:"<< this->nearest_object_index << std::endl;
-        // activityscorefacedata<<darknet_cnt<<","
-        //     <<currenttimesec<<", "
-        //     <<this->nearest_object_index<<std::endl;
-        // scorefacedata<<darknet_cnt<<","<<currenttimesec<<",";
-        // scorefacelabel<<darknet_cnt<<","<<currenttimesec<<",";
-        // activityscorefacedata2<<darknet_cnt<<","
-        //     <<currenttimesec<<","
-        //     <<notmeasurement_cnt<<","
-        //     <<move_mode<<","
-        //     <<robot_moving<<std::endl;
-
-        // activityscoreobjectdata<<darknet_cnt<<","
-        //     <<currenttimesec<<", "
-        //     <<this->most_active_object_index<<std::endl;
-        // scoreobjectdata<<darknet_cnt<<","<<currenttimesec<<",";
-        // scoreobjectlabel<<darknet_cnt<<","<<currenttimesec<<",";
-        // this->object_viewing_timesdata<<darknet_cnt<<","<<currenttimesec<<",";
-        // for(int i=0;i<this->class_names.size();i++)
-        // {
-        //     if(i==(this->class_names.size()-1))
-        //     {
-        //         scorefacedata<< activityscoreface.at(i);
-        //         scoreobjectdata<< activityscoreobject.at(i);
-        //         scorefacelabel<<this->class_names.at(i);
-        //         scoreobjectlabel<<this->class_names.at(i);
-        //         this->object_viewing_timesdata<<this->object_viewing_times.at(i);
-        //     }
-        //     else
-        //     {
-        //         scorefacedata<< activityscoreface.at(i)<<",";
-        //         scoreobjectdata<< activityscoreobject.at(i)<<",";
-        //         scorefacelabel<<this->class_names.at(i)<<",";
-        //         scoreobjectlabel<<this->class_names.at(i)<<",";
-        //         this->object_viewing_timesdata<<this->object_viewing_times.at(i)<<",";
-        //     }
-        // }
-        // scorefacedata<<std::endl;
-        // scoreobjectdata<<std::endl;
-        // scorefacelabel<<std::endl;
-        // scoreobjectlabel<<std::endl;
-        // this->object_viewing_timesdata<<std::endl;
-
-        // if(kf_cnt>1)
-        // {
-        //     timeusedata<<darknet_cnt<<","
-        //         <<currenttimesec<<","
-        //         << personvelocity.at(0)<<","
-        //         << personvelocity.at(1)<<","
-        //         << estimateposition.at(0)<<","
-        //         << estimateposition.at(1)<<std::endl;
-        // }
-    }
-
-    // alltimerecord<<darknet_cnt<<","
-    //     <<currenttimesec<<","
-    //     <<robot_move_cnt<<","
-    //     <<robot_move<<","
-    //     <<person_move_cnt<<","
-    //     <<static_cast<int>(person_moving_state)<<","
-    //     <<notmeasurement_cnt<<","
-    //     <<pose_reset_cnt<<","
-    //     <<pose_reset<<","
-    //     <<move_mode<<","
-    //     <<robot_moving<<","
-    //     <<moving_cnt<<std::endl;
     previous_time_sec = current_time_sec;
-    frame_num += 1;
 }
+
 
 bool CombiDarknetOpenface::isIgnoredObjectClass(const std::string& class_name) const
 {
     return std::find(this->ignore_object_list.begin(), this->ignore_object_list.end(), class_name) != this->ignore_object_list.end();
-}
-
-void CombiDarknetOpenface::linearLine(double x1,double y1,double x2,double y2,double* a,double* b )
-{
-    *a = (y2-y1)/(x2-x1);
-    double a2 = *a;
-    *b = y1-a2*x1;
 }
 
 /*
@@ -605,7 +494,7 @@ void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
     else if(move_mode==RobotPoseReset)
     {
         std::cout<<"move_mode===RobotPoseReset"<<std::endl;
-        if((robot_moving==0)&&(pose_reset_cnt==PoseResetCount))
+        if((robot_moving==0)&&(pose_reset_cnt==this->pose_reset_count))
         {
             ROS_INFO("start to reset the pose");
 
@@ -935,11 +824,6 @@ void CombiDarknetOpenface::calculateTimeUse()
             if(this->object_distance_cache.value() > this->person_distance_cache.value())
             {
                 this->nearest_object_index = 0;
-                object_far = 1;
-            }
-            else
-            {
-                object_far = 0;
             }
 
             // if(this->nearest_object_index != 0)
@@ -1045,6 +929,7 @@ void CombiDarknetOpenface::calculateTimeUse()
     // }
 }
 
+
 std::tuple<std::size_t, double, cv::Point2i> CombiDarknetOpenface::getNearestObject(const cv::Point2i& nose_tip_point, const cv::Point2i& nose_end_point, const std::vector<cv::Point2i>& object_centers, float angle_distance_thresh) const
 {
     double nose_angle = math_util::radToDeg(math_util::atan2(nose_end_point - nose_tip_point));
@@ -1084,6 +969,7 @@ std::tuple<std::size_t, double, cv::Point2i> CombiDarknetOpenface::getNearestObj
     }
     return std::forward_as_tuple(min_object_index, min_object_distance, min_gaze_position);
 }
+
 
 void CombiDarknetOpenface::calculateTimeUseOutofView()
 {
@@ -1126,7 +1012,7 @@ void CombiDarknetOpenface::calculateTimeUseOutofView()
     activityscoreface.at(this->nearest_object_index) += 1;
 }
 
-//RGB
+
 void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& msg) const
 {
     cv_bridge::CvImagePtr cv_ptr;
@@ -1180,28 +1066,15 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
 
             cv::circle(cv_ptr->image, *nose_end_point2D_draw3, 5, cv::Scalar(255,255,255), 3);
 
-            double nose_end_angle_tmpx = nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x;
-            double nose_end_angle_tmpy = nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y;
-            double nose_end_angle_tmp = math_util::radToDeg(atan2(nose_end_angle_tmpy,nose_end_angle_tmpx));
-            double nose_end_angle_3x = nose_end_point2D_draw3->x-nose_tip_position_ptr->x;
-            double nose_end_angle_3y = nose_end_point2D_draw3->y-nose_tip_position_ptr->y;
-            double nose_end_angle_3 = math_util::radToDeg(atan2(nose_end_angle_3y,nose_end_angle_3x));
-            double nose_end_angle_2x = nose_end_point2D_draw2->x-nose_tip_position_ptr->x;
-            double nose_end_angle_2y = nose_end_point2D_draw2->y-nose_tip_position_ptr->y;
-            double nose_end_angle_2 = math_util::radToDeg(atan2(nose_end_angle_2y,nose_end_angle_2x));
-            double thetanoseendx = nose_end_point2D_draw->x-nose_tip_position_ptr->x;
-            double thetanoseendy = nose_end_point2D_draw->y-nose_tip_position_ptr->y;
-            double thetanoseend = math_util::radToDeg(atan2(thetanoseendy,thetanoseendx));
-
-            if((((nose_end_point2D_draw3->x>0)&&(nose_end_point2D_draw3->x<640))&&((nose_end_point2D_draw3->y>0)&&(nose_end_point2D_draw3->y<480)))&&(abs(nose_end_angle_tmp-nose_end_angle_3)<10))
+            if((((nose_end_point2D_draw3->x>0)&&(nose_end_point2D_draw3->x<640))&&((nose_end_point2D_draw3->y>0)&&(nose_end_point2D_draw3->y<480))))
             {
                 cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw3, cv::Scalar(0,255,0), 2);
             }
-            else if((((nose_end_point2D_draw2->x>0)&&(nose_end_point2D_draw2->x<640))&&((nose_end_point2D_draw2->y>0)&&(nose_end_point2D_draw2->y<480)))&&(abs(nose_end_angle_tmp-nose_end_angle_2)<10))
+            else if((((nose_end_point2D_draw2->x>0)&&(nose_end_point2D_draw2->x<640))&&((nose_end_point2D_draw2->y>0)&&(nose_end_point2D_draw2->y<480))))
             {
                 cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw2, cv::Scalar(0,255,0), 2);
             }
-            else if((((nose_end_point2D_draw->x>0)&&(nose_end_point2D_draw->x<640))&&((nose_end_point2D_draw->y>0)&&(nose_end_point2D_draw->y<480)))&&(abs(nose_end_angle_tmp-thetanoseend)<10))
+            else if((((nose_end_point2D_draw->x>0)&&(nose_end_point2D_draw->x<640))&&((nose_end_point2D_draw->y>0)&&(nose_end_point2D_draw->y<480))))
             {
                 cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw, cv::Scalar(0,255,0), 2);
 
@@ -1211,14 +1084,14 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
 
         if(pose_reset)
         {
-            if((pose_reset_cnt==PoseResetCount))
+            if((pose_reset_cnt==this->pose_reset_count))
             {
                 cv::putText(cv_ptr->image, "robot returning", cv::Point(20,90), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
             }
             else
             {
                 int maxindexface = 0;
-                if(pose_reset_cnt!=PoseResetCount)
+                if(pose_reset_cnt!=this->pose_reset_count)
                 {
                     int zerocntface = std::count(activityscoreface.begin(), activityscoreface.end(), 0);
                     if(activityscoreface.at(0)==0)
@@ -1248,45 +1121,10 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
             }
         }
     }
-
-    cv::putText(dataimage, std::to_string(darknet_cnt), cv::Point(550,25), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,0,255), 2,CV_AA);
-    if(this->person_box)
-    {
-        cv::putText(dataimage, "person found", cv::Point(20,25), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,0,255), 2,CV_AA);
-    }
-    else
-    {
-        cv::putText(cv_ptr->image, "person not found", cv::Point(20,25), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,0,255), 2,CV_AA);
-    }
-
-    cv::putText(dataimage, std::to_string(angularsig), cv::Point(20,120), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(255,255,0), 2,CV_AA);
-    cv::putText(dataimage, std::to_string(linearxsig), cv::Point(20,150), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(255,255,0), 2,CV_AA);
-    cv::putText(dataimage, std::to_string(linearysig), cv::Point(20,180), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(255,255,0), 2,CV_AA);
-
-    cv::putText(dataimage, std::to_string(errortmptheta), cv::Point(140,120), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
-    cv::putText(dataimage, std::to_string(errortmpx), cv::Point(140,150), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
-    cv::putText(dataimage, std::to_string(errortmpy), cv::Point(140,180), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
-    cv::putText(dataimage, std::to_string(head_arrow_angle), cv::Point(20,210), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
-    cv::putText(dataimage, std::to_string(head_arrow_theta), cv::Point(20,240), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
-    cv::putText(dataimage, std::to_string(headrobottheta), cv::Point(20,270), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
-
-    cv::putText(dataimage, std::to_string(robotyaw), cv::Point(20,330), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
-    cv::putText(dataimage, std::to_string(targetthetatmp), cv::Point(20,360), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
-    cv::putText(dataimage, std::to_string(errortmptheta), cv::Point(20,390), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
-
-
-    cv::putText(dataimage, std::to_string(moving_cnt), cv::Point(550,55), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,255), 2,CV_AA);
-    cv::putText(dataimage, std::to_string(pose_reset_cnt), cv::Point(550,85), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(255,0,255), 2,CV_AA);
-    cv::putText(dataimage, std::to_string(out_view_mode), cv::Point(550,115), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(255,255,0), 2,CV_AA);
-
-    cv::resize(dataimage, dataimage, cv::Size(), ResizeSize, ResizeSize);
-
-    cv::namedWindow("data", CV_WINDOW_AUTOSIZE);
-    cv::imshow("data", dataimage);
-
     cv::namedWindow("RGB image", CV_WINDOW_AUTOSIZE);
     cv::imshow("RGB image", cv_ptr->image);
 }
+
 
 void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr& msg)
 {
@@ -1309,8 +1147,8 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
             cv::Rect((this->person_box->tl() + this->person_box->br()) / 2, cv::Size(3, 3));
         double current_person_distance = this->getDepthValue(cv_ptr->image, person_area);
         this->person_distance_cache.update(current_person_distance);;
-        double person_angle = AngleofView / 2 - (static_cast<double>((this->person_box->tl().x + this->person_box->br().x) / 2) / this->image_size.width) * AngleofView;
-        if(robotpose_cnt > 0)
+        double person_angle = this->angle_of_view / 2 - (static_cast<double>((this->person_box->tl().x + this->person_box->br().x) / 2) / this->image_size.width) * this->angle_of_view;
+        if(this->robotpose_cnt > 0)
         {
             cv::Point2d person_position = this->getPositionInGlobal(
                 cv::Point2d(robotpose.at(0), robotpose.at(1)),
@@ -1328,8 +1166,8 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
         cv::Rect object_area = cv::Rect((this->getFocusedObjectBox().tl() + this->getFocusedObjectBox().br()) / 2, cv::Size(3, 3));
         double current_object_distance = this->getDepthValue(cv_ptr->image, object_area);
         this->object_distance_cache.update(current_object_distance);
-        double object_angle = AngleofView / 2 - (static_cast<double>((this->getFocusedObjectBox().tl().x + this->getFocusedObjectBox().br().x) / 2) / this->image_size.width) * AngleofView;
-        if(robotpose_cnt > 0)
+        double object_angle = this->angle_of_view / 2 - (static_cast<double>((this->getFocusedObjectBox().tl().x + this->getFocusedObjectBox().br().x) / 2) / this->image_size.width) * this->angle_of_view;
+        if(this->robotpose_cnt > 0)
         {
             cv::Point2d object_position = this->getPositionInGlobal(
                 cv::Point2d(robotpose.at(0), robotpose.at(1)),
@@ -1405,6 +1243,7 @@ void CombiDarknetOpenface::onPersonPositionEstimated(const geometry_msgs::PoseSt
     this->publishEstimatedPersonPositionMarker(*this->estimate_position_ptr, this->darknet_cnt);
 }
 
+
 void CombiDarknetOpenface::publishEstimatedPersonPositionMarker(const cv::Point2d& position, int num_tracking_frame) const
 {
     visualization_msgs::Marker estimate_person_marker;
@@ -1439,6 +1278,7 @@ void CombiDarknetOpenface::publishEstimatedPersonPositionMarker(const cv::Point2
     m2.color.r = 1.0;
     this->cnt_text_pub.publish(m2);
 }
+
 
 void CombiDarknetOpenface::publishPersonMeasurement(const cv::Point2d& position, const std::unique_ptr<cv::Point2d>& estimated_position) const
 {
@@ -1476,6 +1316,7 @@ void CombiDarknetOpenface::publishPersonMeasurement(const cv::Point2d& position,
     }
 }
 
+
 void CombiDarknetOpenface::publishHeadPoseArrow(const cv::Point2d& position, double head_arrow_angle_deg) const
 {
     visualization_msgs::Marker head_pose_arrow;
@@ -1497,6 +1338,7 @@ void CombiDarknetOpenface::publishHeadPoseArrow(const cv::Point2d& position, dou
     head_pose_arrow.lifetime = ros::Duration();
     headpose_arrow_pub.publish(head_pose_arrow);
 }
+
 
 void CombiDarknetOpenface::publishPersonMarker(double theta, const cv::Point2d& position) const
 {
@@ -1550,6 +1392,7 @@ void CombiDarknetOpenface::publishPersonMarker(double theta, const cv::Point2d& 
     origin_marker_pub.publish(origin_marker);
 }
 
+
 void CombiDarknetOpenface::publishObjectMarker(const cv::Point2d& position) const
 {
     visualization_msgs::Marker object_marker;
@@ -1567,6 +1410,7 @@ void CombiDarknetOpenface::publishObjectMarker(const cv::Point2d& position) cons
     object_marker_pub.publish(object_marker);
 }
 
+
 cv::Point2i CombiDarknetOpenface::invalidPoint()const
 {
     return cv::Point2i(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
@@ -1577,6 +1421,7 @@ bool CombiDarknetOpenface::isInvalidPoint(const cv::Point2i& p)const
 {
     return p.x == std::numeric_limits<int>::max() && p.y == std::numeric_limits<int>::max();
 }
+
 
 bool CombiDarknetOpenface::hasFocusedObject() const
 {
@@ -1589,88 +1434,12 @@ cv::Rect CombiDarknetOpenface::getFocusedObjectBox() const
     return this->object_boxes.at(this->nearest_object_index);
 }
 
-// 購読者ノードのメイン関数
+
 int main(int argc, char **argv)
 {
-    // ノード名の初期化
     ros::init(argc, argv, "combi_darknet_openface");
-
-    headposedata<<"time"<<","
-        <<"head_pose_x"<<","
-        <<"head_pose_y"<<","
-        <<"head_pose_z"<<","
-        <<"head_roll"<<","
-        <<"head_pitch"<<","
-        <<"head_yaw"<<std::endl;
-
-    timeusedata<<"cnt"<<","
-        <<"time"<<","
-        <<"velocity_x"<<","
-        <<"velocity_y"<<","
-        <<"position_x"<<","
-        <<"position_y"<<","
-        <<"class"<<std::endl;
-
-    activityscorefacedata<<"cnt"<<","
-        <<"time"<<","
-        <<"class"<<std::endl;
-
-    activityscorefacedata2<<"cnt"<<","
-        <<"time"<<","
-        <<"notmeasurement_cnt"<<","
-        <<"move_mode"<<","
-        <<"robot_moving"<<std::endl;
-
-    activityscoreobjectdata<<"cnt"<<","
-        <<"time"<<","
-        <<"class"<<std::endl;
-
-    scorefacedata<<"cnt"<<","
-        <<"time"<<","
-        <<"score"<<std::endl;
-
-    scoreobjectdata<<"cnt"<<","
-        <<"time"<<","
-        <<"score"<<std::endl;
-
-    timerecordfacedata<<"cnt"<<","
-        <<"time"<<","
-        <<"activity time"<<std::endl;
-
-    scorefacelabel<<"cnt"<<","
-        <<"time"<<","
-        <<"label"<<std::endl;
-
-    scoreobjectlabel<<"cnt"<<","
-        <<"time"<<","
-        <<"label"<<std::endl;
-
-    alltimerecord<<"darknet_cnt"<<","
-        <<"currenttimesec"<<","
-        <<"robot_move_cnt"<<","
-        <<"robot_move"<<","
-        <<"person_move_cnt"<<","
-        <<"person_move"<<","
-        <<"notmeasurement_cnt"<<","
-        <<"pose_reset_cnt"<<","
-        <<"pose_reset"<<","
-        <<"move_mode"<<","
-        <<"robot_moving"<<","
-        <<"moving_cnt"<<std::endl;
-
-    noseobjecttheta<<"darknet_cnt"<<","
-        <<"time"<<","
-        <<"gazetheta"<<","
-        <<"nosethetaminindex"<<std::endl;
-
-    noseobjecttheta<<"darknet_cnt"<<","
-        <<"currenttimesec"<<","
-        <<"gazetheta"<<","
-        <<"nosethetaminindex"<<std::endl;
-
     ros::NodeHandle nh;
     CombiDarknetOpenface pt(nh);
-
     ros::spin();
     return 0;
 }
