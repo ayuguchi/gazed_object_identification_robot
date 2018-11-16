@@ -17,6 +17,7 @@
 #include <darknet_ros_msgs/BoundingBox.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <sensor_msgs/Image.h>
+#include <sensor_msgs/CameraInfo.h>
 #include <visualization_msgs/Marker.h>
 #include <openface_ros/Face.h>
 #include <openface_ros/Faces.h>
@@ -137,6 +138,7 @@ public:
     void onRgbImageUpdated(const sensor_msgs::ImageConstPtr& msg);//face_feature
     void onDepthImageUpdated(const sensor_msgs::ImageConstPtr& msg);
     void onPersonPositionEstimated(const geometry_msgs::PoseStamped::ConstPtr& msg);
+    void onCameraInfoUpdated(const sensor_msgs::CameraInfo::ConstPtr& msg);
     void publishPersonMeasurement(double measurement_x, double measurement_y, const std::unique_ptr<cv::Point2d>& estimated_position) const;
     void publishPersonMarker(double theta, double measurement_x, double measurement_y) const;
     void publishObjectMarker(double measurement_x, double measurement_y) const;
@@ -146,17 +148,21 @@ public:
 
 private:
     const std::string FIXED_FRAME = "map";
-    const cv::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
-    const cv::Mat dist_coeffs = (cv::Mat_<double>(4,1) << 0.06569569924719, -0.25862424608946, 0.00010394071172, -0.00024019257963);
     const std::vector<std::string> ignore_object_list = {"person", "dining table", "bench", "oven", "refrigerator"};
     const int search_distance_step = 10;
     const int search_distance_range = 650;
     const double gaze_assigned_thresh = 65.0;
+
+    cv::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
+    cv::Mat dist_coeffs = (cv::Mat_<double>(4,1) << 0.06569569924719, -0.25862424608946, 0.00010394071172, -0.00024019257963);
+
+
     ros::Subscriber ros_object_sub;
     
     ros::Subscriber ros_face_sub;
     ros::Subscriber rgb_img_sub;
     ros::Subscriber depth_img_sub;
+    ros::Subscriber camera_info_sub;
 
     ros::Subscriber ros_filtered_sub;
     ros::Publisher measurement_pub;
@@ -181,7 +187,7 @@ private:
     std::vector<cv::Point2i> last_object_centers;
 
     std::size_t most_active_object_index;
-    std::size_t nearest_object_index;
+    std::size_t nearest_object_index = 0;
     int mindistanceindex;
     std::vector<int>activityscoreface;
     std::vector<int>activityscoreobject;

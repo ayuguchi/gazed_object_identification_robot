@@ -18,6 +18,7 @@ CombiDarknetOpenface::CombiDarknetOpenface(ros::NodeHandle nh)
     ros_face_sub = nh1.subscribe("faces",1, &CombiDarknetOpenface::onRecognizedFace, this);
     rgb_img_sub = nh1.subscribe<sensor_msgs::Image>("/camera/rgb/image_rect_color", 1, &CombiDarknetOpenface::onRgbImageUpdated, this);
     depth_img_sub = nh1.subscribe<sensor_msgs::Image>("/camera/depth_registered/image_raw", 1, &CombiDarknetOpenface::onDepthImageUpdated, this);
+    camera_info_sub = nh1.subscribe<sensor_msgs::CameraInfo>("/camera/color/camera_info", 1, &CombiDarknetOpenface::onCameraInfoUpdated, this);
 
     ros_filtered_sub= nh1.subscribe("estimate_pos",1, &CombiDarknetOpenface::onPersonPositionEstimated, this);
     measurement_pub = nh1.advertise<geometry_msgs::PoseStamped>("filter_measurement", 1);
@@ -40,6 +41,24 @@ CombiDarknetOpenface::CombiDarknetOpenface(ros::NodeHandle nh)
 CombiDarknetOpenface::~CombiDarknetOpenface()
 {
 }
+
+
+void CombiDarknetOpenface::onCameraInfoUpdated(const sensor_msgs::CameraInfo::ConstPtr& msg)
+{
+    this->camera_matrix = cv::Mat(3, 3, CV_64FC1);
+    for(std::size_t i = 0; i < msg->K.size(); ++i)
+    {
+        this->camera_matrix.at<double>(i / 3, i % 3) = msg->K[i];
+    }
+    this->dist_coeffs = cv::Mat(msg->D.size(), 1, CV_64FC1);
+    for(std::size_t i = 0; i < msg->D.size(); ++i)
+    {
+        this->dist_coeffs.at<double>(i, 0) = msg->D[i];
+    }
+    this->image_size.width = msg->width;
+    this->image_size.height = msg->height;
+}
+
 
 void CombiDarknetOpenface::onRecognizedFace(const openface_ros::Faces::ConstPtr& msg)
 {
@@ -1068,9 +1087,6 @@ std::tuple<std::size_t, double, cv::Point2i> CombiDarknetOpenface::getNearestObj
 
 void CombiDarknetOpenface::calculateTimeUseOutofView()
 {
-    std::cout<<"calculateTimeUseOutofView"<<std::endl;
-    //const face orientation
-    std::cout<<"########const face orientation#############" << std::endl;
     std::vector<float> objectdistance;
     std::vector<float> objectdistancetmp;
     for(int i=0;i<this->class_names.size();i++)
@@ -1087,25 +1103,13 @@ void CombiDarknetOpenface::calculateTimeUseOutofView()
         }
     }
 
-    //commentout(11/21)
-    std::cout<<"objectdistance  :"<<" ";
-    for(int i=0;i<objectdistance.size();i++)
-    std::cout << objectdistance.at(i) << " ";
-    std::cout <<""<< std::endl;
-    std::cout<<"objectdistancetmp  :"<<" ";
-    for(int i=0;i<objectdistancetmp.size();i++)
-    std::cout << objectdistancetmp.at(i) << " ";
-    std::cout <<""<< std::endl;
-
     if(objectdistancetmp.empty())
     {
-        std::cout << "no detected objects " << std::endl;
         this->nearest_object_index = 0;
     }
     else
     {
         auto minobjectdistance = std::min_element(std::begin(objectdistancetmp), std::end(objectdistancetmp));
-        std::cout << "*minobjectdistance:"<< *minobjectdistance << std::endl;
         float minobjectdistancetmp = *minobjectdistance;
         std::vector<float>::iterator citerobdist =std::find(objectdistance.begin(), objectdistance.end(), minobjectdistancetmp);
         if(citerobdist != objectdistance.end())
@@ -1114,13 +1118,10 @@ void CombiDarknetOpenface::calculateTimeUseOutofView()
         }
 
         double xcerror =  this->object_centers.at(this->nearest_object_index).x-320;
-        //std::cout << "detectedobjectxc:"<< detectedobjectxc << std::endl;
         if(abs(xcerror)>200)
         {
-            std::cout << "gaze is not Assigned" << std::endl;
             this->nearest_object_index = 0;
         }
-        std::cout << "xcerror:"<< xcerror << std::endl;
     }
     activityscoreface.at(this->nearest_object_index) += 1;
 }
@@ -1134,9 +1135,6 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
     int height = HEIGHT;
     cv_bridge::CvImagePtr cv_ptr;
     static int lastdarknetcnt = 0;
-
-    this->image_size.width = msg->width;
-    this->image_size.height = msg->height;
 
     rgb_cnt += 1;
     std::cout<<"rgb_callback:"<<rgb_cnt<<std::endl;
