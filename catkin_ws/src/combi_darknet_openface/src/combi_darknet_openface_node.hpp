@@ -46,6 +46,7 @@ public:
     void publishObjectMarker(const cv::Point2d& position) const;
     void publishHeadPoseArrow(const cv::Point2d& position, double head_arrow_angle_deg) const;
     void publishEstimatedPersonPositionMarker(const cv::Point2d& position) const;
+    void publishGazeDetectionResult(const std_msgs::Header& header) const;
 
 private:
     const std::string FIXED_FRAME = "map";
@@ -66,6 +67,7 @@ private:
     ros::Subscriber camera_info_sub;
     ros::Subscriber ros_filtered_sub;
 
+    ros::Publisher gaze_detection_pub;
     ros::Publisher measurement_pub;
     ros::Publisher headpose_arrow_pub;
     ros::Publisher origin_marker_pub;

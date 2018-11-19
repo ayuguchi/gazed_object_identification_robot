@@ -39,7 +39,7 @@ message(${CMAKE_C_COMPILER})
 
 find_package(dlib REQUIRED)
 
-add_message_files(FILES ActionUnit.msg Face.msg Faces.msg)
+add_message_files(FILES DetectionResult.msg GazeDetectionResult.msg)
 generate_messages(DEPENDENCIES std_msgs geometry_msgs)
 
 add_definitions(-std=c++11)
