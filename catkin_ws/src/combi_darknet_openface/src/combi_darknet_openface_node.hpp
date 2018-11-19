@@ -45,8 +45,7 @@ public:
     void publishPersonMarker(double theta, const cv::Point2d& position) const;
     void publishObjectMarker(const cv::Point2d& position) const;
     void publishHeadPoseArrow(const cv::Point2d& position, double head_arrow_angle_deg) const;
-    void publishEstimatedPersonPositionMarker(const cv::Point2d& position, int num_tracking_frame) const;
-    //void changeViewPoint(double currenttimesec);
+    void publishEstimatedPersonPositionMarker(const cv::Point2d& position) const;
 
 private:
     const std::string FIXED_FRAME = "map";
@@ -57,7 +56,6 @@ private:
     const int search_distance_range = 650;
     const double gaze_assigned_thresh = 65.0;
     const double angle_of_view = 58.0;
-    const std::size_t pose_reset_count = 50;
 
     ros::NodeHandle nh1;
 
@@ -84,14 +82,11 @@ private:
     std::vector<cv::Point2i> last_object_centers;
 
     std::size_t nearest_object_index = 0;
-    std::vector<int>activityscoreface;
-    std::vector<int>activityscoreobject;
     
     std::unique_ptr<cv::Point2d> estimate_position_ptr;
     std::unique_ptr<cv::Vec2d> person_velocity_ptr;
 
-    std::vector<double>robotpose;
-    double robotyaw;
+    double robotyaw = 0.0;
 
     std::unique_ptr<cv::Rect> person_box;
 
@@ -109,14 +104,7 @@ private:
     std::unique_ptr<cv::Point2i> nearest_gaze_position_ptr;
 
     PersonMovingState person_moving_state = PersonMovingState::Moving;//0:stoping,1:moving
-
-    std::size_t darknet_cnt = 0;
-    std::size_t robotpose_cnt = 0;
     std::size_t person_move_cnt = 0;
-    bool after_flag = false;
-    int robot_moving = 0;
-    int pose_reset = 0;
-    std::size_t pose_reset_cnt = 0;
 
     cv::Mat camera_matrix = (cv::Mat_<double>(3,3) << 541.20870062659242, 0, 318.78756964392710, 0 ,  540.20435182225424, 236.43301053278904, 0, 0, 1);
     cv::Mat dist_coeffs = (cv::Mat_<double>(4,1) << 0.06569569924719, -0.25862424608946, 0.00010394071172, -0.00024019257963);

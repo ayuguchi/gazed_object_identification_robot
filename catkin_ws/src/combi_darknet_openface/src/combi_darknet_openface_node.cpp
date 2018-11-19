@@ -241,23 +241,11 @@ double CombiDarknetOpenface::calcHeadArrowAngle(const EulerAngles& head_orientat
 
 void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBoxes::ConstPtr& msg )
 {
-    static ros::Time firsttime = ros::Time::now();
-    static double previous_time_sec = std::numeric_limits<double>::max();
-    ros::Time nowtime = ros::Time::now();
-    if(previous_time_sec == std::numeric_limits<double>::max())
-    {
-        previous_time_sec = nowtime.toSec() - firsttime.toSec();
-    }
-    double current_time_sec = nowtime.toSec() - firsttime.toSec();
-
     std::vector<std::string> current_frame_class_names = {"none"};
     std::vector<cv::Rect> current_frame_object_boxes = {cv::Rect(0, 0, 0, 0)};
 
-    activityscoreface.clear();
-    activityscoreobject.clear();
     this->nearest_object_index = 0;
     this->person_box.reset();
-    darknet_cnt += 1;
 
     for(const auto& detected_object :  msg->boundingBoxes)
     {
@@ -272,12 +260,6 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
             this->class_names.push_back(detected_object.Class);
         }
     }
-
-    activityscoreface.resize(this->class_names.size());
-    activityscoreobject.resize(this->class_names.size());
-    fill(activityscoreface.begin(), activityscoreface.end(),0);
-    fill(activityscoreobject.begin(), activityscoreobject.end(),0);
-
     this->object_boxes.resize(this->class_names.size());
     std::fill(this->object_boxes.begin(), this->object_boxes.end(), cv::Rect(0, 0, 0, 0));
     for(std::size_t i = 0; i < current_frame_class_names.size(); ++i)
@@ -300,27 +282,13 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
             this->object_centers[i] = (this->object_boxes[i].tl() + this->object_boxes[i].br()) / 2;
         }
     }
-
-    if(this->person_box && this->person_moving_state == PersonMovingState::Stopping &&(!this->robot_moving)&&(!pose_reset))
+    if(this->person_box && this->person_moving_state == PersonMovingState::Stopping)
     {
         this->calculateTimeUse();
     }
-    else if(pose_reset)
-    {
-        if(pose_reset_cnt==this->pose_reset_count)
-        {
-            //move_mode = RobotPoseReset;
-//            CombiDarknetOpenface::changeViewPoint(currenttimesec);
-        }
-        else
-        {
-            //pose_reset_cnt += 1;
-            
-            this->calculateTimeUseOutofView();
-        }
-        this->after_flag = true;
+    else{
+        this->calculateTimeUseOutofView();
     }
-    previous_time_sec = current_time_sec;
 }
 
 
@@ -329,483 +297,6 @@ bool CombiDarknetOpenface::isIgnoredObjectClass(const std::string& class_name) c
     return std::find(this->ignore_object_list.begin(), this->ignore_object_list.end(), class_name) != this->ignore_object_list.end();
 }
 
-/*
-void CombiDarknetOpenface::changeViewPoint(double currenttimesec)
-{
-    static geometry_msgs::Twist twist;
-    double disterror = 0.0;
-    double distxerror = 0.0;
-    double distyerror = 0.0;
-    double angleerror = 0.0;
-    static std::vector<double>targetrobotpose;
-    static std::vector<double>beforerobotpose;
-    static int exitflag = 0;
-
-    after_flag = 1;
-    if(targetrobotpose.empty()&&(!robotpose.empty()))
-    {
-        std::cout<<"init targetrobotpose"<<std::endl;
-        for(int i=0;i<robotpose.size();i++)
-        {
-            targetrobotpose.push_back(robotpose.at(i));
-        }
-        targetrobotpose.push_back(robotyaw);
-    }
-
-    if(beforerobotpose.empty())
-    {
-        std::cout<<"init beforerobotpose"<<std::endl;
-        for(int i=0;i<robotpose.size();i++)
-        {
-            beforerobotpose.push_back(robotpose.at(i));
-        }
-        beforerobotpose.push_back(robotyaw);
-    }
-    if((!robot_moving)&&(!pose_reset))
-    {
-        beforerobotpose.at(0) = robotpose.at(0);
-        beforerobotpose.at(1) = robotpose.at(1);
-        beforerobotpose.at(2) = robotyaw;
-    }
-    if(!robot_moving)
-    {
-        moving_cnt = 0;
-    }
-    else
-    {
-        moving_cnt += 1;
-    }
-
-    double robotyawtmp = robotyaw;
-
-    if((!robotpose.empty())&&(nose_end_point2D_drawtmp&&(!pose_reset)))
-    {
-        if(move_mode==OrientationInView)
-        {
-            std::cout<<"move_mode==OrientationInView"<<std::endl;
-            if(robot_moving==0)
-            {
-                double deltatheta = 0;
-                targetrobotpose.at(2) = head_arrow_theta+180;
-                if(targetrobotpose.at(2)>360)
-                {
-                    targetrobotpose.at(2)-=360;
-                }
-
-                double r = std::sqrt(std::pow(robotpose.at(0)-this->estimate_position_ptr->x, 2) + std::pow(robotpose.at(1)-this->estimate_position_ptr->y, 2));
-
-                targetrobotpose.at(0) = r*cos(math_util::degToRad(head_arrow_theta))+this->estimate_position_ptr->x;
-                targetrobotpose.at(1) = r*sin(math_util::degToRad(head_arrow_theta))+this->estimate_position_ptr->y;
-
-                double r2 = std::sqrt(std::pow(targetrobotpose.at(0)-this->estimate_position_ptr->x, 2) + std::pow(targetrobotpose.at(1)-this->estimate_position_ptr->y, 2));
-
-                robot_moving = 1;
-                std::cout<<"r:"<<r<<std::endl;
-                std::cout<<"r2:"<<r2<<std::endl;
-                std::cout<<"robot pose:"<<robotpose.at(0)<<","<<robotpose.at(1)<<std::endl;
-                std::cout<<"person pose:"<<this->estimate_position_ptr->x<<","<<this->estimate_position_ptr->y<<std::endl;
-                std::cout<<"head_arrow_theta:"<<head_arrow_theta<<std::endl;
-            }
-        }
-        else if(move_mode==OrientationOutView)
-        {
-            std::cout<<"move_mode==OrientationOutView"<<std::endl;
-            pose_reset=1;
-
-            if(robot_moving==0)
-            {
-                targetrobotpose.at(0) = robotpose.at(0);
-                targetrobotpose.at(1) = robotpose.at(1);
-
-                if((0<=headrobottheta)&&(headrobottheta<10))
-                {
-                    std::cout<<"out of view mode:1"<<std::endl;
-                    targetrobotpose.at(2) = robotyaw;
-                    out_view_mode=1;
-                }
-                else if((10<=headrobottheta)&&(headrobottheta<=30))
-                {
-                    std::cout<<"out of view mode:2"<<std::endl;
-                    targetrobotpose.at(2) = head_arrow_theta;
-                    out_view_mode=2;
-                }
-                else if((30<=headrobottheta)&&(headrobottheta<=90))
-                {
-                    std::cout<<"out of view mode:3"<<std::endl;
-                    targetrobotpose.at(2) = robotyaw+(90-headrobottheta)+45;
-
-                    out_view_mode=3;
-                }
-                else if((0>=headrobottheta)&&(headrobottheta>-10))
-                {
-                    std::cout<<"out of view mode:4"<<std::endl;
-                    targetrobotpose.at(2) = robotyaw;
-                    out_view_mode=4;
-                }
-                else if((-10>=headrobottheta)&&(headrobottheta>-30))
-                {
-                    std::cout<<"out of view mode:5"<<std::endl;
-                    targetrobotpose.at(2) = head_arrow_theta;
-                    out_view_mode=5;
-                }
-                else if((-30>=headrobottheta)&&(headrobottheta>-90))
-                {
-                    std::cout<<"out of view mode:6"<<std::endl;
-                    targetrobotpose.at(2) = robotyaw-90;
-                    out_view_mode=6;
-                }
-                else
-                {
-                    std::cout<<"out of view mode error"<<std::endl;
-                    std::cout<<"headarrowangle:"<<head_arrow_angle<<std::endl;
-                    std::cout<<"head_arrow_theta:"<<head_arrow_theta<<std::endl;
-                    std::cout<<"headrobottheta:"<<headrobottheta<<std::endl;
-                }
-                targetthetatmp = targetrobotpose.at(2);
-
-                robot_moving = 1;
-            }
-            std::cout<<"out_view_mode;"<<out_view_mode<<std::endl;
-        }
-        else if(move_mode==ObjectFar)
-        {
-            std::cout<<"move_mode==ObjectFar"<<std::endl;
-            if(robot_moving==0)
-            {
-
-                targetrobotpose.at(0) = robotpose.at(0);
-                targetrobotpose.at(1) = robotpose.at(1);
-                targetrobotpose.at(2) = robotyaw;
-                robot_moving = 1;
-            }
-        }
-        else if(move_mode==FaceOrinentationError)
-        {
-            std::cout<<"FaceOrinentationError"<<std::endl;
-            if(robot_moving==0)
-            {
-
-                targetrobotpose.at(0) = robotpose.at(0);
-                targetrobotpose.at(1) = robotpose.at(1);
-                targetrobotpose.at(2) = robotyaw;
-                robot_moving = 1;
-            }
-        }
-    }
-    else if(move_mode==RobotPoseReset)
-    {
-        std::cout<<"move_mode===RobotPoseReset"<<std::endl;
-        if((robot_moving==0)&&(pose_reset_cnt==this->pose_reset_count))
-        {
-            ROS_INFO("start to reset the pose");
-
-            targetrobotpose.at(0) = beforerobotpose.at(0);
-            targetrobotpose.at(1) = beforerobotpose.at(1);
-            targetrobotpose.at(2) = beforerobotpose.at(2);
-            robot_moving = 1;
-            pose_reset = 2;
-        }
-    }
-
-    if(robot_moving)
-    {
-        disterror = std::sqrt(std::pow(targetrobotpose.at(0)-robotpose.at(0), 2) + std::pow(targetrobotpose.at(1)-robotpose.at(1), 2));
-
-        distxerror = targetrobotpose.at(0)-robotpose.at(0);
-        distyerror = targetrobotpose.at(1)-robotpose.at(1);
-        angleerror = targetrobotpose.at(2)-robotyaw;
-
-        errortmptheta = angleerror;
-        errortmpx = distxerror;
-        errortmpy = distyerror;
-
-        twist.linear.x = 0;
-        twist.linear.y = 0;
-        twist.angular.z= 0;
-        static int signalangle = 0;
-        static int signallinearx = 0;
-        static int signallineary = 0;
-        static int signallinear = 0;
-        double a = 0;
-        double b = 0;
-        double robottheta = 180-robotyaw;
-        double robotphi = robotyaw-180;
-        double linearsigval = 0.05;
-
-        if((angleerror<=0)&&(abs(angleerror)>5)&&(!signallinearx)&&(!signallineary))
-        {
-            std::cout<<"angleerror<=0"<<std::endl;
-            twist.angular.z= -0.1;
-            signalangle = 1;
-        }
-        else if((angleerror>=0)&&(abs(angleerror)>5)&&(!signallinearx)&&(!signallineary))
-        {
-            std::cout<<"angleerror>=0"<<std::endl;
-            twist.angular.z= 0.1;
-            signalangle = 1;
-        }
-        else
-        {
-            twist.angular.z= 0;
-            signalangle = 0;
-        }
-
-        if((distyerror<=0)&&(abs(distyerror)>0.1)&&(!signalangle)&&(!signallinearx))
-        {
-            std::cout<<"distyerror<=0"<<std::endl;
-            signallineary = 1;
-            if((90<=robotyaw)&&(robotyaw<=180))
-            {
-                std::cout<<"signal mode :1"<<std::endl;
-                if((0<=robottheta)&&(robottheta<=45))
-                {
-                    twist.linear.y = linearsigval;
-                    twist.linear.x = (-1*linearsigval)*(robottheta/45);
-                }
-                else if((45<robottheta)&&(robottheta<=90))
-                {
-                    linearLine(45,linearsigval,90.0,0.0,&a,&b);
-                    twist.linear.y = a*robottheta+b;
-                    twist.linear.x = -1*linearsigval;
-                }
-                else
-                {
-                    std::cout<<"robottheta none"<<std::endl;
-                }
-            }
-            else if((180<robotyaw)&&(robotyaw<270))
-            {
-                std::cout<<"signal mode :3"<<std::endl;
-                if((0<=robotphi)&&(robotphi<=45))
-                {
-                    twist.linear.y = linearsigval;
-                    twist.linear.x = linearsigval*(robotphi/45);
-                }
-                else if((45<robotphi)&&(robotphi<=90))
-                {
-                    linearLine(45,linearsigval,90.0,0.0,&a,&b);
-                    twist.linear.y = a*robotphi+b;
-                    twist.linear.x = linearsigval;
-                }
-                else
-                {
-                    std::cout<<"robotphi none"<<std::endl;
-                }
-            }
-            else
-            {
-                std::cout<<"signal mode none"<<std::endl;
-            }
-        }
-        else if((distyerror>=0)&&(abs(distyerror)>0.1)&&(!signalangle)&&(!signallinearx))
-        {
-            std::cout<<"distyerror>=0"<<std::endl;
-            signallineary = 1;
-            if((90<=robotyaw)&&(robotyaw<=180))
-            {
-                std::cout<<"signal mode :2"<<std::endl;
-                if((0<=robottheta)&&(robottheta<=45))
-                {
-                    twist.linear.y = -1*linearsigval;
-                    twist.linear.x = linearsigval*(robottheta/45);
-                }
-                else if((45<robottheta)&&(robottheta<=90))
-                {
-                    linearLine(45,(-1)*linearsigval,90,0,&a,&b);
-                    twist.linear.y = a*robottheta+b;
-                    twist.linear.x = linearsigval;
-                }
-                else
-                {
-                    std::cout<<"robottheta none"<<std::endl;
-                }
-            }
-            else if((180<robotyaw)&&(robotyaw<270))
-            {
-                std::cout<<"signal mode :4"<<std::endl;
-                if((0<=robotphi)&&(robotphi<=45))
-                {
-                    twist.linear.y = (-1)*linearsigval;
-                    twist.linear.x = (-1*linearsigval)*(robotphi/45);
-                }
-                else if((45<robotphi)&&(robotphi<=90))
-                {
-                    linearLine(45,(-1)*linearsigval,90.0,0.0,&a,&b);
-                    twist.linear.y = a*robotphi+b;
-                    twist.linear.x = (-1)*linearsigval;
-                }
-                else
-                {
-                    std::cout<<"robotphi none"<<std::endl;
-                }
-            }
-            else
-            {
-                std::cout<<"signal mode none"<<std::endl;
-            }
-        }
-        else
-        {
-            signallineary = 0;
-        }
-
-        if((distxerror<=0)&&(abs(distxerror)>0.1)&&(!signalangle))
-        {
-            std::cout<<"distxerror<=0"<<std::endl;
-            if((90<=robotyaw)&&(robotyaw<=180))
-            {
-                std::cout<<"signal mode :5"<<std::endl;
-                if((0<=robottheta)&&(robottheta<=45))
-                {
-                    twist.linear.y = linearsigval;
-                    twist.linear.x = linearsigval*(robottheta/45);
-                }
-                else if((45<robottheta)&&(robottheta<=90))
-                {
-                    linearLine(45,linearsigval,90,0,&a,&b);
-                    twist.linear.y = linearsigval;
-                    twist.linear.x = a*robottheta+b;
-                }
-                else
-                {
-                    std::cout<<"robottheta none"<<std::endl;
-                }
-            }
-            else if((180<robotyaw)&&(robotyaw<270))
-            {
-                std::cout<<"signal mode :7"<<std::endl;
-                if((0<=robotphi)&&(robotphi<=45))
-                {
-                    twist.linear.y = (-1*linearsigval)*(robotphi/45);
-                    twist.linear.x = linearsigval;
-                }
-                else if((45<robotphi)&&(robotphi<=90))
-                {
-                    linearLine(45,linearsigval,90,0,&a,&b);
-                    twist.linear.y = (-1)*linearsigval;
-                    twist.linear.x = a*robotphi+b;
-                }
-                else
-                {
-                    std::cout<<"robotphi none"<<std::endl;
-                }
-            }
-            else
-            {
-                std::cout<<"signal mode none"<<std::endl;
-            }
-        }
-        else if((distxerror>=0)&&(abs(distxerror)>0.1)&&(!signalangle))
-        {
-            std::cout<<"distxerror>=0"<<std::endl;
-            if((90<=robotyaw)&&(robotyaw<=180))
-            {
-                std::cout<<"signal mode :6"<<std::endl;
-                if((0<=robottheta)&&(robottheta<=45))
-                {
-                    twist.linear.y = (-1*linearsigval)*(robottheta/45);
-                    twist.linear.x = -1*linearsigval;
-                }
-                else if((45<robottheta)&&(robottheta<=90))
-                {
-                    linearLine(45,(-1)*linearsigval,90,0,&a,&b);
-                    twist.linear.y = -1*linearsigval;
-                    twist.linear.x = a*robottheta+b;
-                }
-                else
-                {
-                    std::cout<<"robottheta none"<<std::endl;
-                }
-            }
-            else if((180<robotyaw)&&(robotyaw<270))
-            {
-                std::cout<<"signal mode :8"<<std::endl;
-                if((0<=robotphi)&&(robotphi<=45))
-                {
-                    twist.linear.y = linearsigval*(robotphi/45);
-                    twist.linear.x = (-1)*linearsigval;
-                }
-                else if((45<robotphi)&&(robotphi<=90))
-                {
-                    linearLine(45,(-1)*linearsigval,90,0,&a,&b);
-                    twist.linear.y = linearsigval;
-                    twist.linear.x = a*robotphi+b;
-                }
-                else
-                {
-                    std::cout<<"robotphi none"<<std::endl;
-                }
-            }
-            else
-            {
-                std::cout<<"signal mode none"<<std::endl;
-            }
-        }
-        else
-        {
-            signallinearx = 0;
-        }
-
-        angularsig = math_util::round(twist.angular.z,3);
-        linearxsig = math_util::round(twist.linear.x,3);
-        linearysig = math_util::round(twist.linear.y,3);
-
-        std::cout<<"robotmovig:"<<robot_moving<<","<<"moving_cnt:"<<moving_cnt<<std::endl;
-        std::cout<<"current pose:"<<robotpose.at(0)<<","<<robotpose.at(1)<<","<<robotyaw<<std::endl;
-        std::cout<<"target:"<<targetrobotpose.at(0)<<","<<targetrobotpose.at(1)<<","<<targetrobotpose.at(2)<<std::endl;
-        std::cout<<"error:"<<distxerror<<","<<distyerror<<","<<angleerror<<std::endl;
-        std::cout<<"twistx:"<<twist.linear.x<<","<<twist.linear.y<<","<<twist.angular.z<<std::endl;
-        std::cout<<"signalinearx:"<<signallinearx<<std::endl;
-        std::cout<<"signalineary:"<<signallineary<<std::endl;
-        std::cout<<"signalangle:"<<signalangle<<std::endl;
-
-        if(abs(twist.linear.y)>linearsigval)
-        {
-            exitflag = 1;
-        }
-        if(abs(twist.linear.x)>linearsigval)
-        {
-            exitflag = 1;
-        }
-
-        if(moving_cnt>RobotStopCount)
-        {
-            ROS_INFO("robot stop and exit");
-            exitflag = 1;
-        }
-
-        if((out_view_mode==1)||(out_view_mode==2)||(out_view_mode==4)||(out_view_mode==5))
-        {
-            signallineary = 0;
-            signallinearx = 0;
-        }
-        if((!signallineary)&&(!signallinearx)&&(!signalangle))
-        {
-            ROS_INFO("finish movement");
-            notmeasurement_cnt = 0;
-            moving_cnt = 0;
-            robot_moving = 0;
-            robotyaw = robotyawtmp;
-            if(move_mode==OrientationInView)
-            {
-                //exitflag = 1;
-                exitflag = 0;
-            }
-            if(pose_reset==2)
-            {
-                pose_reset = 0;
-                pose_reset_cnt = 0;
-                ROS_INFO("finished pose reset and exit");
-                exitflag = 1;
-            }
-            twist.linear.x = 0;
-            twist.linear.y = 0;
-            twist.angular.z = 0;
-            after_flag = 1;
-        }
-    }
-}
-*/
 
 void CombiDarknetOpenface::calculateTimeUse()
 {
@@ -826,108 +317,8 @@ void CombiDarknetOpenface::calculateTimeUse()
             {
                 this->nearest_object_index = 0;
             }
-
-            // if(this->nearest_object_index != 0)
-            // {
-            //     int gazeobjectx = this->object_centers.at(this->nearest_object_index).x-nose_tip_position_ptr->x;
-            //     int gazeobjecty = this->object_centers.at(this->nearest_object_index).y-nose_tip_position_ptr->y;
-            //     double thetagazeobject = math_util::radToDeg(atan2(gazeobjecty,gazeobjectx));
-
-            //     double thetanoseendminx = nearest_gaze_position_ptr->x-nose_tip_position_ptr->x;
-            //     double thetanoseendminy = nearest_gaze_position_ptr->y-nose_tip_position_ptr->y;
-            //     double thetanoseendmin = math_util::radToDeg(atan2(thetanoseendminy,thetanoseendminx));
-
-            //     if(abs(thetagazeobject-thetanoseendmin)<30)
-            //     {
-            //         move_mode = OrientationInView;
-            //         if(object_far)
-            //         {
-            //             move_mode = ObjectFar;
-            //         }
-            //     }
-            //     else
-            //     {
-            //         move_mode = OrientationOutView;
-            //     }
-
-            //     double nosetoend = std::sqrt(std::pow(nose_end_point2D_drawtmp->x-nose_tip_position_ptr->x, 2) + std::pow(nose_end_point2D_drawtmp->y-nose_tip_position_ptr->y, 2));
-
-            //     std::cout << "######indicator########"<< std::endl;
-            //     std::cout << "nose:" << nose_tip_position_ptr->x << "," << nose_tip_position_ptr->y<< std::endl;
-            //     std::cout << "min_nose_end_index_tmp2:"<< min_nose_end_index_tmp2 << std::endl;
-            //     std::cout << "boxcenter.at(min_nose_end_index_tmp2)  :"<<this->object_centers.at(this->nearest_object_index)<< std::endl;
-            //     std::cout << "thetagazeobject:"<< thetagazeobject << std::endl;
-            //     std::cout << "nearest_gaze_position_ptr  :"<<nearest_gaze_position_ptr->x<<","<<nearest_gaze_position_ptr->y<< std::endl;
-            //     std::cout << "thetanoseendmin:"<< thetanoseendmin << std::endl;
-            // }
         }
-        // else
-        // {
-        //     this->nearest_object_index = 0;
-        //     move_mode=FaceOrinentationError;
-        // }
-
-        //commentout(11/21)
-        // std::cout << "noseobjectmindist:"<< noseobjectmindist << std::endl;
-        // std::cout << "this->person_distance:"<< noseobjectmindist << std::endl;
-        // std::cout << "minnoseend:"<< minnoseend << std::endl;
-        // std::cout << "this->nearest_object_index:"<< this->nearest_object_index << std::endl;
-        // std::cout << "boxcenter  :"<<this->object_centers[this->nearest_object_index]<< std::endl;
-
-        activityscoreface.at(this->nearest_object_index) += 1;
-
-        // if(darknet_cnt==1)
-        // {
-        //     lastmove_mode = move_mode;
-        // }
-        // if(this->nearest_object_index)
-        // {
-        //     notmeasurement_cnt = 0;
-        //     move_mode = 0;
-        // }
-        // else if(lastmove_mode == move_mode)
-        // {
-        //     notmeasurement_cnt += 1;
-        // }
-        // else
-        // {
-        //     notmeasurement_cnt = 0;
-        // }
-        // lastmove_mode = move_mode;
-        // std::cout << "move_mode:"<< move_mode << std::endl;
-        // std::cout << "notmeasurement_cnt:"<< notmeasurement_cnt << std::endl;
-
     }
-    //object movement
-    // if(this->class_names.empty() ||  !this->person_box)
-    // {
-    //     return;
-    // }
-
-    // if(this->last_object_centers.empty())
-    // {
-    //     this->last_object_centers = this->object_centers;
-    // }
-    // else
-    // {
-    //     if(this->last_object_centers.size() == this->object_centers.size())
-    //     {
-    //         std::vector<float> object_movement_list;
-    //         // std::vector<float> objectmovementtmp;
-    //         for(std::size_t i = 0; i < this->class_names.size(); i++)
-    //         {
-    //             object_movement_list.push_back(this->isIgnoredObjectClass(this->class_names.at(i)) ? 0.0 : cv::norm(this->object_centers.at(i) - this->last_object_centers.at(i)));
-    //         }
-    //         auto max_move_object_iter = std::max_element(object_movement_list.begin(), object_movement_list.end());
-    //         this->most_active_object_index = std::distance(objectmovement.begin(), citerobmove);
-    //         if(*max_move_object_iter <= 10)
-    //         {
-    //             this->most_active_object_index = 0;
-    //         }
-    //         activityscoreobject.at(this->most_active_object_index) += 1;
-    //     }
-    //     this->last_object_centers = this->object_centers;
-    // }
 }
 
 
@@ -1010,7 +401,6 @@ void CombiDarknetOpenface::calculateTimeUseOutofView()
             this->nearest_object_index = 0;
         }
     }
-    activityscoreface.at(this->nearest_object_index) += 1;
 }
 
 
@@ -1028,99 +418,25 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
 
     cv::Mat dataimage = cv::Mat::zeros(480, 640, CV_8UC3);
 
-    if(!after_flag)
+    //facescore
+    if(nearest_gaze_position_ptr && this->person_box)
     {
-        //facescore
-        if((nearest_gaze_position_ptr)&&(this->person_box)&&(!activityscoreface.empty()))
+        cv::circle(cv_ptr->image, *nose_end_point2D_draw3, 5, cv::Scalar(255,255,255), 3);
+
+        if((((nose_end_point2D_draw3->x>0)&&(nose_end_point2D_draw3->x<640))&&((nose_end_point2D_draw3->y>0)&&(nose_end_point2D_draw3->y<480))))
         {
-            int zerocntface = std::count(activityscoreface.begin(), activityscoreface.end(), 0);
-            int maxindexface = 0;
-
-            if(activityscoreface.at(0)==0)
-            {
-                auto maxactivityscoreface = std::max_element(std::begin(activityscoreface), std::end(activityscoreface));
-                float maxactivityscorefacetmp = *maxactivityscoreface;
-                auto citeracscoreface =std::find(activityscoreface.begin(), activityscoreface.end(), maxactivityscorefacetmp);
-                if (citeracscoreface != activityscoreface.end())
-                {
-                    maxindexface = std::distance(activityscoreface.begin(), citeracscoreface);
-                }
-                if(!((this->object_centers[maxindexface].x==0)&&(this->object_centers[maxindexface].y==0)))
-                {
-                    //box
-                    cv::rectangle(cv_ptr->image, this->object_boxes[maxindexface], cv::Scalar(255, 0, 0), 3, 4);
-                }
-            }
-            else
-            {
-                maxindexface = 0;
-            }
-
-            if(nearest_gaze_position_ptr)
-            {
-                cv::putText(cv_ptr->image, this->class_names.at(maxindexface), cv::Point(20,60), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,0,255), 2,CV_AA);
-            }
-            else
-            {
-                cv::putText(cv_ptr->image, "cannot measure", cv::Point(20,60), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,0,255), 2,CV_AA);
-            }
-
-            cv::circle(cv_ptr->image, *nose_end_point2D_draw3, 5, cv::Scalar(255,255,255), 3);
-
-            if((((nose_end_point2D_draw3->x>0)&&(nose_end_point2D_draw3->x<640))&&((nose_end_point2D_draw3->y>0)&&(nose_end_point2D_draw3->y<480))))
-            {
-                cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw3, cv::Scalar(0,255,0), 2);
-            }
-            else if((((nose_end_point2D_draw2->x>0)&&(nose_end_point2D_draw2->x<640))&&((nose_end_point2D_draw2->y>0)&&(nose_end_point2D_draw2->y<480))))
-            {
-                cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw2, cv::Scalar(0,255,0), 2);
-            }
-            else if((((nose_end_point2D_draw->x>0)&&(nose_end_point2D_draw->x<640))&&((nose_end_point2D_draw->y>0)&&(nose_end_point2D_draw->y<480))))
-            {
-                cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw, cv::Scalar(0,255,0), 2);
-
-            }
-            cv::circle(cv_ptr->image, *nearest_gaze_position_ptr, 7, cv::Scalar(0,0,255), 5);
+            cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw3, cv::Scalar(0,255,0), 2);
         }
-
-        if(pose_reset)
+        else if((((nose_end_point2D_draw2->x>0)&&(nose_end_point2D_draw2->x<640))&&((nose_end_point2D_draw2->y>0)&&(nose_end_point2D_draw2->y<480))))
         {
-            if((pose_reset_cnt==this->pose_reset_count))
-            {
-                cv::putText(cv_ptr->image, "robot returning", cv::Point(20,90), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
-            }
-            else
-            {
-                int maxindexface = 0;
-                if(pose_reset_cnt!=this->pose_reset_count)
-                {
-                    int zerocntface = std::count(activityscoreface.begin(), activityscoreface.end(), 0);
-                    if(activityscoreface.at(0)==0)
-                    {
-                        auto maxactivityscoreface = std::max_element(std::begin(activityscoreface), std::end(activityscoreface));
-                        float maxactivityscorefacetmp = *maxactivityscoreface;
-                        auto citeracscoreface =std::find(activityscoreface.begin(), activityscoreface.end(), maxactivityscorefacetmp);
-                        if (citeracscoreface != activityscoreface.end())
-                        {
-                            maxindexface = std::distance(activityscoreface.begin(), citeracscoreface);
-                        }
-                        if(!((this->object_centers[maxindexface].x==0)&&(this->object_centers[maxindexface].y==0)))
-                        {
-                            //box
-                            cv::rectangle(cv_ptr->image, this->object_boxes[maxindexface], cv::Scalar(255, 0, 0), 3, 4);
-                            cv::circle(cv_ptr->image, this->object_centers[maxindexface], 5, cv::Scalar(255,0,0), 3);
-                            cv::line(cv_ptr->image,cv::Point(320,240), this->object_centers[maxindexface], cv::Scalar(255,0,0), 2);
-                        }
-                    }
-                    else
-                    {
-                        maxindexface = 0;
-                    }
-                }
-                cv::putText(cv_ptr->image, this->class_names.at(maxindexface), cv::Point(20,60), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,0,255), 2,CV_AA);
-                cv::putText(cv_ptr->image, "out measuring", cv::Point(20,90), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
-            }
+            cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw2, cv::Scalar(0,255,0), 2);
         }
+        else if((((nose_end_point2D_draw->x>0)&&(nose_end_point2D_draw->x<640))&&((nose_end_point2D_draw->y>0)&&(nose_end_point2D_draw->y<480))))
+        {
+            cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw, cv::Scalar(0,255,0), 2);
+
+        }
+        cv::circle(cv_ptr->image, *nearest_gaze_position_ptr, 7, cv::Scalar(0,0,255), 5);
     }
     cv::imshow("RGB image", cv_ptr->image);
     cv::waitKey(10);
@@ -1140,7 +456,6 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
         ROS_ERROR("error");
         exit(-1);
     }
-
     if(this->person_box)
     {
         cv::Rect person_area = nose_tip_position_ptr ?
@@ -1149,17 +464,14 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
         double current_person_distance = this->getDepthValue(cv_ptr->image, person_area);
         this->person_distance_cache.update(current_person_distance);;
         double person_angle = this->angle_of_view / 2 - (static_cast<double>((this->person_box->tl().x + this->person_box->br().x) / 2) / this->image_size.width) * this->angle_of_view;
-        if(this->robotpose_cnt > 0)
-        {
-            cv::Point2d person_position = this->getPositionInGlobal(
-                cv::Point2d(robotpose.at(0), robotpose.at(1)),
-                robotyaw,
-                this->person_distance_cache.value(),
-                person_angle
-            );
-            this->publishPersonMeasurement(person_position, this->estimate_position_ptr);
-            this->publishPersonMarker(person_angle, person_position);
-        }
+        cv::Point2d person_position = this->getPositionInGlobal(
+            cv::Point2d(0, 0),
+            robotyaw,
+            this->person_distance_cache.value(),
+            person_angle
+        );
+        this->publishPersonMeasurement(person_position, this->estimate_position_ptr);
+        this->publishPersonMarker(person_angle, person_position);
     }
 
     if(this->hasFocusedObject())
@@ -1168,16 +480,13 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
         double current_object_distance = this->getDepthValue(cv_ptr->image, object_area);
         this->object_distance_cache.update(current_object_distance);
         double object_angle = this->angle_of_view / 2 - (static_cast<double>((this->getFocusedObjectBox().tl().x + this->getFocusedObjectBox().br().x) / 2) / this->image_size.width) * this->angle_of_view;
-        if(this->robotpose_cnt > 0)
-        {
-            cv::Point2d object_position = this->getPositionInGlobal(
-                cv::Point2d(robotpose.at(0), robotpose.at(1)),
-                robotyaw,
-                this->object_distance_cache.value(),
-                object_angle
-            );
-            this->publishObjectMarker(object_position);
-        }
+        cv::Point2d object_position = this->getPositionInGlobal(
+            cv::Point2d(0, 0),
+            robotyaw,
+            this->object_distance_cache.value(),
+            object_angle
+        );
+        this->publishObjectMarker(object_position);
     }
 }
 
@@ -1218,11 +527,15 @@ double CombiDarknetOpenface::getDepthValue(const cv::Mat& depth_image, const cv:
 
 void CombiDarknetOpenface::onPersonPositionEstimated(const geometry_msgs::PoseStamped::ConstPtr& msg)
 {
-    static std::unique_ptr<cv::Point2d> last_estimate_position_ptr(new cv::Point2d(msg->pose.position.x, msg->pose.position.y));
-    last_estimate_position_ptr.reset(new cv::Point2d(*this->estimate_position_ptr));
+    static std::unique_ptr<cv::Point2d> last_estimate_position_ptr;
+    if(!last_estimate_position_ptr)
+    {
+        last_estimate_position_ptr.reset(new cv::Point2d(msg->pose.position.x, msg->pose.position.y));
+    }
     this->estimate_position_ptr.reset(new cv::Point2d(msg->pose.position.x, msg->pose.position.y));
     this->person_velocity_ptr.reset(new cv::Vec2d((*this->estimate_position_ptr) - (*last_estimate_position_ptr)));
-    if(this->person_box)
+    last_estimate_position_ptr.reset(new cv::Point2d(*this->estimate_position_ptr));
+    if(!this->person_box)
     {
         this->person_moving_state = PersonMovingState::Unrecognized;
     }
@@ -1241,11 +554,11 @@ void CombiDarknetOpenface::onPersonPositionEstimated(const geometry_msgs::PoseSt
         this->person_moving_state = PersonMovingState::Moving;
     }
 
-    this->publishEstimatedPersonPositionMarker(*this->estimate_position_ptr, this->darknet_cnt);
+    this->publishEstimatedPersonPositionMarker(*this->estimate_position_ptr);
 }
 
 
-void CombiDarknetOpenface::publishEstimatedPersonPositionMarker(const cv::Point2d& position, int num_tracking_frame) const
+void CombiDarknetOpenface::publishEstimatedPersonPositionMarker(const cv::Point2d& position) const
 {
     visualization_msgs::Marker estimate_person_marker;
     estimate_person_marker.header.stamp = ros::Time::now();
@@ -1262,22 +575,6 @@ void CombiDarknetOpenface::publishEstimatedPersonPositionMarker(const cv::Point2
     estimate_person_marker.color.g = 0;
     estimate_person_marker.color.b = 1.0;
     this->estimate_marker_pub.publish(estimate_person_marker);
-
-    visualization_msgs::Marker m2;
-    m2.header.stamp = ros::Time::now();
-    m2.header.frame_id = this->FIXED_FRAME;
-    m2.ns = "Person";
-    m2.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
-    m2.pose.position.x = position.x - 0.25;
-    m2.pose.position.y = position.y;
-    m2.text =  std::to_string(num_tracking_frame);
-    m2.scale.x = .1;
-    m2.scale.y = .1;
-    m2.scale.z = 0.2;
-    m2.color.a = 1;
-    m2.lifetime = ros::Duration();
-    m2.color.r = 1.0;
-    this->cnt_text_pub.publish(m2);
 }
 
 
