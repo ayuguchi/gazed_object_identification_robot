@@ -122,10 +122,6 @@ void CombiDarknetOpenface::onRecognizedFace(const openface_ros::Faces::ConstPtr&
             !this->isInImageArea(*this->nose_end_point2D_drawtmp)
         );
 
-        nose_end_point2D_draw.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, this->search_distances[0]))));
-        nose_end_point2D_draw2.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, this->search_distances[1]))));
-        nose_end_point2D_draw3.reset(new cv::Point2i(this->getProjectedPoint(cv::Point3f(0.0, 0.0, this->search_distances[2]))));
-
         if(this->estimate_position_ptr && (!head_orientation.empty()))
         {
             double head_arrow_theta = calcHeadArrowAngle(head_orientation);
@@ -365,6 +361,8 @@ std::tuple<std::size_t, double, cv::Point2i> CombiDarknetOpenface::getNearestObj
 
 void CombiDarknetOpenface::calculateTimeUseOutofView()
 {
+    this->nearest_object_index = 0;
+    this->nearest_gaze_position_ptr.reset();
     std::vector<float> objectdistance;
     std::vector<float> objectdistancetmp;
     for(int i=0;i<this->class_names.size();i++)
@@ -417,25 +415,20 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
     }
 
     cv::Mat dataimage = cv::Mat::zeros(480, 640, CV_8UC3);
-
-    //facescore
-    if(nearest_gaze_position_ptr && this->person_box)
+    if(this->nose_tip_position_ptr && this->isInImageArea(*this->nose_tip_position_ptr))
     {
-        cv::circle(cv_ptr->image, *nose_end_point2D_draw3, 5, cv::Scalar(255,255,255), 3);
-
-        if((((nose_end_point2D_draw3->x>0)&&(nose_end_point2D_draw3->x<640))&&((nose_end_point2D_draw3->y>0)&&(nose_end_point2D_draw3->y<480))))
-        {
-            cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw3, cv::Scalar(0,255,0), 2);
-        }
-        else if((((nose_end_point2D_draw2->x>0)&&(nose_end_point2D_draw2->x<640))&&((nose_end_point2D_draw2->y>0)&&(nose_end_point2D_draw2->y<480))))
-        {
-            cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw2, cv::Scalar(0,255,0), 2);
-        }
-        else if((((nose_end_point2D_draw->x>0)&&(nose_end_point2D_draw->x<640))&&((nose_end_point2D_draw->y>0)&&(nose_end_point2D_draw->y<480))))
-        {
-            cv::line(cv_ptr->image,*nose_tip_position_ptr, *nose_end_point2D_draw, cv::Scalar(0,255,0), 2);
-
-        }
+        cv::circle(cv_ptr->image, *nose_tip_position_ptr, 5, cv::Scalar(0,0,255), 5);
+    }
+    if(this->nose_end_point2D_drawtmp && this->isInImageArea(*this->nose_end_point2D_drawtmp))
+    {
+        cv::circle(cv_ptr->image, *nose_end_point2D_drawtmp, 5, cv::Scalar(0,0,255), 5);
+    }
+    if(this->nose_tip_position_ptr && this->nose_end_point2D_drawtmp && this->isInImageArea(*this->nose_tip_position_ptr) && this->isInImageArea(*this->nose_end_point2D_drawtmp))
+    {
+        cv::line(cv_ptr->image, *this->nose_tip_position_ptr, *this->nose_end_point2D_drawtmp, cv::Scalar(0, 255, 0), 2);
+    }
+    if(this->nearest_gaze_position_ptr)
+    {
         cv::circle(cv_ptr->image, *nearest_gaze_position_ptr, 7, cv::Scalar(0,0,255), 5);
     }
     cv::imshow("RGB image", cv_ptr->image);

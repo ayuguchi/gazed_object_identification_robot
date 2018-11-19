@@ -98,9 +98,6 @@ private:
     std::unique_ptr<cv::Point2i> right_mouth_position_ptr;
 
     std::unique_ptr<cv::Point2i> nose_end_point2D_drawtmp;
-    std::unique_ptr<cv::Point2i> nose_end_point2D_draw;
-    std::unique_ptr<cv::Point2i> nose_end_point2D_draw2;
-    std::unique_ptr<cv::Point2i> nose_end_point2D_draw3;
     std::unique_ptr<cv::Point2i> nearest_gaze_position_ptr;
 
     PersonMovingState person_moving_state = PersonMovingState::Moving;//0:stoping,1:moving
