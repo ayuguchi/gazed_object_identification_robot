@@ -302,7 +302,7 @@ void CombiDarknetOpenface::calculateTimeUse()
 {
     this->nearest_object_index = 0;
     this->nearest_gaze_position_ptr.reset();
-    if(nose_end_point2D_draw && this->person_box)
+    if(this->nose_tip_position_ptr && this->nose_end_point2D_drawtmp)
     {
         double nearest_object_distance;
         this->nearest_gaze_position_ptr.reset(new cv::Point2i(this->invalidPoint()));
