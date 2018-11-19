@@ -328,7 +328,7 @@ std::tuple<std::size_t, double, cv::Point2i> CombiDarknetOpenface::getNearestObj
     std::size_t min_object_index = 0;
     float min_object_distance = std::numeric_limits<float>::infinity();
     cv::Point2i min_gaze_position = this->invalidPoint();
-    for(int distance = this->search_distance_step; distance <= this->search_distance_range; distance += this->search_distance_step)
+    for(double distance = this->search_distance_step; distance <= this->search_distance_range; distance += this->search_distance_step)
     {
         cv::Point2i target_point = this->getProjectedPoint(cv::Point3d(0,0,distance));
         double target_point_angle = math_util::radToDeg(math_util::atan2(target_point - nose_tip_point));
