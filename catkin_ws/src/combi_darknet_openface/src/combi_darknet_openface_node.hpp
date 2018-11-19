@@ -73,8 +73,6 @@ private:
     ros::Publisher person_marker_pub;
     ros::Publisher object_marker_pub;
     ros::Publisher estimate_marker_pub;
-    ros::Publisher cnt_text_pub;
-    ros::Publisher destination_marker_pub;
 
     std::vector<std::string> class_names;
     std::vector<cv::Rect> object_boxes;

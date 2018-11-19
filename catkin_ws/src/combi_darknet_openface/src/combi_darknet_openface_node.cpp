@@ -28,8 +28,6 @@ CombiDarknetOpenface::CombiDarknetOpenface(ros::NodeHandle nh)
     person_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_person_marker", 1);
     object_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_object_marker", 1);
     estimate_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_estimateperson_marker", 1);
-    cnt_text_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_cnt_txt", 1);
-    destination_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_destination_marker", 1);
     cv::namedWindow("RGB image", CV_WINDOW_AUTOSIZE);
 }
 
