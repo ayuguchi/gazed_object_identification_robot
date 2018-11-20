@@ -304,7 +304,7 @@ void CombiDarknetOpenface::calculateTimeUse()
     {
         double nearest_object_distance;
         this->nearest_gaze_position_ptr.reset(new cv::Point2i(this->invalidPoint()));
-        std::tie(this->nearest_object_index, nearest_object_distance, *this->nearest_gaze_position_ptr) = this->getNearestObject(*this->nose_tip_position_ptr, *this->nose_end_point2D_drawtmp, this->object_centers);
+        std::tie(this->nearest_object_index, nearest_object_distance, *this->nearest_gaze_position_ptr) = this->findGazedObject(*this->nose_tip_position_ptr, *this->nose_end_point2D_drawtmp, this->object_centers);
         if(this->nearest_gaze_position_ptr && !this->isInvalidPoint(*this->nearest_gaze_position_ptr))
         {
             if(nearest_object_distance > this->gaze_assigned_thresh)
@@ -320,7 +320,7 @@ void CombiDarknetOpenface::calculateTimeUse()
 }
 
 
-std::tuple<std::size_t, double, cv::Point2i> CombiDarknetOpenface::getNearestObject(const cv::Point2i& nose_tip_point, const cv::Point2i& nose_end_point, const std::vector<cv::Point2i>& object_centers, float angle_distance_thresh) const
+std::tuple<std::size_t, double, cv::Point2i> CombiDarknetOpenface::findGazedObject(const cv::Point2i& nose_tip_point, const cv::Point2i& nose_end_point, const std::vector<cv::Point2i>& object_centers, float angle_distance_thresh) const
 {
     double nose_angle = math_util::radToDeg(math_util::atan2(nose_end_point - nose_tip_point));
     std::size_t min_object_index = 0;
@@ -436,7 +436,7 @@ void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& m
 
 void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr& msg)
 {
-    if(!this->person_box && !this->hasFocusedObject())
+    if(!this->person_box && !this->hasGazedObject())
     {
         return;
     }
@@ -465,12 +465,12 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
         this->publishPersonMarker(person_angle, person_position);
     }
 
-    if(this->hasFocusedObject())
+    if(this->hasGazedObject())
     {
-        cv::Rect object_area = cv::Rect((this->getFocusedObjectBox().tl() + this->getFocusedObjectBox().br()) / 2, cv::Size(3, 3));
+        cv::Rect object_area = cv::Rect((this->getGazedObjectBox().tl() + this->getGazedObjectBox().br()) / 2, cv::Size(3, 3));
         double current_object_distance = this->getDepthValue(cv_ptr->image, object_area);
         this->object_distance_cache.update(current_object_distance);
-        double object_angle = this->angle_of_view / 2 - (static_cast<double>((this->getFocusedObjectBox().tl().x + this->getFocusedObjectBox().br().x) / 2) / this->image_size.width) * this->angle_of_view;
+        double object_angle = this->angle_of_view / 2 - (static_cast<double>((this->getGazedObjectBox().tl().x + this->getGazedObjectBox().br().x) / 2) / this->image_size.width) * this->angle_of_view;
         cv::Point2d object_position = this->getPositionInGlobal(
             cv::Point2d(0, 0),
             robotyaw,
@@ -738,13 +738,13 @@ bool CombiDarknetOpenface::isInvalidPoint(const cv::Point2i& p)const
 }
 
 
-bool CombiDarknetOpenface::hasFocusedObject() const
+bool CombiDarknetOpenface::hasGazedObject() const
 {
     return this->nearest_object_index != 0;
 }
 
 
-cv::Rect CombiDarknetOpenface::getFocusedObjectBox() const
+cv::Rect CombiDarknetOpenface::getGazedObjectBox() const
 {
     return this->object_boxes.at(this->nearest_object_index);
 }

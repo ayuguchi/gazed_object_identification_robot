@@ -121,11 +121,11 @@ private:
     bool isInImageArea(const cv::Point2i& point) const;
     bool isIgnoredObjectClass(const std::string& class_name) const;
     /// \return index, distance, gaze_position
-    std::tuple<std::size_t, double, cv::Point2i> getNearestObject(const cv::Point2i& nose_tip_point, const cv::Point2i& nose_end_point, const std::vector<cv::Point2i>& object_centers, float angle_distance_thresh=10.0f) const;
+    std::tuple<std::size_t, double, cv::Point2i> findGazedObject(const cv::Point2i& nose_tip_point, const cv::Point2i& nose_end_point, const std::vector<cv::Point2i>& object_centers, float angle_distance_thresh=10.0f) const;
     cv::Point2i invalidPoint()const;
     bool isInvalidPoint(const cv::Point2i& p)const;
-    bool hasFocusedObject() const;
-    cv::Rect getFocusedObjectBox() const;
+    bool hasGazedObject() const;
+    cv::Rect getGazedObjectBox() const;
     double getDepthValue(const cv::Mat& depth_image, const cv::Rect& area)const;
     cv::Point2d getPositionInGlobal(const cv::Point2d& robot_trans, double robot_yaw, double distance, double angle)const;
 };
