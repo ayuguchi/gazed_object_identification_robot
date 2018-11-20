@@ -407,16 +407,12 @@ void CombiDarknetOpenface::calculateTimeUseOutofView()
 void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& msg) const
 {
     cv_bridge::CvImagePtr cv_ptr;
-    static int lastdarknetcnt = 0;
-
     try{
         cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
     }catch (cv_bridge::Exception& ex){
         ROS_ERROR("error");
         exit(-1);
     }
-
-    cv::Mat dataimage = cv::Mat::zeros(480, 640, CV_8UC3);
     if(this->nose_tip_position_ptr && this->isInImageArea(*this->nose_tip_position_ptr))
     {
         cv::circle(cv_ptr->image, *nose_tip_position_ptr, 5, cv::Scalar(0,0,255), 5);
