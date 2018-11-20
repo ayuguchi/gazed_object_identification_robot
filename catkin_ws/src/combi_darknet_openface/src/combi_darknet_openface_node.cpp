@@ -371,11 +371,14 @@ void CombiDarknetOpenface::calculateTimeUseOutofView()
 void CombiDarknetOpenface::onRgbImageUpdated(const sensor_msgs::ImageConstPtr& msg) const
 {
     cv_bridge::CvImagePtr cv_ptr;
-    try{
-        cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-    }catch (cv_bridge::Exception& ex){
-        ROS_ERROR("error");
-        exit(-1);
+    try
+    {
+        cv_ptr = cv_bridge::toCvCopy(msg, msg->encoding);
+    }
+    catch (cv_bridge::Exception& ex)
+    {
+        ROS_ERROR_STREAM("cv_bridge exception: " << ex.what());
+        return;
     }
     if(this->nose_tip_position_ptr && this->isInImageArea(*this->nose_tip_position_ptr))
     {
@@ -405,11 +408,14 @@ void CombiDarknetOpenface::onDepthImageUpdated(const sensor_msgs::ImageConstPtr&
         return;
     }
     cv_bridge::CvImagePtr cv_ptr;
-    try{
+    try
+    {
         cv_ptr = cv_bridge::toCvCopy(msg, msg->encoding);
-    }catch (cv_bridge::Exception& ex){
-        ROS_ERROR("error");
-        exit(-1);
+    }
+    catch (cv_bridge::Exception& ex)
+    {
+        ROS_ERROR_STREAM("cv_bridge exception: " << ex.what());
+        return;
     }
     if(this->person_box)
     {
