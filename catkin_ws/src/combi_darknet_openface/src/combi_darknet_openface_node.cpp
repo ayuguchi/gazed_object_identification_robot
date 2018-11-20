@@ -365,42 +365,6 @@ void CombiDarknetOpenface::calculateTimeUseOutofView()
 {
     this->nearest_object_index = 0;
     this->nearest_gaze_position_ptr.reset();
-    std::vector<float> objectdistance;
-    std::vector<float> objectdistancetmp;
-    for(int i=0;i<this->class_names.size();i++)
-    {
-        objectdistance.push_back(std::sqrt(std::pow(this->object_centers.at(i).x-320, 2) + std::pow(this->object_centers.at(i).y-240, 2)));
-
-        if(this->isInvalidPoint(this->object_centers.at(i)))
-        {
-            objectdistance.at(i) = 0;
-        }
-        if(objectdistance.at(i)>0)
-        {
-            objectdistancetmp.push_back(objectdistance.at(i));
-        }
-    }
-
-    if(objectdistancetmp.empty())
-    {
-        this->nearest_object_index = 0;
-    }
-    else
-    {
-        auto minobjectdistance = std::min_element(std::begin(objectdistancetmp), std::end(objectdistancetmp));
-        float minobjectdistancetmp = *minobjectdistance;
-        std::vector<float>::iterator citerobdist =std::find(objectdistance.begin(), objectdistance.end(), minobjectdistancetmp);
-        if(citerobdist != objectdistance.end())
-        {
-            this->nearest_object_index = std::distance(objectdistance.begin(), citerobdist);
-        }
-
-        double xcerror =  this->object_centers.at(this->nearest_object_index).x-320;
-        if(abs(xcerror)>200)
-        {
-            this->nearest_object_index = 0;
-        }
-    }
 }
 
 
