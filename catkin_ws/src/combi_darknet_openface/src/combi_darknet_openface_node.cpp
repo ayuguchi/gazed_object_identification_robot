@@ -14,8 +14,8 @@
 #include "math_util.h"
 
 
-CombiDarknetOpenface::CombiDarknetOpenface(ros::NodeHandle nh)
-    : nh1(nh), class_names({"none"})
+CombiDarknetOpenface::CombiDarknetOpenface()
+    : nh1("~"), class_names({"none"})
 {
     ros_object_sub = nh1.subscribe("darknet_ros/bounding_boxes",1, &CombiDarknetOpenface::onRecognizedObject, this);
     ros_filtered_sub= nh1.subscribe("estimate_pos",1, &CombiDarknetOpenface::onPersonPositionEstimated, this);
@@ -753,8 +753,7 @@ cv::Rect CombiDarknetOpenface::getFocusedObjectBox() const
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "combi_darknet_openface");
-    ros::NodeHandle nh;
-    CombiDarknetOpenface pt(nh);
+    volatile CombiDarknetOpenface pt;
     ros::spin();
     return 0;
 }

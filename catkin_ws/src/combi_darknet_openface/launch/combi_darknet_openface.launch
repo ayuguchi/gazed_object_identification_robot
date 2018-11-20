@@ -9,6 +9,11 @@
         args="_image_topic:=/camera/color/image_rect_color"/>
     <include file="$(find darknet_ros)/launch/darknet_ros.launch">
     </include>
-    <node pkg="combi_darknet_openface" type="combi_darknet_openface_node" name="combi_darknet_openface_node"  output="screen"/>
     <node pkg="person_tracking_kalman" type="person_tracking_kalman_node" name="person_tracking_kalman_node"  output="screen"/>
+    <node pkg="combi_darknet_openface" type="combi_darknet_openface_node" name="combi_darknet_openface_node"  output="screen">
+        <remap from="~estimate_pos" to="/estimate_pos" />
+        <remap from="~darknet_ros/bounding_boxes" to="/darknet_ros/bounding_boxes" />
+        <remap from="~faces" to="/faces" />
+        <remap from="~filter_measurement" to="/filter_measurement" />
+    </node>
 </launch>

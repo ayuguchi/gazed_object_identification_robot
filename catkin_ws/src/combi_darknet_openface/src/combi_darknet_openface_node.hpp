@@ -31,7 +31,7 @@ public:
         Moving = 1,
         Unrecognized = 2
     };
-    CombiDarknetOpenface(ros::NodeHandle nh);
+    CombiDarknetOpenface();
     ~CombiDarknetOpenface();
     void calculateTimeUse();
     void calculateTimeUseOutofView();
