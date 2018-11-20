@@ -272,7 +272,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     {
         if(this->isIgnoredObjectClass(this->class_names[i]))
         {
-            this->object_centers[i] = cv::Point2i(0, 0);
+            this->object_centers[i] = this->invalidPoint();
         }
         else
         {
@@ -337,7 +337,7 @@ std::tuple<std::size_t, double, cv::Point2i> CombiDarknetOpenface::findGazedObje
         std::vector<float> nose_end_distances;
         for(const auto& center_position : object_centers)
         {
-            if(center_position.x == 0 && center_position.y == 0)
+            if(this->isInvalidPoint(center_position))
             {
                 nose_end_distances.push_back(std::numeric_limits<float>::infinity());
                 continue;
@@ -371,7 +371,7 @@ void CombiDarknetOpenface::calculateTimeUseOutofView()
     {
         objectdistance.push_back(std::sqrt(std::pow(this->object_centers.at(i).x-320, 2) + std::pow(this->object_centers.at(i).y-240, 2)));
 
-        if((this->object_centers.at(i).x == 0)&&(this->object_centers.at(i).y == 0))
+        if(this->isInvalidPoint(this->object_centers.at(i)))
         {
             objectdistance.at(i) = 0;
         }
