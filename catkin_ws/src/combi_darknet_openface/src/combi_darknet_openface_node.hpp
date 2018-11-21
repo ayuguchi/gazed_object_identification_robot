@@ -65,7 +65,7 @@ private:
     ros::Subscriber rgb_img_sub;
     ros::Subscriber depth_img_sub;
     ros::Subscriber camera_info_sub;
-    ros::Subscriber ros_filtered_sub;
+    ros::Subscriber ros_person_pos_sub;
 
     ros::Publisher gaze_detection_pub;
     ros::Publisher measurement_pub;
