@@ -7,9 +7,6 @@
 [submodule "ros/OpenFace"]
 	path = ros/OpenFace
 	url = https://github.com/interaction-lab/OpenFace.git
-[submodule "ros/sixad"]
-	path = ros/sixad
-	url = https://github.com/RetroPie/sixad.git
 [submodule "catkin_ws/src/openface_ros"]
 	path = catkin_ws/src/openface_ros
 	url = https://github.com/interaction-lab/openface_ros.git

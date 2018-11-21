@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# cleanup legacy service
-if [ ! -x /usr/lib/bluetooth/bluetoothd ]; then
-  chmod 755 /usr/lib/bluetooth/bluetoothd
-fi
-update-rc.d sixad remove
-
-exit 0
