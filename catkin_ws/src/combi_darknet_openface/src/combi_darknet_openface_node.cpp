@@ -8,7 +8,7 @@
 
 #include <tf/transform_datatypes.h>
 #include <std_msgs/Int16.h>
-#include <combi_darknet_openface/GazeDetectionResult.h>
+#include <combi_darknet_openface/GazedObjectDetectionResult.h>
 #include <combi_darknet_openface/DetectionResult.h>
 
 #include "math_util.h"
@@ -30,7 +30,7 @@ CombiDarknetOpenface::CombiDarknetOpenface()
     person_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_person_marker", 1);
     object_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_object_marker", 1);
     estimate_marker_pub = nh1.advertise<visualization_msgs::Marker>("/visualization_estimateperson_marker", 1);
-    gaze_detection_pub = nh1.advertise<combi_darknet_openface::GazeDetectionResult>("gaze_detection_result", 1);
+    gazed_object_detection_pub = nh1.advertise<combi_darknet_openface::GazedObjectDetectionResult>("gazed_object_detection_result", 1);
     cv::namedWindow("RGB image", CV_WINDOW_AUTOSIZE);
 }
 
@@ -286,7 +286,7 @@ void CombiDarknetOpenface::onRecognizedObject(const darknet_ros_msgs::BoundingBo
     else{
         this->calculateTimeUseOutofView();
     }
-    this->publishGazeDetectionResult(msg->header);
+    this->publishGazedObjectDetectionResult(msg->header);
 }
 
 
@@ -670,18 +670,18 @@ void CombiDarknetOpenface::publishObjectMarker(const cv::Point2d& position) cons
 }
 
 
-void CombiDarknetOpenface::publishGazeDetectionResult(const std_msgs::Header& header) const
+void CombiDarknetOpenface::publishGazedObjectDetectionResult(const std_msgs::Header& header) const
 {
     if(!this->nose_tip_position_ptr || !this->nose_end_point2D_drawtmp)
     {
         return;
     }
-    combi_darknet_openface::GazeDetectionResult result;
+    combi_darknet_openface::GazedObjectDetectionResult result;
     result.header = header;
     result.face.x = this->nose_tip_position_ptr->x;
     result.face.y = this->nose_tip_position_ptr->y;
     result.face.theta = math_util::atan2(*this->nose_end_point2D_drawtmp - *this->nose_tip_position_ptr);
-    result.gazedObjectIndex = this->nearest_object_index == 0 ? combi_darknet_openface::GazeDetectionResult::OUT_OF_VIEW : this->nearest_object_index - 1;
+    result.gazedObjectIndex = this->nearest_object_index == 0 ? combi_darknet_openface::GazedObjectDetectionResult::OUT_OF_VIEW : this->nearest_object_index - 1;
     for(std::size_t i = 1; i < this->class_names.size(); ++i)
     {
         combi_darknet_openface::DetectionResult d;
@@ -692,7 +692,7 @@ void CombiDarknetOpenface::publishGazeDetectionResult(const std_msgs::Header& he
         d.ymax = this->object_boxes[i].br().y;
         result.detectionResults.push_back(d);
     }
-    this->gaze_detection_pub.publish(result);
+    this->gazed_object_detection_pub.publish(result);
 }
 
 
