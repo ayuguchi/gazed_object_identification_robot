@@ -1,1 +1,0 @@
-/root/catkin_ws/devel/.private/teleop_twist_joy/share/teleop_twist_joy/cmake/teleop_twist_joyConfig-version.cmake

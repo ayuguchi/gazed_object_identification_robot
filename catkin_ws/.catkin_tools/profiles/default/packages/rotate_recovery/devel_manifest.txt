@@ -1,5 +1,0 @@
-navigation/rotate_recovery
-/root/catkin_ws/devel/.private/rotate_recovery/lib/librotate_recovery.so /root/catkin_ws/devel/lib/librotate_recovery.so
-/root/catkin_ws/devel/.private/rotate_recovery/lib/pkgconfig/rotate_recovery.pc /root/catkin_ws/devel/lib/pkgconfig/rotate_recovery.pc
-/root/catkin_ws/devel/.private/rotate_recovery/share/rotate_recovery/cmake/rotate_recoveryConfig.cmake /root/catkin_ws/devel/share/rotate_recovery/cmake/rotate_recoveryConfig.cmake
-/root/catkin_ws/devel/.private/rotate_recovery/share/rotate_recovery/cmake/rotate_recoveryConfig-version.cmake /root/catkin_ws/devel/share/rotate_recovery/cmake/rotate_recoveryConfig-version.cmake

@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/devel/.private/map_server
-
-Name: map_server
-Description: Description of map_server
-Version: 1.12.13
-Cflags: -I/root/catkin_ws/src/navigation/map_server/include
-Libs: -L/root/catkin_ws/devel/.private/map_server/lib -limage_loader
-Requires: roscpp tf nav_msgs

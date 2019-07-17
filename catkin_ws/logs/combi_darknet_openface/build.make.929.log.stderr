@@ -1,7 +1,0 @@
-[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:[m[K In member function '[01m[Kvoid CombiDarknetOpenface::rgbImageCallback(const ImageConstPtr&)[m[K':
-[01m[K/root/catkin_ws/src/combi_darknet_openface/src/combi_darknet_openface_node.cpp:2407:38:[m[K [01;31m[Kerror: [m[K'[01m[Kheadarrowrtheta[m[K' was not declared in this scope
-     cv::putText(cv_ptr->image, tostr(headarrowrtheta), cv::Point(20,210), CV_FONT_HERSHEY_DUPLEX, 1.0, cv::Scalar(0,255,0), 2,CV_AA);
-[01;32m[K                                      ^[m[K
-make[2]: *** [CMakeFiles/combi_darknet_openface_node.dir/src/combi_darknet_openface_node.cpp.o] Error 1
-make[1]: *** [CMakeFiles/combi_darknet_openface_node.dir/all] Error 2
-make: *** [all] Error 2

@@ -1,6 +1,32 @@
-This program is about Mr. Inoue's master's thesis.
+This program is about Mr. Inoue's master's thesis "Gazed object Estimation for Obtaining Detailed Time-usage Data Using a Mobile Robot".
 
-## How to use
+# How to use (current version)
+
+## Installation
+
+1. install nvidia-docker2 and docker-compose
+
+## Run application
+
+1. enter docker environment
+
+    ```
+    $ docker-compose run gazed_object_estimation bash
+    ```
+
+1. make catkin_ws
+
+    ```
+    $ catkin_make -DCMAKE_CXX_FLAGS="-DOPENCV_TRAITS_ENABLE_DEPRECATED"
+    ```
+
+1. 以下のコマンドを実行
+
+    ```
+    $ roslaunch combi_darknet_openface combi_darknet_openface.launch
+    ```
+
+# How to use (old version)
 
 ### Set up
 
@@ -18,11 +44,11 @@ This program is about Mr. Inoue's master's thesis.
 1. Dockerを起動
 
 ```
-cd ~/Documents/env && sudo nvidia-docker-compose run mael bash
+sudo nvidia-docker-compose run gazed_object_estimation bash
 terminatorの各タブで
-cd ~/Documents/env && sudo docker exec -it env_mael_run_1 bash
+sudo docker exec -it gazed_object_estimation_run_1 bash
 終了するときはdockerを使ってないタブで
-cd ~/Documents/env &&sudo nvidia-docker-compose down
+sudo nvidia-docker-compose down
 ```
 
 * プログラムの起動
@@ -37,7 +63,6 @@ cp rgb_PS1080_PrimeSense.yaml /root/.ros/camera_info
 2. 各タブで順番にプログラムを起動
 
 ```
-roscore	\\roscore
 roslaunch pepper_bringup pepper_full.launch nao_ip:=169.254.246.15 \\ペッパーのrosパッケージ
 chmod 777 /dev/ttyACM0
 roslaunch urg_node urg_node.launch \\LRFのノード
@@ -58,5 +83,9 @@ cd catkin_ws/py_ws/timeuse_test/datatimeuse/
 rosrun combi_darknet_openface combi_darknet_openface_node | tee -a log.txt \\最終的なプログラム
 ```
 
+# Tips
+
+OpenFace requires OpenCV 3.2 & dlib 19.6
+
 ## Authors
-Tomoaki Inoue/ Akishige Yuguchi
+Tomoaki Inoue/ Akishige Yuguchi / Takumi Nakamura

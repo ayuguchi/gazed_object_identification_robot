@@ -1,4 +1,0 @@
-[35m[1mScanning dependencies of target move_slow_and_clear[0m
-[ 50%] [32mBuilding CXX object CMakeFiles/move_slow_and_clear.dir/src/move_slow_and_clear.cpp.o[0m
-[100%] [32m[1mLinking CXX shared library /root/catkin_ws/devel/.private/move_slow_and_clear/lib/libmove_slow_and_clear.so[0m
-[100%] Built target move_slow_and_clear

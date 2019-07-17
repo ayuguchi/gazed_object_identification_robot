@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/devel/.private/image_rotate
-
-Name: image_rotate
-Description: Description of image_rotate
-Version: 1.12.21
-Cflags: -I/root/catkin_ws/devel/.private/image_rotate/include
-Libs: -L/root/catkin_ws/devel/.private/image_rotate/lib 
-Requires: 

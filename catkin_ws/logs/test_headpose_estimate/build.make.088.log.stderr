@@ -1,6 +1,0 @@
-[01m[K/root/catkin_ws/src/test_headpose_estimate/src/test_headpose_estimate_node.cpp:340:49:[m[K [01;31m[Kerror: [m[Kno '[01m[Kvoid TestHeadposeEstimate::ModifyHeadOrintation()[m[K' member function declared in class '[01m[KTestHeadposeEstimate[m[K'
- void TestHeadposeEstimate::ModifyHeadOrintation()
-[01;32m[K                                                 ^[m[K
-make[2]: *** [CMakeFiles/test_headpose_estimate_node.dir/src/test_headpose_estimate_node.cpp.o] Error 1
-make[1]: *** [CMakeFiles/test_headpose_estimate_node.dir/all] Error 2
-make: *** [all] Error 2

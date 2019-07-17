@@ -1,4 +1,0 @@
-pepper_plymouth_ros
-/root/catkin_ws/devel/.private/pepper_plymouth_ros/lib/pkgconfig/pepper_plymouth_ros.pc /root/catkin_ws/devel/lib/pkgconfig/pepper_plymouth_ros.pc
-/root/catkin_ws/devel/.private/pepper_plymouth_ros/share/pepper_plymouth_ros/cmake/pepper_plymouth_rosConfig.cmake /root/catkin_ws/devel/share/pepper_plymouth_ros/cmake/pepper_plymouth_rosConfig.cmake
-/root/catkin_ws/devel/.private/pepper_plymouth_ros/share/pepper_plymouth_ros/cmake/pepper_plymouth_rosConfig-version.cmake /root/catkin_ws/devel/share/pepper_plymouth_ros/cmake/pepper_plymouth_rosConfig-version.cmake

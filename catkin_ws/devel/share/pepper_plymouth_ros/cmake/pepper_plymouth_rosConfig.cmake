@@ -1,1 +1,0 @@
-/root/catkin_ws/devel/.private/pepper_plymouth_ros/share/pepper_plymouth_ros/cmake/pepper_plymouth_rosConfig.cmake

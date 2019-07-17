@@ -1,0 +1,18 @@
+[submodule "ros/opencv"]
+	path = ros/opencv
+	url = https://github.com/opencv/opencv.git
+[submodule "ros/dlib"]
+	path = ros/dlib
+	url = https://github.com/davisking/dlib.git
+[submodule "ros/OpenFace"]
+	path = ros/OpenFace
+	url = https://github.com/interaction-lab/OpenFace.git
+[submodule "catkin_ws/src/openface_ros"]
+	path = catkin_ws/src/openface_ros
+	url = https://github.com/interaction-lab/openface_ros.git
+[submodule "catkin_ws/src/darknet_ros"]
+	path = catkin_ws/src/darknet_ros
+	url = https://github.com/leggedrobotics/darknet_ros.git
+[submodule "catkin_ws/src/realsense"]
+	path = catkin_ws/src/realsense
+	url = https://github.com/intel-ros/realsense.git

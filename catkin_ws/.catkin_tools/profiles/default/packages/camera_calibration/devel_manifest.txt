@@ -1,5 +1,0 @@
-image_pipeline/camera_calibration
-/root/catkin_ws/devel/.private/camera_calibration/lib/python2.7/dist-packages/camera_calibration/__init__.py /root/catkin_ws/devel/lib/python2.7/dist-packages/camera_calibration/__init__.py
-/root/catkin_ws/devel/.private/camera_calibration/lib/pkgconfig/camera_calibration.pc /root/catkin_ws/devel/lib/pkgconfig/camera_calibration.pc
-/root/catkin_ws/devel/.private/camera_calibration/share/camera_calibration/cmake/camera_calibrationConfig-version.cmake /root/catkin_ws/devel/share/camera_calibration/cmake/camera_calibrationConfig-version.cmake
-/root/catkin_ws/devel/.private/camera_calibration/share/camera_calibration/cmake/camera_calibrationConfig.cmake /root/catkin_ws/devel/share/camera_calibration/cmake/camera_calibrationConfig.cmake

@@ -1,2 +1,0 @@
-- setup-file:
-    local-name: /root/catkin_ws/devel/.private/scan_to_cloud_converter/setup.sh

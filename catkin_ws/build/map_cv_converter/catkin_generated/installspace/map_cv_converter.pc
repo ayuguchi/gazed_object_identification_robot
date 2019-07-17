@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/install
-
-Name: map_cv_converter
-Description: Description of map_cv_converter
-Version: 0.0.0
-Cflags: 
-Libs: -L/root/catkin_ws/install/lib 
-Requires: 

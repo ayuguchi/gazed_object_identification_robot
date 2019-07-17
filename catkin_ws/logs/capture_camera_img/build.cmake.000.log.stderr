@@ -1,5 +1,0 @@
-[31m[1mCMake Error[0m at /root/catkin_ws/src/capture_camera_img/CMakeLists.txt:196 (target_link_libraries):
-  Cannot specify link libraries for target "capture_camera_img" which is not
-  built by this project.
-
-

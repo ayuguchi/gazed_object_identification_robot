@@ -1,8 +1,0 @@
-prefix=/root/catkin_ws/install
-
-Name: person_tracking_kalman
-Description: Description of person_tracking_kalman
-Version: 0.0.0
-Cflags: -I/root/catkin_ws/install/include
-Libs: -L/root/catkin_ws/install/lib -lperson_tracking_kalman
-Requires: roscpp
