@@ -1,4 +1,4 @@
-This program is about Mr. Inoue's master's thesis "Gazed object Estimation for Obtaining Detailed Time-usage Data Using a Mobile Robot".
+This program is regarding "Real-Time Gazed Object Identification with a Variable Point of View Using a Mobile Service Robot" presented at IEEE RO-MAN'19, India, 2019.
 
 # How to use (current version)
 
@@ -86,6 +86,10 @@ rosrun combi_darknet_openface combi_darknet_openface_node | tee -a log.txt \\最
 # Tips
 
 OpenFace requires OpenCV 3.2 & dlib 19.6
+
+# License
+
+MIT
 
 ## Authors
 Tomoaki Inoue/ Akishige Yuguchi / Takumi Nakamura
